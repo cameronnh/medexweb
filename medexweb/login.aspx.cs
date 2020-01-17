@@ -11,14 +11,34 @@ namespace medexweb
 {
     public partial class login : System.Web.UI.Page
     {
+        patient currentPatient;
+
+        private dataConnection patientConnect = new dataConnection();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblErrorMessage.Visible = false;
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
-        {
+        {            
+            string tryUsername = txtUserName.Text;
+            string tryPassword = txtPassword.Text;
 
+            currentPatient = patientConnect.ValidatePatient(tryUsername, tryPassword);//sends login request to patient in dataconnection
+
+            if(currentPatient.userName == txtUserName.Text)
+            {
+                patientConnect.ValidatePerscription(currentPatient);//gets the patients prescriptions
+
+                Session["username"] = txtUserName.Text.Trim();
+                Response.Redirect("Dashboard.aspx");
+            }
+            else
+            {
+                lblErrorMessage.Visible = true;
+            }
+       
         }
     }
 }

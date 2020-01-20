@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="medexweb.login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="medexweb.login" %>
 
 <!DOCTYPE html>
 
@@ -22,7 +22,7 @@
 
                 <tr>
                         <td><asp:Label ID="Label2" runat="server" Text="Password"></asp:Label></td>                                        
-                        <td><asp:TextBox ID="txtPassword" runat="server"></asp:TextBox></td>                      
+                        <td><asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox></td>                      
                 </tr>
 
                  <tr>

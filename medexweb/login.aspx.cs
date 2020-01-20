@@ -31,8 +31,8 @@ namespace medexweb
             {
                 patientConnect.ValidatePerscription(currentPatient);//gets the patients prescriptions
 
-                Session["username"] = txtUserName.Text.Trim();
-                Response.Redirect("Dashboard.aspx");
+                Session["object"] = currentPatient;                
+                Response.Redirect("Dashboard.aspx");                   
             }
             else
             {

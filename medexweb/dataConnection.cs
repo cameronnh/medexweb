@@ -31,7 +31,7 @@ namespace medexweb
             password = "Cam81182041";//unique sql password
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";Integrated Security=True;";           
 
             connection = new MySqlConnection(connectionString);
         }

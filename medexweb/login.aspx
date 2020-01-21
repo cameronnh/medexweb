@@ -4,12 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
     <style>
         body{
-            background-color:lightpink;
+            background-color:white;
         }
     </style>
+    <title>Patient Login</title>
 </head>
 <body>
     <form id="Login" runat="server">

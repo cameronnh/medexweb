@@ -11,22 +11,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <title>Welcome</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <form id="Dashboard" runat="server">
-        
-        <!-- Web -->
-        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
-</nav>
-
+<form id="Dashboard" runat="server">
 <div class="container-fluid">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -34,73 +22,43 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active" href="#">
-              <span data-feather="home"></span>
+              <span data-feather="NONE"></span>
               Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
+              <span data-feather="NONE"></span>
+              Doctor
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
+              <span data-feather="NONE"></span>
+              Deliveries
             </a>
           </li>
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
+          <span>My Account</span>
+          <a class="d-flex align-items-center text-muted" href="#" <%--aria-label="Add a new report--%>">
+            <span data-feather="NONE"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Current month
+              <span data-feather="NONE"></span>
+              Settings
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last quarter
+              <span data-feather="NONE"></span>
+              Sign Out
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li>
+          </li>         
         </ul>
       </div>
     </nav>
@@ -120,16 +78,16 @@
         </div>
       </div>
 
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+      <%--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>--%>
 
-      <h2>Section title</h2>
+      <h2>My Prescriptions</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
+              <th>Perscription</th>
+              <th>Dosage</th>
+              <th>Description</th>
               <th>Header</th>
               <th>Header</th>
             </tr>
@@ -246,9 +204,7 @@
               <td>ligula</td>
               <td>in</td>
               <td>libero</td>
-            </tr>
-        
-        
+            </tr>      
     </form>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

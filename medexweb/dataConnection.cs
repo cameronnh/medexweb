@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace medexweb
 {
@@ -112,7 +113,34 @@ namespace medexweb
                 return temp;
             }
         }
+        
+        public DataTable getPrescriptionDatatable(int accountNumber)
+        {
+            string query = "SELECT rXNAME, rXDosage FROM patientPrescriptions WHERE patientFID = '" + accountNumber +"';";
+            DataTable dt = new DataTable();
 
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                try
+                {                    
+                    dt.Load(cmd.ExecuteReader());
+                    this.CloseConnection();
+                }
+                catch(Exception e)
+                {
+                    this.CloseConnection();
+                    return dt;
+                }
+                return dt;
+            }
+            else
+            {
+                return dt;
+            }
+            
+        }
         public patient ValidatePerscription(patient tempPatient)
         {
             patient currentPatient = tempPatient;

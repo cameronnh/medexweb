@@ -5,13 +5,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
 
+    <!-- full calendar css-->
+    <link href="css/bootstrap-fullcalendar.css" rel="stylesheet" />
+    <link href="css/fullcalendar.css" rel="stylesheet" />
+
+   
     <title>Dashboard</title>
+
+
+    <style>
+    body {
+      margin-bottom: 40px;
+      margin-top: 0px;
+      /*text-align: center;*/
+      /*font-size: 14px;*/
+      /*font-family: "Open Sans", sans-serif;*/
+      background: url(http://www.digiphotohub.com/wp-content/uploads/2015/09/bigstock-Abstract-Blurred-Background-Of-92820527.jpg);
+    }
+    
+
+  </style>
+
+
 </head>
 <body>
 <form id="Dashboard" runat="server">
@@ -38,7 +59,7 @@
               Deliveries
             </a>
           </li>
-        </ul>
+        </ul>     
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>My Account</span>
@@ -74,11 +95,32 @@
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
             This week
-          </button>
-        </div>
-      </div>
+        </div>   
+     </div>              
+          <%--<canvas class="collapse" class="" id="calendar" width="560" height="380"></canvas>--%>
+      
+        <div class="row">
+        <div class="col-md-6 portlets">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2><strong>Calendar</strong></h2>
+                    <div class="panel-actions">
+                        <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                        <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                    </div>
 
-      <canvas class="my-4 w-100" id="calendar" width="900" height="380"></canvas>
+                </div><br><br><br>
+                <div class="panel-body">
+                    <!-- Widget content -->
+                    <!-- Below line produces calendar. I am using FullCalendar plugin. -->
+                    <div id="calendar"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+       
              
         <h2>My Prescriptions</h2>
         <div class="table-responsive">
@@ -91,7 +133,21 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/dashboard.js"></script>
+
+
+
+    <!-- partial -->
+    <script src="js/jquery.js"></script>
+    <!-- jQuery full calendar -->
+    <script src="js/fullcalendar.min.js"></script>
+    <!-- Full Google Calendar - Calendar -->
+    <script src="js/fullcalendar.js"></script>
+    <!--script for this page only-->
+    <script src="js/calendar-custom.js"></script>
+    
+    
+    
+    
 </body>
 </html>
 

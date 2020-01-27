@@ -32,7 +32,7 @@ namespace medexweb
                 //patientConnect.ValidatePerscription(currentPatient);//gets the patients prescriptions IM NOT SURE IF THIS COULD GET DELETED
 
                 Session["object"] = currentPatient;                
-                Response.Redirect("Dashboard.aspx");                   
+                Response.Redirect("Schedule.aspx");                   
             }
             else
             {

@@ -141,6 +141,14 @@ namespace medexweb
             }
             
         }
+
+
+        //public GetAppiontments()
+        //{
+            //needs to set vars and write to the var in cal-init.js 
+            //cal-init.js CalendarApp.prototype.init defaultEvents = 
+            //the appointment data
+        //}
         public patient ValidatePerscription(patient tempPatient)
         {
             patient currentPatient = tempPatient;

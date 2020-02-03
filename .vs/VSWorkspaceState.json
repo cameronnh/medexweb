@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\medexweb",
-    "\\medexweb\\dist",
-    "\\medexweb\\dist\\css",
-    "\\medexweb\\dist\\js\\pages"
+    "\\medexweb"
   ],
-  "SelectedNode": "\\medexweb\\Dashboard.aspx",
+  "SelectedNode": "\\medexweb\\Schedule.aspx",
   "PreviewInSolutionExplorer": false
 }

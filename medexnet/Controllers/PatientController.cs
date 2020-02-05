@@ -1,12 +1,14 @@
-﻿using System;
+﻿using medexnet.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataLibrary;
 
 namespace medexnet.Controllers
 {
-    public class HomeController : Controller
+    public class PatientController : Controller
     {
         public ActionResult Index()
         {
@@ -26,5 +28,6 @@ namespace medexnet.Controllers
 
             return View();
         }
+       
     }
 }

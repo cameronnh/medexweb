@@ -76,3 +76,7 @@ C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.csprojAssemb
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.csproj.CopyComplete
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.dll
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.pdb
+C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\DataLibrary.dll
+C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Dapper.dll
+C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\DataLibrary.pdb
+C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Dapper.xml

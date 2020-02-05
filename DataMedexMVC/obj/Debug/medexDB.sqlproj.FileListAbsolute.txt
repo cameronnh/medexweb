@@ -1,0 +1,9 @@
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\bin\Debug\medexDB.dacpac
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\bin\Debug\DataMedexMVC.dll
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\bin\Debug\DataMedexMVC.pdb
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\Model.xml
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\refactor.xml
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\postdeploy.sql
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\predeploy.sql
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\DataMedexMVC.dll
+C:\Users\camer\Documents\Repos\medexweb\DataMedexMVC\obj\Debug\DataMedexMVC.pdb

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "medexnet", "medexnet\medexnet.csproj", "{A409A7A9-7A2E-4426-BD9E-CFEDAF643D51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{451BF503-8ACB-42C4-8D2B-657157A6514B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "medexDB", "DataMedexMVC\medexDB.sqlproj", "{D9F91952-7745-454E-977D-B67A344E161A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{A409A7A9-7A2E-4426-BD9E-CFEDAF643D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A409A7A9-7A2E-4426-BD9E-CFEDAF643D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A409A7A9-7A2E-4426-BD9E-CFEDAF643D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{451BF503-8ACB-42C4-8D2B-657157A6514B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451BF503-8ACB-42C4-8D2B-657157A6514B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451BF503-8ACB-42C4-8D2B-657157A6514B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451BF503-8ACB-42C4-8D2B-657157A6514B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F91952-7745-454E-977D-B67A344E161A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\medexweb"
+    "\\medexnet\\Models",
+    "\\medexnet\\Views",
+    "\\medexnet\\Views\\Shared"
   ],
-  "SelectedNode": "\\medexweb\\Schedule.aspx",
   "PreviewInSolutionExplorer": false
 }

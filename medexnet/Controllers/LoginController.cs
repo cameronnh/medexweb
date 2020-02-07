@@ -40,53 +40,36 @@ namespace medexnet.Controllers
         [HttpPost]
         public ActionResult PatientLogin(Patient_Login model)
         {
-            if (ModelState.IsValid)
-            {
-                //var data = ValidatePatient(model.email, model.password);                
 
-                //if (data == null)
-                //{
-                //    return RedirectToAction("PatientLogin");                    
-                //}
-                //else
-                //{
-                //    PatientModel currentPatient = new PatientModel();
+            var data = LoadPatient(model.email, model.password);
+            
+            if (data.Count == 1)
+            {          
+                PatientModel patient = new PatientModel();
 
-                //    currentPatient = data;
+                foreach (var row in data)
+                {
+                    patient.Id = row.Id;
+                    patient.fName = row.fName;
+                    patient.lName = row.lName;
+                    patient.email = row.email;
+                    patient.password = row.password;
+                    patient.phoneNumber = row.phoneNumber;
+                    patient.streetAddress = row.streetAddress;
+                    patient.city = row.city;
+                    patient.state = row.state;
+                    patient.zipcode = row.zipcode;
+                }                
 
-                //    foreach (var row in data)
-                //    {
-                //        currentPatient.Id = row.Id;
-                //        currentPatient.fName = row.fName;
-                //        currentPatient.lName = row.lName;
-                //        currentPatient.email = row.email;
-                //        currentPatient.password = row.password;
-                //        currentPatient.phoneNumber = row.phoneNumber;
-                //        currentPatient.streetAddress = row.streetAddress;
-                //        currentPatient.city = row.city;
-                //        currentPatient.state = row.state;
-                //        currentPatient.zipcode = row.zipcode;
-
-                //        currentPatient.Add(new PatientModel
-                //        {
-                //            Id = row.Id,
-                //            fName = row.fName,
-                //            lName = row.lName,
-                //            email = row.email,
-                //            password = row.password,
-                //            phoneNumber = row.phoneNumber,
-                //            streetAddress = row.streetAddress,
-                //            city = row.city,
-                //            state = row.state,
-                //            zipcode = row.zipcode
-                //        });
-                //}
-
-                Session["Id"] = "LOL"/*currentPatient.Id*/;
+                Session["Id"] = patient.Id;
                 return RedirectToAction("Index", "Home");
-                //}
+
             }
-            return View();
+            else
+            {
+                return View();
+            }
+            
         }
 
     }

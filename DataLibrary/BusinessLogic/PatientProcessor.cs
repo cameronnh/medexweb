@@ -35,7 +35,7 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<PatientModel> LoadPatients()
+        public static List<PatientModel> LoadPatients()//goigg to be for cerain doctor
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
                             FROM dbo.Patient;";
@@ -43,20 +43,14 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
 
-        //public static List<PatientModel> ValidatePatient(string email, string password)
-        //{
-        //    PatientModel data = new PatientModel
-        //    {
-        //        email = email,
-        //        password = password
-        //    };
+        public static List<PatientModel> LoadPatient(string email, string password)
+        {
+            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
+                            FROM dbo.Patient WHERE email = '" + email + " ' AND password = '" + password + "';";
 
-        //    string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-        //                    FROM dbo.Patient WHERE email = @email AND @password;";
-
-        //    return SqlDataAccess.LoadData<PatientModel>(sql);
-        //}
-
+            return SqlDataAccess.LoadData<PatientModel>(sql);
+        }
+       
         //public static bool ValidatePatient(string email, string password)
         //{
         //    using (SqlConnection cnn = new SqlConnection(SqlDataAccess.GetConnectionString()))

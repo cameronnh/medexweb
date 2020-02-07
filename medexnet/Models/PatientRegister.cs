@@ -30,7 +30,7 @@ namespace medexnet.Models
         [Display(Name = "Password")]
         [Required(ErrorMessage = "You must have a password.")]
         [DataType(DataType.Password)]
-        [StringLength(100, MinimumLength = 10, ErrorMessage = "Password must be above 10 characters.")]
+        [StringLength(100, MinimumLength = 10, ErrorMessage = "Password must be above 10 characters.")]      
         public string password { get; set; }
 
         [Display(Name = "Confirm Password")]

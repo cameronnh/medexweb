@@ -8,6 +8,7 @@ namespace medexnet.Models
 {
     public class Patient_Login
     {
+        [DataType(DataType.EmailAddress)]
         public string email { get; set; }
 
         [DataType(DataType.Password)]

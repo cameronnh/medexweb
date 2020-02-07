@@ -40,44 +40,52 @@ namespace medexnet.Controllers
         [HttpPost]
         public ActionResult PatientLogin(Patient_Login model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var data = ValidatePatient(model.email, model.password);
+                //var data = ValidatePatient(model.email, model.password);                
 
-                if (data == null)
-                {
-                    PatientModel currentPatient = new PatientModel();
+                //if (data == null)
+                //{
+                //    return RedirectToAction("PatientLogin");                    
+                //}
+                //else
+                //{
+                //    PatientModel currentPatient = new PatientModel();
 
-                    //currentPatient = data;
+                //    currentPatient = data;
 
-                    //foreach (var row in data)
-                    //{
-                    //    currentPatient.Add(new PatientModel
-                    //    {
-                    //        Id = row.Id,
-                    //        fName = row.fName,
-                    //        lName = row.lName,
-                    //        email = row.email,
-                    //        password = row.password,
-                    //        phoneNumber = row.phoneNumber,
-                    //        streetAddress = row.streetAddress,
-                    //        city = row.city,
-                    //        state = row.state,
-                    //        zipcode = row.zipcode
-                    //    });
-                    //}
+                //    foreach (var row in data)
+                //    {
+                //        currentPatient.Id = row.Id;
+                //        currentPatient.fName = row.fName;
+                //        currentPatient.lName = row.lName;
+                //        currentPatient.email = row.email;
+                //        currentPatient.password = row.password;
+                //        currentPatient.phoneNumber = row.phoneNumber;
+                //        currentPatient.streetAddress = row.streetAddress;
+                //        currentPatient.city = row.city;
+                //        currentPatient.state = row.state;
+                //        currentPatient.zipcode = row.zipcode;
 
-                    Session["Id"] = currentPatient.Id;
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("PatientLogin");
-                }
+                //        currentPatient.Add(new PatientModel
+                //        {
+                //            Id = row.Id,
+                //            fName = row.fName,
+                //            lName = row.lName,
+                //            email = row.email,
+                //            password = row.password,
+                //            phoneNumber = row.phoneNumber,
+                //            streetAddress = row.streetAddress,
+                //            city = row.city,
+                //            state = row.state,
+                //            zipcode = row.zipcode
+                //        });
+                //}
 
-                
+                Session["Id"] = "LOL"/*currentPatient.Id*/;
+                return RedirectToAction("Index", "Home");
+                //}
             }
-
             return View();
         }
 

@@ -2,6 +2,8 @@
 using DataLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,20 +43,38 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
 
-        public static List<PatientModel> ValidatePatient(string email, string password)
-        {
-            PatientModel data = new PatientModel
-            {
-                email = email,
-                password = password
-            };
+        //public static List<PatientModel> ValidatePatient(string email, string password)
+        //{
+        //    PatientModel data = new PatientModel
+        //    {
+        //        email = email,
+        //        password = password
+        //    };
 
-            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-                            FROM dbo.Patient WHERE email = @email AND @password;";
+        //    string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
+        //                    FROM dbo.Patient WHERE email = @email AND @password;";
 
-            return SqlDataAccess.LoadData<PatientModel>(sql);
-        }
-        
+        //    return SqlDataAccess.LoadData<PatientModel>(sql);
+        //}
+
+        //public static bool ValidatePatient(string email, string password)
+        //{
+        //    using (SqlConnection cnn = new SqlConnection(SqlDataAccess.GetConnectionString()))
+        //    {               
+        //        bool loginSuccessful = false;
+        //        string sql = "SELECT * FROM dbo.Patient WHERE [email]=@email AND [password]=@password'";
+
+        //        SqlCommand cmd = new SqlCommand(sql, cnn);
+        //        cmd.Parameters.Add(new SqlParameter("[email]", email));
+        //        cmd.Parameters.Add(new SqlParameter("[password]", password));
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+
+        //        if (rdr.HasrRows())
+        //            loginSuccessful = true;
+
+        //        return loginSuccessful;
+        //    }                  
+        //}
         
     }
 }

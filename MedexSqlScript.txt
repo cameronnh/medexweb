@@ -1,0 +1,234 @@
+create database if not exists medex;
+use medex;
+
+create table patientAccounts 
+(accountNumber int auto_increment primary key,
+userName varchar(100),
+password varchar(100),
+name varchar(100),
+email varchar(100),
+streetNumber int,
+addressName varchar(100),
+city varchar(100),
+state varchar(100),
+zipCode varchar(10),
+phoneNumber varchar(100),
+birthDate varchar(100));
+
+create table prescriptionClasses
+(classID int auto_increment primary key,
+className varchar(100));
+
+create table prescriptions 
+(prescriptionID int auto_increment primary key,
+prescriptionName varchar(100),
+prescriptionDosage varchar(100),
+classFID int,
+FOREIGN KEY(classFID) references prescriptionClasses(classID));
+
+create table patientPrescriptions
+(idNumber int auto_increment primary key,
+patientFID int,
+prescriptionFID int,
+fulfilled int,
+rXName varchar(100),
+rXDosage varchar(100),
+rxPillCount int,
+rxNumberofdays int,
+dateShipped varchar(100),
+prescriptionDesc varchar(255),
+FOREIGN KEY(patientFID) references patientAccounts(accountNumber),
+FOREIGN KEY(prescriptionFID) references prescriptions(prescriptionID));
+
+create table packerAccounts
+(packerId int auto_increment primary key,
+name varchar(100),
+userName varchar(100),
+password varchar(100),
+admin int);
+
+create table doctorAccounts 
+(doctorAccountNumber int auto_increment primary key,
+userName varchar(100),
+password varchar(100),
+name varchar(100),
+NPI varchar(25),
+email varchar(100));
+
+create table doctorPatientBridge
+(doctorPatientID int auto_increment primary key,
+patientFID int,
+doctorFID int,
+FOREIGN KEY (patientFID) references patientAccounts(accountNumber),
+FOREIGN KEY (doctorFID) references doctorAccounts(doctorAccountNumber));
+
+describe patientAccounts;
+describe prescriptions;
+
+INSERT INTO patientAccounts(userName, password, name, birthDate)
+values('CHatch', 'Asdf','Connor Hatch', '7/4/1984'),
+('CJewett', 'Zxcv','Cameron Jewett','4/20/2000');
+
+INSERT INTO doctorAccounts(userName,password,name, NPI)
+values('CHatch', 'Asdf','Connor Hatch', '0000001'),
+('CJewett', 'Zxcv', 'Cameron Jewett', '0042069');
+
+INSERT INTO packerAccounts(name,userName,password,admin)
+values('Nick Mayo','NMayo','Qwer',1);
+
+INSERT INTO prescriptionClasses(className) VALUES
+('Analgesics'),('AntiDepressants'),('Anticoagulants'),('Antibiotics'),
+('Opioids'),('Bronchodilators'),('Steroids'),('Benzodiazepines'),('Stimulants'),('Beta Blockers'),
+('Diuretics'),('Sedatives'),('Antihistamines'),('Antibacterials');
+
+INSERT INTO prescriptions(prescriptionName, prescriptionDosage, classFID)
+values('Penicillin', '10mg',4),
+('Penicillin','30mg',4),
+('Penicillin','60mg',4),
+('Albuterol','10mg',6),
+('Albuterol','40mg',6),
+('Albuterol','50mg',6),
+('Fentanyl', '.25mg',5),
+('Fentanyl','.5mg',5),
+('Desomorphine','5mg',5),
+('Desomorphine','10mg',5),
+('Acetaminophen','80mg',1),
+('Acetaminophen','160mg',1),
+('Acetaminophen','50mg',1),
+('Ibuprofen','200mg',1),
+('Ibuprofen','300mg',1),
+('Ibuprofen','500mg',1),
+('Prozac','20mg',2),
+('Prozac','30mg',2),
+('Prozac','40mg',2),
+('Prozac','50mg',2),
+('Zoloft','25mg',2),
+('Zoloft','50mg',2),
+('Celexa','20mg',2),
+('Celexa','40mg',2),
+('Coumadin','5mg',3),
+('Coumadin','10mg',3),
+('Xarelto','15mg',3),
+('Xarelto','20mg',3),
+('Xarelto','25mg',3),
+('Xarelto','30mg',3),
+('Eliquis','2.5mg',3),
+('Eliquis','5mg',3),
+('Amoxicillin','50mg',4),
+('Amoxicillin','100mg',4),
+('Amoxicillin','150mg',4),
+('Amoxicillin','200mg',4),
+('Amoxicillin','250mg',4),
+('Cefaclor','250mg',4),
+('Cefaclor','300mg',4),
+('Cefaclor','350mg',4),
+('Cefaclor','400mg',4),
+('Cefaclor','450mg',4),
+('Tetracycline','250mg',4),
+('Tetracycline','500mg',4),
+('Percocet','10mg',5),
+('Percocet','20mg',5),
+('Percocet','30mg',5),
+('Codeine','15mg',5),
+('Codeine','30mg',5),
+('Codeine','60mg',5),
+('Vicodin','5mg',5),
+('Vicodin','7.5mg',5),
+('Vicodin','10mg',5),
+('Anadrol','1mg',7),
+('Anadrol','2mg',7),
+('Anadrol','3mg',7),
+('Anadrol','4mg',7),
+('Anadrol','5mg',7),
+('Oxandrin','2.5mg',7),
+('Oxandrin','5mg',7),
+('Oxandrin','7.5mg',7),
+('Oxandrin','10mg',7),
+('Xanax','.5mg',8),
+('Xanax','1mg',8),
+('Xanax','2mg',8),
+('Klonopin','.5mg',8),
+('Klonopin','1mg',8),
+('Klonopin','2mg',8),
+('Valium','2mg',8),
+('Valium','5mg',8),
+('Valium','10mg',8),
+('Ativan','.5mg',8),
+('Ativan','1mg',8),
+('Ativan','2mg',8),
+('Lorazepam','1mg',8),
+('Lorazepam','2mg',8),
+('Adderall','5mg',9),
+('Adderall','10mg',9),
+('Adderall','15mg',9),
+('Adderall','20mg',9),
+('Adderall','25mg',9),
+('Adderall','30mg',9),
+('Adderall','35mg',9),
+('Adderall','40mg',9),
+('Adderall','50mg',9),
+('Adderall','60mg',9),
+('Concerta','18mg',9),
+('Concerta','27mg',9),
+('Concerta','36mg',9),
+('Concerta','54mg',9),
+('Ritalin','20mg',9),
+('Ritalin','30mg',9),
+('Vyvanse','30mg',9),
+('Vyvanse','40mg',9),
+('Vyvanse','50mg',9),
+('Vyvanse','60mg',9),
+('Vyvanse','70mg',9),
+('Sectral','400mg',10),
+('Sectral','600mg',10),
+('Sectral','800mg',10),
+('Sectral','1000mg',10),
+('Sectral','1200mg',10),
+('Zebeta','2.5mg',10),
+('Zebeta','5mg',10),
+('Zebeta','10mg',10),
+('Zebeta','7.5mg',10),
+('Bumex','.5mg',11),
+('Bumex','1mg',11),
+('Bumex','1.5mg',11),
+('Bumex','2mg',11),
+('Lasix','20mg',11),
+('Lasix','40mg',11),
+('Lasix','60mg',11),
+('Lasix','80mg',11),
+('Somnote','250mg',12),
+('Somnote','500mg',12),
+('Somnote','300mg',12),
+('Somnote','400mg',12),
+('Prosom','1mg',12),
+('Prosom','2mg',12),
+('Benadryl','25mg',13),
+('Benadryl','50mg',13),
+('Clarinex','2.5mg',13),
+('Clarinex','5mg',13),
+('Sulfamethoxazole','1mg',14),
+('Sulfamethoxazole','2mg',14)
+;
+
+INSERT INTO doctorPatientBridge(patientFID, doctorFID)
+select patientAccounts.accountNumber, doctorAccounts.doctorAccountNumber 
+FROM patientAccounts, doctorAccounts
+where patientAccounts.accountNumber = 1 and doctorAccounts.doctorAccountNumber = 2;
+
+INSERT INTO doctorPatientBridge(patientFID, doctorFID)
+select patientAccounts.accountNumber, doctorAccounts.doctorAccountNumber 
+FROM patientAccounts, doctorAccounts
+where patientAccounts.accountNumber = 2 and doctorAccounts.doctorAccountNumber = 1;
+
+INSERT INTO doctorPatientBridge(patientFID, doctorFID)
+select patientAccounts.accountNumber, doctorAccounts.doctorAccountNumber 
+FROM patientAccounts, doctorAccounts
+where patientAccounts.accountNumber = 3 and doctorAccounts.doctorAccountNumber = 1;
+
+select * from patientAccounts;
+select * from prescriptions;
+select * from patientPrescriptions;
+select * from doctorAccounts;
+select * from doctorPatientBridge;
+select * from packerAccounts;
+ 

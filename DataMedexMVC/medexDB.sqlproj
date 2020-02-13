@@ -68,8 +68,14 @@
     <Build Include="dbo\Tables\Doctor.sql" />
     <Build Include="dbo\Tables\doctorPatients.sql" />
     <Build Include="dbo\Tables\Packer.sql" />
+    <Build Include="dbo\Tables\user.sql" />
+    <Build Include="dbo\Tables\messages.sql" />
+    <Build Include="dbo\Tables\appointments.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Profiles\medexDB.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="medexDB.refactorlog" />
   </ItemGroup>
 </Project>

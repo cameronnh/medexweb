@@ -13,3 +13,7 @@ C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\bin\Debug\DataMedexMVC.p
 C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\medexDB.sqlprojAssemblyReference.cache
 C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\DataMedexMVC.dll
 C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\DataMedexMVC.pdb
+C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\Model.xml
+C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\refactor.xml
+C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\postdeploy.sql
+C:\Users\Cameron\Documents\GitHub\medexweb\DataMedexMVC\obj\Debug\predeploy.sql

@@ -62,8 +62,8 @@ namespace medexnet.Controllers
                 }                
 
                 Session["Id"] = patient.Id;
-                return RedirectToAction("Index", "Home");
-
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", patient);
             }
             else
             {

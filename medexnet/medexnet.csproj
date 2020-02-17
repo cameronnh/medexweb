@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Models\PatientLogin.cs" />
     <Compile Include="Models\PatientModel.cs" />
+    <Compile Include="Models\PatientPrescriptions.cs" />
     <Compile Include="Models\PatientRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

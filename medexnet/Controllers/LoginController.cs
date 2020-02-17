@@ -59,14 +59,15 @@ namespace medexnet.Controllers
                     patient.city = row.city;
                     patient.state = row.state;
                     patient.zipcode = row.zipcode;
-                }                
+                }
 
+                TempData["patient"] = patient;                
                 Session["Id"] = patient.Id;
-                //return RedirectToAction("Index", "Home");
-                return RedirectToAction("Index", "Home", patient);
+                return RedirectToAction("Index", "Home");             
             }
             else
             {
+
                 return View();
             }
             

@@ -12,6 +12,7 @@ namespace DataLibrary.BusinessLogic
 {
     public static class PatientProcessor
     {
+        //this is patient register
         public static int CreatePatient(string fName, string lName, string email,
             string password, string phoneNumber, string streetAddress, string city,
             string state, string zipcode)
@@ -28,14 +29,14 @@ namespace DataLibrary.BusinessLogic
                 state = state,
                 zipcode = zipcode
             };
-
             string sql = @"INSERT into dbo.Patient (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode)
                             values(@fName, @lName, @email, @password, @phoneNumber, @streetAddress, @city, @state, @zipcode)";
 
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<PatientModel> LoadPatients()//goigg to be for cerain doctor
+        //goigg to be for cerain doctor
+        public static List<PatientModel> LoadPatients()
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
                             FROM dbo.Patient;";
@@ -43,6 +44,7 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
 
+        //this is used for login and it passes a patient model to 
         public static List<PatientModel> LoadPatient(string email, string password)
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
@@ -50,25 +52,12 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
-       
-        //public static bool ValidatePatient(string email, string password)
-        //{
-        //    using (SqlConnection cnn = new SqlConnection(SqlDataAccess.GetConnectionString()))
-        //    {               
-        //        bool loginSuccessful = false;
-        //        string sql = "SELECT * FROM dbo.Patient WHERE [email]=@email AND [password]=@password'";
 
-        //        SqlCommand cmd = new SqlCommand(sql, cnn);
-        //        cmd.Parameters.Add(new SqlParameter("[email]", email));
-        //        cmd.Parameters.Add(new SqlParameter("[password]", password));
-        //        SqlDataReader rdr = cmd.ExecuteReader();
+        public static List<PatientPrescriptions> LoadPatientPrescriptions(int id)
+        {
+            string sql = @"SELECT ;";
 
-        //        if (rdr.HasrRows())
-        //            loginSuccessful = true;
-
-        //        return loginSuccessful;
-        //    }                  
-        //}
-        
+            return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
+        }
     }
 }

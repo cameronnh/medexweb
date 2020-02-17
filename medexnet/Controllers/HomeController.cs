@@ -10,18 +10,14 @@ namespace medexnet.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(PatientModel patient)
-        {
+        public ActionResult Index()
+        {                      
+            PatientModel patient = (PatientModel)TempData["patient"];
+            TempData.Keep("patient");
 
-
-            ViewBag.Patient = patient;
-            //{
-            //    fName = "Cameron"...
-            //};
-
+            ViewBag.PatientFirstName = patient.fName;          
             
-           
-            return View();
+            return View(patient);
         }
 
         public ActionResult About()

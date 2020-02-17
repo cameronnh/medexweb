@@ -61,15 +61,16 @@
     <Folder Include="Publish Profiles\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Patient.sql" />
-    <Build Include="dbo\Tables\Prescription.sql" />
+    <Build Include="dbo\Tables\user.sql" />
+    <Build Include="dbo\Tables\prescription.sql" />
     <Build Include="dbo\Tables\prescriptionClasses.sql" />
     <Build Include="dbo\Tables\patientPrescription.sql" />
-    <Build Include="dbo\Tables\Doctor.sql" />
     <Build Include="dbo\Tables\doctorPatients.sql" />
-    <Build Include="dbo\Tables\Packer.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Profiles\medexDB.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="medexDB.refactorlog" />
   </ItemGroup>
 </Project>

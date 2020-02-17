@@ -1,10 +1,8 @@
 ﻿@{
-if (Session["Id"] == null)
-{
-    Response.Redirect("~/Login/PatientLogin");
-}
-
-
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/PatientLogin");
+    }  
 }
 <!DOCTYPE html>
 <html dir="ltr" lang="en">

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="5ca1f827-1d2d-4794-b07f-902fd9d8232d" ChangeDateTime="02/17/2020 19:51:57">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[rxUseBefore]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="useBefore" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="551d3b6b-d9af-4be4-8229-a94bd1fe5767" ChangeDateTime="02/17/2020 19:51:59">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[rxNumberofRefills]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="numberofRefills" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4f8a4989-dd4f-4f8d-921b-435833f930f3" ChangeDateTime="02/17/2020 19:52:04">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[rxPillCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="pillCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bd02932b-77f3-4f8c-a343-5dd40371c5b4" ChangeDateTime="02/17/2020 19:52:08">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[rxDosage]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="dosage" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1599e557-487f-4798-9d14-4d543c816606" ChangeDateTime="02/17/2020 19:52:12">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[rxName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="eec084a7-fc83-4e13-baed-e2bbfd79be50" ChangeDateTime="02/17/2020 19:53:08">
+    <Property Name="ElementName" Value="[dbo].[patientPrescriptions].[prescriptionDesc]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[patientPrescriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="description" />
+  </Operation>
+</Operations>

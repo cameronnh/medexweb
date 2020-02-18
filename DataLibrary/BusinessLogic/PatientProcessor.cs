@@ -29,7 +29,7 @@ namespace DataLibrary.BusinessLogic
                 state = state,
                 zipcode = zipcode
             };
-            string sql = @"INSERT into dbo.Patient (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode)
+            string sql = @"INSERT into dbo.[user] (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode)
                             values(@fName, @lName, @email, @password, @phoneNumber, @streetAddress, @city, @state, @zipcode)";
 
             return SqlDataAccess.SaveData(sql, data);
@@ -39,7 +39,7 @@ namespace DataLibrary.BusinessLogic
         public static List<PatientModel> LoadPatients()
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-                            FROM dbo.Patient;";
+                            FROM dbo.[user];";
 
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
@@ -48,14 +48,15 @@ namespace DataLibrary.BusinessLogic
         public static List<PatientModel> LoadPatient(string email, string password)
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-                            FROM dbo.Patient WHERE email = '" + email + " ' AND password = '" + password + "';";
+                            FROM dbo.[user] WHERE email = '" + email + " ' AND password = '" + password + "';";
 
             return SqlDataAccess.LoadData<PatientModel>(sql);
         }
 
         public static List<PatientPrescriptions> LoadPatientPrescriptions(int id)
         {
-            string sql = @"SELECT ;";
+            string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, 
+                            numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPresciption] WHERE patientFID = '" + id + "';";
 
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
         }

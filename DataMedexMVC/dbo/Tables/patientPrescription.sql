@@ -11,8 +11,8 @@
     [description] VARCHAR (250) NOT NULL,
     [datePrescribed] VARCHAR(50) NOT NULL, 
     [doctorFID] INT NOT NULL, 
-    PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_patientPrescription_ToTable] FOREIGN KEY ([patientFID]) REFERENCES [dbo].[user] ([Id]),
     CONSTRAINT [FK_patientPrescription_ToTable_1] FOREIGN KEY ([prescriptionFID]) REFERENCES [dbo].[prescription] ([prescriptionId]), 
-    CONSTRAINT [FK_patientPrescription_ToTable_2] FOREIGN KEY ([doctorFID]) REFERENCES [dbo].[user] ([Id])
+    CONSTRAINT [FK_patientPrescription_ToTable_2] FOREIGN KEY ([doctorFID]) REFERENCES [dbo].[user] ([Id]), 
+    CONSTRAINT [PK_patientPrescriptions] PRIMARY KEY ([Id])
 );

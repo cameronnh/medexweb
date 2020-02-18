@@ -32,7 +32,6 @@ namespace medexnet.Controllers
                     model.state, model.zipcode);
                 return RedirectToAction("PatientLogin");
             }
-
             return View();
         }
 
@@ -67,7 +66,6 @@ namespace medexnet.Controllers
             }
             else
             {
-
                 return View();
             }
             

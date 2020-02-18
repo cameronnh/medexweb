@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
+using static DataLibrary.BusinessLogic.PatientProcessor;
 
 namespace medexnet.Controllers
 {
@@ -15,9 +16,22 @@ namespace medexnet.Controllers
             PatientModel patient = (PatientModel)TempData["patient"];
             TempData.Keep("patient");
 
-            ViewBag.PatientFirstName = patient.fName;          
+            //ViewBag.PatientFirstName = patient.fName;
             
-            return View(patient);
+            var data = LoadPatientPrescriptions(patient.Id);
+            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+
+            foreach (var row in data)
+            {
+                patientPrescriptions.Add(new PatientPrescriptions
+                {
+                    name = row.name,
+                    dosage = row.dosage
+                });
+            }
+            
+            return View(patientPrescriptions);//might have to put patient in here aswell
+
         }
 
         public ActionResult About()

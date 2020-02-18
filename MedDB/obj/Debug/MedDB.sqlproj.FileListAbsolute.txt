@@ -1,0 +1,9 @@
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\bin\Debug\MedDB.dacpac
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\bin\Debug\MedDB.dll
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\bin\Debug\MedDB.pdb
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\Model.xml
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\refactor.xml
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\postdeploy.sql
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\predeploy.sql
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\MedDB.dll
+C:\Users\Cameron\Documents\GitHub\medexweb\MedDB\obj\Debug\MedDB.pdb

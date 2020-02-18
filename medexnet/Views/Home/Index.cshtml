@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<medexnet.Models.PatientPrescriptions>
+
+@{
     ViewBag.Title = "Schedule";
 }
 
@@ -57,7 +59,93 @@
                         <div class="row">
                             <div class="col-lg-3 border-right p-r-0">
                                 <div class="card-body border-bottom">
-                                    <h4 class="card-title m-t-10">@ViewBag.PatientFirstName's Perscriptions</h4>                                   
+                                    <h4 class="card-title m-t-10">Perscriptions</h4>
+
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.patientId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.doctorId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.prescriptionId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.deliveryId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.name)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.dosage)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.pillcount)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.numberofrefills)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.useBefore)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.description)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.datePrescribed)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+
+                                        @foreach (var item in Model)
+                                         {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.patientId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.doctorId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.prescriptionId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.deliveryId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.dosage)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.pillcount)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.numberofrefills)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.useBefore)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.description)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.datePrescribed)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                                </td>
+                                            </tr>
+                                         }
+
+                                    </table>
+
+
                                 </div>
 
                                 @*<asp:GridView ID="prescriptionData" runat="server" class="table table-hover table-sm table-bordered table-striped rounded-sm"></asp:GridView>
@@ -66,13 +154,13 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="card-body b-l calender-sidebar">                                   
+                                <div class="card-body b-l calender-sidebar">
                                     <div id="calendar"></div>
                                 </div>
                             </div>
@@ -81,6 +169,6 @@
                 </div>
             </div>
         </div>
-        <!-- BEGIN MODAL -->       
+        <!-- BEGIN MODAL -->
     </div> <!-- End Page Content -->
 </div><!-- End Page Wrapper  -->                

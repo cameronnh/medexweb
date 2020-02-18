@@ -12,7 +12,7 @@ namespace DataLibrary.DataAccess
 {
     public static class SqlDataAccess
     {
-        public static string GetConnectionString(string connectionName = "medexDB")
+        public static string GetConnectionString(string connectionName = "MedDB")
         {
             return ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
         }

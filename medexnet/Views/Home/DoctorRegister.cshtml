@@ -1,4 +1,4 @@
-﻿@model medexnet.Models.PatientRegister
+﻿@model medexnet.Models.DoctorRegister
 
 @{
     Layout = null;
@@ -12,7 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Patient Register</title>
+    <title>Doctor Register - Medex</title>
+    <link rel="icon" type="#" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/style")
     @Scripts.Render("~/bundles/modernizr")
@@ -21,20 +22,20 @@
 
 
     <div class="main-wrapper">
-        
+
         <div class="preloader">
             <div class="lds-ripple">
                 <div class="lds-pos"></div>
                 <div class="lds-pos"></div>
             </div>
         </div>
-        
+
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
             <div class="auth-box bg-dark border-top border-secondary">
                 <div>
-                    <div class="text-center p-t-20 p-b-20">
-                        <span class="db"><img src="#" alt="logo" /></span>
-                    </div>
+                    @*<div class="text-center p-t-20 p-b-20">
+                            <span class="db"><img src="#" alt="logo" /></span>
+                        </div>*@
                     <!-- Form -->
                     @using (Html.BeginForm(new { htmlAttributes = new { @class = "form-horizontal m-t-20" } }))
                     {
@@ -42,7 +43,7 @@
 
                         <div class="row p-b-30">
                             <div class="col-12">
-                                <div class="input-group mb-3">                                   
+                                <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.fName, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "First Name" } })
                                 </div>
 
@@ -55,7 +56,7 @@
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.confirmEmail, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = " Confirm Email Address" } })
+                                    @Html.EditorFor(model => model.confirmEmail, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Confirm Email Address" } })
                                 </div>
 
                                 <div class="input-group mb-3">
@@ -67,23 +68,27 @@
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Phone Number" } })
+                                    @Html.EditorFor(model => model.officeHours, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Hours" } })
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.streetAddress, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Street Address" } })
+                                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Phone Number" } })
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "City" } })
+                                    @Html.EditorFor(model => model.streetAddress, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Street Address" } })
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "State" } })
+                                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office City" } })
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Zipcode" } })
+                                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office State" } })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Zipcode" } })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
 
@@ -96,6 +101,8 @@
                                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
 
                                 @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
+
+                                @Html.ValidationMessageFor(model => model.officeHours, "", new { @class = "text-danger" })
 
                                 @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
 
@@ -127,9 +134,9 @@
     </div>
 
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
 
 
 </body>

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[doctorPatients]
+﻿CREATE TABLE [dbo].[bridgeDoctorPatient]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [patientFID] INT NOT NULL, 

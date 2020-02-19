@@ -5,48 +5,113 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
-using static DataLibrary.BusinessLogic.PatientProcessor;
+using static DataLibrary.BusinessLogic.Processor;
 
 namespace medexnet.Controllers
 {
     public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {                      
-            PatientModel patient = (PatientModel)TempData["patient"];
-            TempData.Keep("patient");
+    {        
+        public ActionResult Login()
+        {
+            return View();
+        }
 
-            //ViewBag.PatientFirstName = patient.fName;
-            
-            var data = LoadPatientPrescriptions(patient.Id);
-            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+        public ActionResult PatientRegister()
+        {
+            return View();
+        }
 
-            foreach (var row in data)
+        public ActionResult DoctorRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PatientRegister(PatientRegister model)
+        {
+            if (ModelState.IsValid)
             {
-                patientPrescriptions.Add(new PatientPrescriptions
+                CreatePatient(model.fName, model.lName, model.email, model.password,
+                    model.phoneNumber, model.streetAddress, model.city,
+                    model.state, model.zipcode);
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoctorRegister(DoctorRegister model)
+        {
+            if (ModelState.IsValid)
+            {
+                CreateDoctor(model.fName, model.lName, model.email, model.password,
+                    model.phoneNumber, model.streetAddress, model.city,
+                    model.state, model.zipcode, model.officeHours);
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Login(Login model)
+        {
+
+            var data = LoadUser(model.email, model.password);
+            
+            if (data.Count == 1)
+            {
+                UserModel user = new UserModel();
+
+                foreach (var row in data)
                 {
-                    name = row.name,
-                    dosage = row.dosage
-                });
+                    user.Id = row.Id;
+                    user.fName = row.fName;
+                    user.lName = row.lName;
+                    user.email = row.email;
+                    user.password = row.password;
+                    user.phoneNumber = row.phoneNumber;
+                    user.streetAddress = row.streetAddress;
+                    user.city = row.city;
+                    user.state = row.state;
+                    user.zipcode = row.zipcode;
+                    user.accountType = row.accountType;
+                    user.officeHours = row.officeHours;
+                }
+
+                TempData["user"] = user;         
+                Session["Id"] = user.Id;
+
+                if(user.accountType == 1)
+                {
+                    return RedirectToAction("Index", "Patient");
+                }
+                else if(user.accountType == 2)
+                {
+                    return View();
+                }
+                else if(user.accountType == 3)
+                {
+                    return View();
+                }
+                else if(user.accountType == 4)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
+
+            }
+            else
+            {
+                return View();
             }
             
-            return View(patientPrescriptions);//might have to put patient in here aswell
-
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-       
     }
 }

@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\user.sql" />
-    <Build Include="dbo\Tables\doctorPatients.sql" />
+    <Build Include="dbo\Tables\bridgeDoctorPatient.sql" />
     <Build Include="dbo\Tables\patientPrescription.sql" />
     <Build Include="dbo\Tables\prescription.sql" />
     <Build Include="dbo\Tables\prescriptionClasses.sql" />

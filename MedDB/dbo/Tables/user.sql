@@ -11,6 +11,7 @@
     [state] NVARCHAR(100) NULL, 
     [zipcode] NVARCHAR(50) NULL, 
     [accountType] INT NOT NULL, 
+    [officeHours] NVARCHAR(500) NULL, 
     CONSTRAINT [PK_user] PRIMARY KEY ([Id])
 )
 

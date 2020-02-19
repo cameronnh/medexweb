@@ -1,8 +1,8 @@
 ﻿@{
     if (Session["Id"] == null)
     {
-        Response.Redirect("~/Login/PatientLogin");
-    }  
+        Response.Redirect("~/Login/Login");
+    }
 }
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>@ViewBag.Title - Medex</title>
+    <title>Patient Dashboard - Medex</title>
     <link rel="icon" type="image/png" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/calendarcss")
@@ -163,7 +163,7 @@
                 @RenderBody()
                 <hr />
             </div>
-            
+
 
         </div>
 

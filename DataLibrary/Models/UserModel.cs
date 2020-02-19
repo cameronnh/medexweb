@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace medexnet.Models
+namespace DataLibrary.Models
 {
-    public class PatientModel
-    {
+    public class UserModel
+    {    
         public int Id { get; set; }
         public string fName { get; set; }
         public string lName { get; set; }
@@ -17,5 +18,7 @@ namespace medexnet.Models
         public string city { get; set; }
         public string state { get; set; }
         public string zipcode { get; set; }
+        public int accountType { get; set; }
+        public string officeHours { get; set; }
     }
 }

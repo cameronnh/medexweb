@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace DataLibrary.BusinessLogic
 {
-    public static class PatientProcessor
+    public static class Processor
     {
         //this is patient register
         public static int CreatePatient(string fName, string lName, string email,
             string password, string phoneNumber, string streetAddress, string city,
             string state, string zipcode)
         {
-            PatientModel data = new PatientModel
+            UserModel data = new UserModel
             {               
                 fName = fName,
                 lName = lName,
@@ -27,36 +27,61 @@ namespace DataLibrary.BusinessLogic
                 streetAddress = streetAddress,
                 city = city,
                 state = state,
-                zipcode = zipcode
+                zipcode = zipcode,
+                accountType = 1                
             };
-            string sql = @"INSERT into dbo.[user] (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode)
-                            values(@fName, @lName, @email, @password, @phoneNumber, @streetAddress, @city, @state, @zipcode)";
+            string sql = @"INSERT into dbo.[user] (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType)
+                            values(@fName, @lName, @email, @password, @phoneNumber, @streetAddress, @city, @state, @zipcode, @accountType)";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int CreateDoctor(string fName, string lName, string email,
+            string password, string phoneNumber, string streetAddress, string city,
+            string state, string zipcode, string officeHours)
+        {
+            UserModel data = new UserModel
+            {
+                fName = fName,
+                lName = lName,
+                email = email,
+                password = password,
+                phoneNumber = phoneNumber,
+                streetAddress = streetAddress,
+                city = city,
+                state = state,
+                zipcode = zipcode,
+                officeHours = officeHours,
+                accountType = 2
+            };
+            string sql = @"INSERT into dbo.[user] (fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours)
+                            values(@fName, @lName, @email, @password, @phoneNumber, @streetAddress, @city, @state, @zipcode, @accountType, @officeHours)";
 
             return SqlDataAccess.SaveData(sql, data);
         }
 
         //goigg to be for cerain doctor
-        public static List<PatientModel> LoadPatients()
+        public static List<UserModel> LoadPatients()
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
                             FROM dbo.[user];";
 
-            return SqlDataAccess.LoadData<PatientModel>(sql);
+            return SqlDataAccess.LoadData<UserModel>(sql);
         }
 
         //this is used for login and it passes a patient model to 
-        public static List<PatientModel> LoadPatient(string email, string password)
+        public static List<UserModel> LoadUser(string email, string password)
         {
-            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
+            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
                             FROM dbo.[user] WHERE email = '" + email + " ' AND password = '" + password + "';";
 
-            return SqlDataAccess.LoadData<PatientModel>(sql);
+            return SqlDataAccess.LoadData<UserModel>(sql);
         }
 
         public static List<PatientPrescriptions> LoadPatientPrescriptions(int id)
         {
             string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, 
-                            numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPresciption] WHERE patientFID = '" + id + "';";
+                            numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPrescriptions] WHERE patientFID = '" + id + "';";
 
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
         }

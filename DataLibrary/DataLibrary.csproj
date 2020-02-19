@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\PatientProcessor.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
-    <Compile Include="Models\PatientModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\PatientPrescriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -125,13 +125,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\PatientLogin.cs" />
-    <Compile Include="Models\PatientModel.cs" />
+    <Compile Include="Models\DoctorRegister.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\PatientPrescriptions.cs" />
     <Compile Include="Models\PatientRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,7 +140,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\PatientLayout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -150,9 +151,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Patient\About.cshtml" />
+    <Content Include="Views\Patient\Contact.cshtml" />
+    <Content Include="Views\Patient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -160,8 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Views\Login\PatientLogin.cshtml" />
-    <Content Include="Views\Login\PatientRegister.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\PatientRegister.cshtml" />
+    <Content Include="Views\Home\DoctorRegister.cshtml" />
+    <Content Include="Views\Shared\DoctorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

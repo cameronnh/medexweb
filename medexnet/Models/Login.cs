@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace medexnet.Models
 {
-    public class Patient_Login
+    public class Login
     {
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }

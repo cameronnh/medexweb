@@ -1,4 +1,4 @@
-﻿@model medexnet.Models.Patient_Login
+﻿@model medexnet.Models.Login
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Patient Login - Medex</title>
+    <title>Login - Medex</title>
     <link rel="icon" type="#" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/style")
@@ -60,10 +60,12 @@
                             <div class="row border-top border-secondary">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <div class="p-t-20">                                                                                    
-                                            @Html.ActionLink("Register", "PatientRegister", "Login", new { @class = "btn btn-info m-r-5"})
+                                        <div class="p-t-20">
+                                            @Html.ActionLink("Patient Register", "PatientRegister", "Login", new { @class = "btn btn-info m-r-5" })
+
                                             <button class="btn btn-success float-right" type="submit">Login</button>
-                                            @*@Html.ActionLink("Login", "AcceptLogin", "Login", new { @class = "btn btn-success float-right" })*@
+
+                                            @Html.ActionLink("Doctor Register", "DoctorRegister", "Login", new { @class = "btn btn-info m-r-5" })                                           
                                         </div>
                                     </div>
                                 </div>

@@ -125,8 +125,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -165,6 +167,9 @@
     <Content Include="Views\Home\PatientRegister.cshtml" />
     <Content Include="Views\Home\DoctorRegister.cshtml" />
     <Content Include="Views\Shared\DoctorLayout.cshtml" />
+    <Content Include="Views\Doctor\Index.cshtml" />
+    <Content Include="Views\Shared\PharmacyLayout.cshtml" />
+    <Content Include="Views\Pharmacy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

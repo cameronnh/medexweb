@@ -90,7 +90,7 @@ namespace medexnet.Controllers
                 }
                 else if(user.accountType == 2)
                 {
-                    return View();
+                    return RedirectToAction("Index", "Doctor");
                 }
                 else if(user.accountType == 3)
                 {
@@ -98,7 +98,7 @@ namespace medexnet.Controllers
                 }
                 else if(user.accountType == 4)
                 {
-                    return View();
+                    return View();//idk if we should do packer admin till really later
                 }
                 else
                 {

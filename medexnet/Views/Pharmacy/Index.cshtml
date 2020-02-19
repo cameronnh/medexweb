@@ -1,0 +1,101 @@
+﻿@model IEnumerable<medexnet.Models.PatientPrescriptions>
+
+@{
+    Layout = "~/Views/Shared/PharmacyLayout.cshtml";  
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.patientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.doctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prescriptionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.deliveryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dosage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pillcount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numberofrefills)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.useBefore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.datePrescribed)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.patientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.doctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prescriptionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.deliveryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dosage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pillcount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numberofrefills)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.useBefore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datePrescribed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

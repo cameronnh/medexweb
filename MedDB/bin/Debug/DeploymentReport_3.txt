@@ -1,0 +1,25 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[bridgeDoctorPatient] (Table)
+       [dbo].[patientPrescriptions] (Table)
+       [dbo].[prescription] (Table)
+       [dbo].[prescriptionClasses] (Table)
+       [dbo].[user] (Table)
+       [dbo].[FK_doctorPatients_ToTable] (Foreign Key)
+       [dbo].[FK_doctorPatients_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_2] (Foreign Key)
+       [dbo].[FK_prescription_ToTable] (Foreign Key)
+
+** Supporting actions

@@ -1,5 +1,69 @@
 ﻿
 @{
-    Layout = "~/Views/Shared/DoctorLayout.cshtml";  
+    Layout = "~/Views/Shared/DoctorLayout.cshtml";
 }
 
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                //theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'agendaDay,agendaWeek,month'
+                },
+
+                handleWindowResize: true,
+                defaultView: 'agendaWeek',
+                editable: true,
+                allDaySlot: false,
+                selectable: true,
+                slotMinutes: 15,
+                //events: "/home/getevents/"
+            });
+        });
+    </script>
+}
+
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Schedule</h4>
+                <div class="ml-auto text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="card-body b-l calender-sidebar">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BEGIN MODAL -->
+    </div> <!-- End Page Content -->
+</div><!-- End Page Wrapper  -->                

@@ -29,6 +29,7 @@ namespace medexnet.Controllers
             }
             
             return View(patientPrescriptions);//might have to put patient in here aswell
+            //Could just allow patients to have a list of Prescriptions in their object definition.-Connor
 
         }
 

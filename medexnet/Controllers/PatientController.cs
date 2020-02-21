@@ -38,8 +38,9 @@ namespace medexnet.Controllers
                     datePrescribed = row.datePrescribed
                 });
             }
+
             TempData["prescriptions"] = patientPrescriptions;
-            //
+            
 
             return View(patientPrescriptions);
 

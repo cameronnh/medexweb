@@ -10,12 +10,13 @@ using static DataLibrary.BusinessLogic.Processor;
 namespace medexnet.Controllers
 {
     public class PatientController : Controller
-    {
+    {   
         public ActionResult Index()
         {
             UserModel patient = (UserModel)TempData["user"];
             TempData.Keep("user");
-                   
+
+            //can be moved    
             var data = LoadPatientPrescriptions(patient.Id);
             List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
 
@@ -23,28 +24,37 @@ namespace medexnet.Controllers
             {
                 patientPrescriptions.Add(new PatientPrescriptions
                 {
+                    id = row.id,
+                    patientId = row.patientId,
+                    doctorId = row.doctorId,
+                    prescriptionId = row.prescriptionId,
+                    deliveryId = row.deliveryId,
                     name = row.name,
-                    dosage = row.dosage
+                    dosage = row.dosage,
+                    pillcount = row.pillcount,
+                    numberofrefills = row.numberofrefills,
+                    useBefore = row.useBefore,
+                    description = row.description,
+                    datePrescribed = row.datePrescribed
                 });
             }
-            
-            return View(patientPrescriptions);//might have to put patient in here aswell
+            TempData["prescriptions"] = patientPrescriptions;
+            //
+
+            return View(patientPrescriptions);
 
         }
 
-        public ActionResult About()
+        public ActionResult Perscriptions()
         {
+            List<PatientPrescriptions> prescriptions = (List<PatientPrescriptions>)TempData["prescriptions"];
+            TempData.Keep("prescriptions");
+
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View(prescriptions);
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
        
     }
 }

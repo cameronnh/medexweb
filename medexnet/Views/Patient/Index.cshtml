@@ -28,29 +28,8 @@
     </script>
 }
 
-<div class="page-wrapper">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Schedule</h4>
-                <div class="ml-auto text-right">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- Start Page Content -->
-        <!-- ============================================================== -->
+<div class="page-wrapper">   
+    <div class="container-fluid">  
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -58,104 +37,20 @@
                         <div class="row">
                             <div class="col-lg-3 border-right p-r-0">
                                 <div class="card-body border-bottom">
-                                    <h4 class="card-title m-t-10">Perscriptions</h4>
-
-
-
-                                    @*<table class="table">
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.patientId)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.doctorId)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.prescriptionId)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.deliveryId)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.name)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.dosage)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.pillcount)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.numberofrefills)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.useBefore)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.description)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.datePrescribed)
-                                            </th>
-                                            <th></th>
-                                        </tr>
-
-                                        @foreach (var item in Model)
-                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.patientId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.doctorId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.prescriptionId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.deliveryId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.name)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.dosage)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.pillcount)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.numberofrefills)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.useBefore)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.description)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.datePrescribed)
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                                                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                                                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                                                </td>
-                                            </tr>
-                                         }
-
-                                    </table>*@
-
-
+                                    <h4 class="card-title m-t-15">Perscriptions</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
+
                                             @foreach (var item in Model)
-                                            {
-                                                @Html.DisplayFor(modelItem => item.name)
-                                                @Html.DisplayFor(modelItem => item.dosage)
+                                            {                            
+                                                <a href="@Url.Action("Perscriptions", "Patient")" class="text-secondary">
+                                                    <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.description)</p>
+                                                </a>
                                             }
+
                                         </div>
                                     </div>
                                 </div>

@@ -153,8 +153,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Patient\About.cshtml" />
-    <Content Include="Views\Patient\Contact.cshtml" />
+    <Content Include="Views\Patient\Perscriptions.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +169,7 @@
     <Content Include="Views\Doctor\Index.cshtml" />
     <Content Include="Views\Shared\PharmacyLayout.cshtml" />
     <Content Include="Views\Pharmacy\Index.cshtml" />
+    <Content Include="Views\Doctor\Patients.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

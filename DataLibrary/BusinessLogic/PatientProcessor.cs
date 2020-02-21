@@ -76,7 +76,7 @@ namespace DataLibrary.BusinessLogic
                             FROM dbo.[user] WHERE email = '" + email + " ' AND password = '" + password + "';";
 
             return SqlDataAccess.LoadData<UserModel>(sql);
-        }
+        }     
 
         public static List<PatientPrescriptions> LoadPatientPrescriptions(int id)
         {

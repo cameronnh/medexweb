@@ -3,6 +3,7 @@
     {
         Response.Redirect("~/Login/Login");
     }
+    Layout = "/Patient/Calendar";
 }
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -12,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Doctor Dashboard - Medex</title>
+    <title>Patient Calendar - Medex</title>
     <link rel="icon" type="image/png" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/calendarcss")
@@ -122,6 +123,8 @@
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                     <a class="dropdown-item" href="#"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
                                     <a class="dropdown-item" href="/Home/Login"><i class="mdi mdi-logout m-r-5 m-l-5"></i> Logout</a>
+                                    @*@Html.ActionLink("Doctor Register", "DoctorRegister", "Login", new { @class = "btn btn-info m-r-5" })*@
+                                    <!-- Heres the dropdown for the top bar. User btns.-->
                                 </div>
                             </li>
                         </ul>
@@ -133,8 +136,10 @@
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav" class="p-t-30">
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Schedule.aspx" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>                                    
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Patients</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Schedule.aspx" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-truck"></i><span class="hide-menu">Deliveries</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Doctor</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging </span></a>

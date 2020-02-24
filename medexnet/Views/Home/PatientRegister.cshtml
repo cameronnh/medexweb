@@ -43,70 +43,61 @@
 
                         <div class="row p-b-30">
                             <div class="col-12">
-                                <div class="input-group mb-3">                                   
+
+                                    @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
+                                <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.fName, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "First Name" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.lName, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.lName, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Last Name" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Email Address" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.confirmEmail, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.confirmEmail, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Confirm Email Address" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Password" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Confirm Password" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Phone Number" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.streetAddress, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.streetAddress, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Street Address" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "City" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "State" } })
                                 </div>
 
+                                     @Html.ValidationMessageFor(model => model.zipcode, "", new { @class = "text-danger" })
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Zipcode" } })
                                 </div>
-                                @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.lName, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.confirmEmail, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.streetAddress, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
-
-                                @Html.ValidationMessageFor(model => model.zipcode, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

@@ -45,6 +45,7 @@
                             <div class="col-12">
 
                                     @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
+
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.fName, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "First Name" } })
                                 </div>
@@ -98,8 +99,52 @@
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Zipcode" } })
                                 </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.fName, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.lName, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.confirmEmail, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.streetAddress, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.state, "", new { @class = "badge badge-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.ValidationMessageFor(model => model.zipcode, "", new { @class = "badge badge-danger" })
+                                </div>
+                              
                             </div>
-                        </div>
 
                         <div class="row border-top border-secondary">
                             <div class="col-12">

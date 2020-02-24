@@ -14,7 +14,41 @@ namespace medexnet.Controllers
         // GET: Doctor
         public ActionResult Index()
         {
+            UserModel doctor = (UserModel)TempData["user"];
+            TempData.Keep("user");           
+
+            //var data = LoadUser(doctor.Id);            
+            //List<UserModel> users = new List<UserModel>();
+
+            //foreach (var row in data)
+            //{
+            //    users.Add(new UserModel
+            //    {
+            //        Id = row.Id,
+            //        fName = row.fName,
+            //        lName = row.lName,
+            //        email = row.email,
+            //        password = row.password,
+            //        phoneNumber = row.phoneNumber,
+            //        streetAddress = row.streetAddress,
+            //        city = row.city,
+            //        state = row.state,
+            //        zipcode = row.zipcode,
+            //        accountType = row.accountType,
+            //        officeHours = row.officeHours
+            //    });
+                
+            //}
+            //TempData["patients"] = users;
+
+            return View(doctor);
+        }
+
+        public ActionResult Patients()
+        {
             return View();
         }
+
+        
     }
 }

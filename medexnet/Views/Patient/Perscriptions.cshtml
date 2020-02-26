@@ -1,52 +1,55 @@
-﻿@model IEnumerable<medexnet.Models.PatientPrescriptions>
+﻿@model medexnet.Models.UserModel
 
 @{
     Layout = "~/Views/Shared/PatientLayout.cshtml";
 }
 
 
-    <div class="page-wrapper">     
-        <div class="container-fluid">   
-            <div class="row">
-                <div class="col-md-6">
-                    @foreach (var item in Model)
-                    {
-                        <div class="card">
-                            <form class="form-horizontal">
-                                <div class="card-body">
-                                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>                                    
-                                    
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Perscription Name: @Html.DisplayFor(modelItem => item.name)</label>                                         
-                                        </div>
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                @if (Model.myPrescriptions != null)
+                {
+                foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
+                {
+                    <div class="card">
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <h4 class="card-title">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>
 
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Dosage: @Html.DisplayFor(modelItem => item.dosage)</label>                                            
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Description: @Html.DisplayFor(modelItem => item.description)</label>                                         
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Date Prescribed: @Html.DisplayFor(modelItem => item.datePrescribed)</label>                                         
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Use Before: @Html.DisplayFor(modelItem => item.useBefore)</label>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Number of Refills: @Html.DisplayFor(modelItem => item.numberofrefills)</label>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3">Pill Count: @Html.DisplayFor(modelItem => item.pillcount)</label>                                            
-                                        </div>                                    
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Perscription Name: @Html.DisplayFor(modelItem => item.name)</label>
                                 </div>
-                            </form>
-                        </div>
-                    }
-                </div>                
-            </div>                               
-        </div>              
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Dosage: @Html.DisplayFor(modelItem => item.dosage)</label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Description: @Html.DisplayFor(modelItem => item.description)</label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Date Prescribed: @Html.DisplayFor(modelItem => item.datePrescribed)</label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Use Before: @Html.DisplayFor(modelItem => item.useBefore)</label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Number of Refills: @Html.DisplayFor(modelItem => item.numberofrefills)</label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Pill Count: @Html.DisplayFor(modelItem => item.pillcount)</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+                }
+            </div>
+        </div>
     </div>
+</div>

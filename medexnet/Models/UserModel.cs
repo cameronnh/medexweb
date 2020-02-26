@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using medexnet.Models;
 
 namespace medexnet.Models
 {
@@ -19,5 +20,10 @@ namespace medexnet.Models
         public string zipcode { get; set; }
         public int accountType { get; set; }
         public string officeHours { get; set; }
+        public List<PatientPrescriptions> myPrescriptions = new List<PatientPrescriptions>();
+        public List<UserModel> myPatients { get; set; }
+
+        public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}
+        public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }
     }
 }

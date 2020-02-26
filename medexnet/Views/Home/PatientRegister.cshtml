@@ -37,7 +37,7 @@
                         <span class="db"><img src="#" alt="logo" /></span>
                     </div>*@
                     <!-- Form -->
-                    @using (Html.BeginForm(new { htmlAttributes = new { @class = "form-horizontal m-t-20" } }))
+                    @using (Html.BeginForm("PatientRegister", "Home" , Model, FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal m-t-20" } }))
                     {
                         @Html.AntiForgeryToken()
 

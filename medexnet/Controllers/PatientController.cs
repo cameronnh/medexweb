@@ -10,52 +10,68 @@ using static DataLibrary.BusinessLogic.Processor;
 namespace medexnet.Controllers
 {
     public class PatientController : Controller
-    {   
-        public ActionResult Index()
-        {
-            UserModel patient = (UserModel)TempData["user"];
-            TempData.Keep("user");
-
-            //can be moved    
-            var data = LoadPatientPrescriptions(patient.Id);
+    {
+        public ActionResult Index(UserModel patient)
+        {  
+            List<DataLibrary.Models.PatientPrescriptions> data = LoadPatientPrescriptions(patient.Id);
             List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALToMedex));
+            patient.SetPrescriptions(patientPrescriptions);
 
-            foreach (var row in data)
-            {
-                patientPrescriptions.Add(new PatientPrescriptions
+            return View(patient);
+        }
+        public static PatientPrescriptions DALToMedex(DataLibrary.Models.PatientPrescriptions temp)
+        {
+            return new PatientPrescriptions
                 {
-                    id = row.id,
-                    patientId = row.patientId,
-                    doctorId = row.doctorId,
-                    prescriptionId = row.prescriptionId,
-                    deliveryId = row.deliveryId,
-                    name = row.name,
-                    dosage = row.dosage,
-                    pillcount = row.pillcount,
-                    numberofrefills = row.numberofrefills,
-                    useBefore = row.useBefore,
-                    description = row.description,
-                    datePrescribed = row.datePrescribed
-                });
-            }
-
-            TempData["prescriptions"] = patientPrescriptions;
-            
-
-            return View(patientPrescriptions);
-
+                    id = temp.id,
+                    patientId = temp.patientId,
+                    doctorId = temp.doctorId,
+                    prescriptionId = temp.prescriptionId,
+                    deliveryId = temp.deliveryId,
+                    name = temp.name,
+                    dosage = temp.dosage,
+                    pillcount = temp.pillcount,
+                    numberofrefills = temp.numberofrefills,
+                    useBefore = temp.useBefore,
+                    description = temp.description,
+                    datePrescribed = temp.datePrescribed
+                 };
         }
 
-        public ActionResult Perscriptions()
+        public ActionResult Perscriptions(UserModel patient)
         {
-            List<PatientPrescriptions> prescriptions = (List<PatientPrescriptions>)TempData["prescriptions"];
-            TempData.Keep("prescriptions");
-
             ViewBag.Message = "Your application description page.";
 
-            return View(prescriptions);
+            return View(patient);
         }
-        
-       
+
+        public ActionResult Deliveries(UserModel patient)
+        {
+
+            return View(patient);
+        }
+        public ActionResult DoctorInfo(UserModel patient)
+        {
+
+            return View(patient);
+        }
+        public ActionResult Appointments(UserModel patient)
+        {
+
+            return View(patient);
+        }
+        public ActionResult MessageInbox(UserModel patient)
+        {
+
+            return View(patient);
+        }
+        public ActionResult Settings(UserModel patient)
+        {
+
+            return View(patient);
+        }
+
+
     }
 }

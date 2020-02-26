@@ -170,6 +170,11 @@
     <Content Include="Views\Shared\PharmacyLayout.cshtml" />
     <Content Include="Views\Pharmacy\Index.cshtml" />
     <Content Include="Views\Doctor\Patients.cshtml" />
+    <Content Include="Views\Patient\DoctorInfo.cshtml" />
+    <Content Include="Views\Patient\Appointments.cshtml" />
+    <Content Include="Views\Patient\Settings.cshtml" />
+    <Content Include="Views\Patient\MessageInbox.cshtml" />
+    <Content Include="Views\Patient\Deliveries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

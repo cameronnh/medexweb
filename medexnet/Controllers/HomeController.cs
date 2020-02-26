@@ -86,11 +86,11 @@ namespace medexnet.Controllers
 
                 if(user.accountType == 1)
                 {
-                    return RedirectToAction("Index", "Patient");
+                    return RedirectToAction("Index", "Patient", new { varName = model });
                 }
                 else if(user.accountType == 2)
                 {
-                    return RedirectToAction("Index", "Doctor");
+                    return RedirectToAction("Index", "Doctor", new { varName = model });
                 }
                 else if(user.accountType == 3)
                 {

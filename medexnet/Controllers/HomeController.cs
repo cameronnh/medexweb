@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
-using static DataLibrary.BusinessLogic.Processor;
+using DataLibrary.BusinessLogic;
 
 namespace medexnet.Controllers
 {
@@ -32,7 +32,7 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                CreatePatient(model.fName, model.lName, model.email, model.password,
+                PatientProcessor.CreatePatient(model.fName, model.lName, model.email, model.password,
                     model.phoneNumber, model.streetAddress, model.city,
                     model.state, model.zipcode);
                 return RedirectToAction("Login");
@@ -46,7 +46,7 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                CreateDoctor(model.fName, model.lName, model.email, model.password,
+                DoctorProcessor.CreateDoctor(model.fName, model.lName, model.email, model.password,
                     model.phoneNumber, model.streetAddress, model.city,
                     model.state, model.zipcode, model.officeHours);
                 return RedirectToAction("Login");
@@ -59,38 +59,24 @@ namespace medexnet.Controllers
         public ActionResult Login(Login model)
         {
 
-            var data = LoadUser(model.email, model.password);
+            List<DataLibrary.Models.UserModel> data = Processor.LoadUser(model.email, model.password);
             
-            if (data.Count == 1)
+            if (data != null)
             {
-                UserModel user = new UserModel();
-
-                foreach (var row in data)
-                {
-                    user.Id = row.Id;
-                    user.fName = row.fName;
-                    user.lName = row.lName;
-                    user.email = row.email;
-                    user.password = row.password;
-                    user.phoneNumber = row.phoneNumber;
-                    user.streetAddress = row.streetAddress;
-                    user.city = row.city;
-                    user.state = row.state;
-                    user.zipcode = row.zipcode;
-                    user.accountType = row.accountType;
-                    user.officeHours = row.officeHours;
-                }
-
-                TempData["user"] = user;         
+                List<UserModel> userList = new List<UserModel>();
+                
+                userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALToMedex));
+                UserModel user = userList[0];
+                //TempData["user"] = user;         
                 Session["Id"] = user.Id;
 
                 if(user.accountType == 1)
                 {
-                    return RedirectToAction("Index", "Patient", new { varName = model });
+                    return RedirectToAction("Index", "Patient", user);
                 }
                 else if(user.accountType == 2)
                 {
-                    return RedirectToAction("Index", "Doctor", new { varName = model });
+                    return RedirectToAction("Index", "Doctor", user);
                 }
                 else if(user.accountType == 3)
                 {
@@ -112,6 +98,26 @@ namespace medexnet.Controllers
             }
             
         }
+
+        public static UserModel DALToMedex(DataLibrary.Models.UserModel temp)
+        {
+            return new UserModel
+            {
+                Id = temp.Id,
+                fName = temp.fName,
+                lName = temp.lName,
+                email = temp.email,
+                password = temp.password,
+                phoneNumber = temp.phoneNumber,
+                streetAddress = temp.streetAddress,
+                city = temp.city,
+                state = temp.state,
+                zipcode = temp.zipcode,
+                accountType = temp.accountType,
+                officeHours = temp.officeHours,
+            };
+        }
+
 
     }
 }

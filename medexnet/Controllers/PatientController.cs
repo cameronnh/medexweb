@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
-using static DataLibrary.BusinessLogic.Processor;
+using DataLibrary.BusinessLogic;
 
 namespace medexnet.Controllers
 {
@@ -13,7 +13,7 @@ namespace medexnet.Controllers
     {
         public ActionResult Index(UserModel patient)
         {  
-            List<DataLibrary.Models.PatientPrescriptions> data = LoadPatientPrescriptions(patient.Id);
+            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(patient.Id);
             List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
             patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALToMedex));
             patient.SetPrescriptions(patientPrescriptions);

@@ -34,12 +34,20 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        //going to be for certain doctor
-        public static List<UserModel> LoadPatients()
+        public List<int>GetPatientIds(int id)
+        {
+            string sql = @"SELECT patientFID FROM dbo.[bridgeDoctorPatient] WHERE doctorFID = '" + id + "';";
+
+            return SqlDataAccess.LoadData<int>(sql);
+        }
+
+        public static List<UserModel> LoadPatientInfo(int id)
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-                            FROM dbo.[user];";
+                           FROM dbo.[user] WHERE Id = '"+ id +"';";
 
+            //string sql = @"SELECT user.Id, user.fName, user.lName, user.password, user.phoneNumber, user.streetAddress, user.city, user.state, user.zipcode From dbo.[user] INNER JOIN [bridgeDoctorPatient] on [user].Id = [bridgeDoctorPatient]."
+            
             return SqlDataAccess.LoadData<UserModel>(sql);
         }
     }

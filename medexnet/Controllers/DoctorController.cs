@@ -46,6 +46,9 @@ namespace medexnet.Controllers
 
         public ActionResult Patients()
         {
+
+
+
             return View();
         }
 

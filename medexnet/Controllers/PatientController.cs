@@ -43,7 +43,10 @@ namespace medexnet.Controllers
         public ActionResult Perscriptions(UserModel patient)
         {
             ViewBag.Message = "Your application description page.";
-
+            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(patient.Id);
+            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALToMedex));
+            patient.SetPrescriptions(patientPrescriptions);
             return View(patient);
         }
 

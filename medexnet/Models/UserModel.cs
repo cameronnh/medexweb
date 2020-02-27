@@ -20,7 +20,7 @@ namespace medexnet.Models
         public string zipcode { get; set; }
         public int accountType { get; set; }
         public string officeHours { get; set; }
-        public List<PatientPrescriptions> myPrescriptions = new List<PatientPrescriptions>();
+        public List<PatientPrescriptions> myPrescriptions { get; set; }
         public List<UserModel> myPatients { get; set; }
 
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}

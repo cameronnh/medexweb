@@ -65,7 +65,8 @@ namespace medexnet.Controllers
                 List<UserModel> userList = new List<UserModel>();
                 
                 userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALToMedex));
-                UserModel user = userList[0];      
+                UserModel user = userList[0];
+
                 Session["Id"] = user.Id;
 
                 if(user.accountType == 1)
@@ -115,7 +116,5 @@ namespace medexnet.Controllers
                 officeHours = temp.officeHours,
             };
         }
-
-
     }
 }

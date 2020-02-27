@@ -58,17 +58,17 @@
                         <ul class="navbar-nav float-right">
                             <!-- Comment -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-bell " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                                <div class="dropdown-menu dropdown-menu-right animated" aria-labelledby="navbarDropdown">
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-envelope " href="@Url.Action("MessageInbox", "Patient", Model)" aria-haspopup="true" aria-expanded="false"></a>
+                                @*<div class="dropdown-menu dropdown-menu-right animated" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
+                                </div>*@
                             </li>
                             <!-- Messages -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-envelope" href="javascript:void(0)" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-bell" href="javascript:void(0)" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                     <ul class="list-style-none">
                                         <li>
@@ -84,7 +84,7 @@
                                                     </div>
                                                 </a>
                                                 <!-- Message -->
-                                                <a href="javascript:void(0)" class="link border-top">
+                                                @*<a href="javascript:void(0)" class="link border-top">
                                                     <div class="d-flex no-block align-items-center p-10">
                                                         <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
                                                         <div class="m-l-10">
@@ -93,7 +93,7 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                                <!-- Message -->
+                                                 Message 
                                                 <a href="javascript:void(0)" class="link border-top">
                                                     <div class="d-flex no-block align-items-center p-10">
                                                         <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
@@ -102,9 +102,9 @@
                                                             <span class="mail-desc">Just see the my admin!</span>
                                                         </div>
                                                     </div>
-                                                </a>
+                                                </a>*@
                                                 <!-- Message -->
-                                                <a href="javascript:void(0)" class="link border-top">
+                                                @*<a href="javascript:void(0)" class="link border-top">
                                                     <div class="d-flex no-block align-items-center p-10">
                                                         <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
                                                         <div class="m-l-10">
@@ -112,7 +112,7 @@
                                                             <span class="mail-desc">Just see the my new admin!</span>
                                                         </div>
                                                     </div>
-                                                </a>
+                                                </a>*@
                                             </div>
                                         </li>
                                     </ul>
@@ -121,7 +121,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-user" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                    <a class="dropdown-item" href="#"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                    <a class="dropdown-item" href="@Url.Action("Settings", "Patient", Model)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
                                     <a class="dropdown-item" href="@Url.Action("Login", "Home")"><i class="mdi mdi-logout m-r-5 m-l-5"></i> Logout</a>
                                     @*@Html.ActionLink("Doctor Register", "DoctorRegister", "Login", new { @class = "btn btn-info m-r-5" })*@
                                     <!-- Heres the dropdown for the top bar. User btns.-->
@@ -138,17 +138,18 @@
                         <ul id="sidebarnav" class="p-t-30">                            
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Patient", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Perscriptions", "Patient", Model)" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Deliveries", "Patient",Model)" aria-expanded="false"><i class="fas fa-truck"></i><span class="hide-menu">Deliveries</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("DoctorInfo", "Patient",Model)" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Doctor</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Appointments", "Patient",Model)" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
-                            <li class="sidebar-item">
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Deliveries", "Patient", Model)" aria-expanded="false"><i class="fas fa-truck"></i><span class="hide-menu">Deliveries</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("DoctorInfo", "Patient", Model)" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Doctor</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Appointments", "Patient", Model)" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("MessageInbox", "Patient", Model)" aria-expanded="false"><i class="fas fa-inbox"></i><span class="hide-menu">Messages</span></a></li>
+                            @*<li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">
                                     <li class="sidebar-item"><a href="@Url.Action("MessageInbox", "Patient",Model)" class="sidebar-link"><i class="fas fa-inbox"></i><span class="hide-menu"> Inbox </span></a></li>
                                     <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-send"></i><span class="hide-menu"> Send Message </span></a></li>
                                     <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-trash-alt"></i><span class="hide-menu"> Trash </span></a></li>
                                 </ul>
-                            </li>
+                            </li>*@
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">

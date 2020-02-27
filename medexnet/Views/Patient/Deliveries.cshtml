@@ -4,12 +4,81 @@
     Layout = "~/Views/Shared/PatientLayout.cshtml";
 }
 
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                //theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+
+                handleWindowResize: true,
+                defaultView: 'month',
+                editable: true,
+                allDaySlot: false,
+                selectable: true,
+                slotMinutes: 15,
+                //events: "/Patient/GetCalendarData/"
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Patient/GetDeliveryData',
+                        type: "GET",
+                        dataType: "JSON",
+
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.Title,
+                                        description: data.Desc,
+                                        start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: data.PriorityColor,
+                                        borderColor: "#ffffff"
+                                    });
+                            });
+
+                            callback(events);
+                        }
+                    });
+                }//,
+                //eventRender: function (event, element)
+                //{
+                //    element.qtip(
+                //    {
+                //        content: event.description
+                //    });
+                //}//,
+
+                //editable: false
+            });
+        });
+    </script>
+}
 
 <div class="page-wrapper">
     <div class="container-fluid">
+        <!-- BEGIN MODAL -->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="card-body b-l calender-sidebar">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> <!-- End Page Content -->
+</div><!-- End Page Wrapper  -->    

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
 using DataLibrary.BusinessLogic;
+using System.Drawing;
 
 namespace medexnet.Controllers
 {
@@ -46,11 +47,72 @@ namespace medexnet.Controllers
             return View(patient);
         }
 
+        public ActionResult GetCalendarData()
+        {
+            // Initialization.  
+            JsonResult result = new JsonResult();
+            try
+            {
+                // Loading.  
+                List<CalendarEvent> data = this.LoadCalendarData();
+                // Processing.  
+                result = this.Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+
+            // Return info.  
+            return result;
+        }
+
+        private List<CalendarEvent> LoadCalendarData()
+        {
+            List<CalendarEvent> temp = new List<CalendarEvent>();
+            temp.Add(new CalendarEvent { Sr = 2, Title = "Take Bumex", Start_Date = DateTime.Today.ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Take prescription of Bumex", PriorityColor = "#e9fc0f"});
+            temp.Add(new CalendarEvent { Sr = 4, Title = "Delivery Arriving", Start_Date = DateTime.Today.AddDays(15).ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Estimated delivery arrival today", PriorityColor = "#0cf71c" });
+            temp.Add(new CalendarEvent { Sr = 1, Title = "Doctor Appointment", Start_Date = DateTime.Today.AddDays(30).ToShortDateString(), End_Date = DateTime.Today.AddDays(30).ToShortDateString(), Desc = "Doctor appointment today!", PriorityColor = "#f70c0c"});
+            return temp;
+        }
+
         public ActionResult Deliveries(UserModel patient)
         {
 
             return View(patient);
         }
+
+        public ActionResult GetDeliveryData()
+        {
+            // Initialization.  
+            JsonResult result = new JsonResult();
+            try
+            {
+                // Loading.  
+                List<CalendarEvent> data = this.LoadDeliveryCalendarData();
+                // Processing.  
+                result = this.Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+
+            // Return info.  
+            return result;
+        }
+
+        private List<CalendarEvent> LoadDeliveryCalendarData()
+        {
+            List<CalendarEvent> temp = new List<CalendarEvent>();
+            //temp.Add(new CalendarEvent { Sr = 2, Title = "Take Bumex", Start_Date = DateTime.Today.ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Take prescription of Bumex", PriorityColor = "#e9fc0f" });
+            temp.Add(new CalendarEvent { Sr = 4, Title = "Delivery Arriving", Start_Date = DateTime.Today.AddDays(15).ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Estimated delivery arrival today", PriorityColor = "#0cf71c" });
+            //temp.Add(new CalendarEvent { Sr = 1, Title = "Doctor Appointment", Start_Date = DateTime.Today.AddDays(30).ToShortDateString(), End_Date = DateTime.Today.AddDays(30).ToShortDateString(), Desc = "Doctor appointment today!", PriorityColor = "#f70c0c" });
+            return temp;
+        }
+
         public ActionResult DoctorInfo(UserModel patient)
         {
 

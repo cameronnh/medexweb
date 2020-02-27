@@ -35,7 +35,7 @@ namespace medexnet.Controllers
                 PatientProcessor.CreatePatient(model.fName, model.lName, model.email, model.password,
                     model.phoneNumber, model.streetAddress, model.city,
                     model.state, model.zipcode);
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Home", model);
             }
             return View();
         }
@@ -49,7 +49,7 @@ namespace medexnet.Controllers
                 DoctorProcessor.CreateDoctor(model.fName, model.lName, model.email, model.password,
                     model.phoneNumber, model.streetAddress, model.city,
                     model.state, model.zipcode, model.officeHours);
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Home", model);
             }
             return View();
         }
@@ -58,16 +58,14 @@ namespace medexnet.Controllers
         [HttpPost]
         public ActionResult Login(Login model)
         {
-
             List<DataLibrary.Models.UserModel> data = Processor.LoadUser(model.email, model.password);
             
-            if (data != null)
+            if (data.Count > 0)
             {
                 List<UserModel> userList = new List<UserModel>();
                 
                 userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALToMedex));
-                UserModel user = userList[0];
-                //TempData["user"] = user;         
+                UserModel user = userList[0];      
                 Session["Id"] = user.Id;
 
                 if(user.accountType == 1)

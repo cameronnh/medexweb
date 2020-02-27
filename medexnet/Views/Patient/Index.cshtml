@@ -23,7 +23,41 @@
                 allDaySlot: false,
                 selectable: true,
                 slotMinutes: 15,
-                //events: "/home/getevents/"
+                //events: "/Patient/GetCalendarData/"
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Patient/GetCalendarData',
+                        type: "GET",
+                        dataType: "JSON",
+
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.Title,
+                                        description: data.Desc,
+                                        start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: data.PriorityColor,
+                                        borderColor: "#ffffff"
+                                    });
+                            });
+
+                            callback(events);
+                        }
+                    });
+                }//,
+                //eventRender: function (event, element)  
+                //{  
+                //    element.qtip(  
+                //    {  
+                //        content: event.description  
+                //    });  
+                //}//,  
+  
+                //editable: false    
             });
         });
     </script>
@@ -31,6 +65,7 @@
 
 <div class="page-wrapper">
     <div class="container-fluid">
+        <!-- BEGIN MODAL -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -46,20 +81,11 @@
 
                                             @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
                                             {
-                                                <a href="@Url.Action("Perscriptions", "Patient")" class="text-secondary">
+                                                <a href="@Url.Action("Perscriptions", "Patient", Model)" class="text-secondary">
                                                     <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>
                                                     <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.description)</p>
                                                 </a>
                                             }
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
 
                                         </div>
                                     </div>
@@ -75,6 +101,5 @@
                 </div>
             </div>
         </div>
-        <!-- BEGIN MODAL -->
     </div> <!-- End Page Content -->
 </div><!-- End Page Wrapper  -->                

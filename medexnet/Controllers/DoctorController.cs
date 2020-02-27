@@ -12,10 +12,10 @@ namespace medexnet.Controllers
     public class DoctorController : Controller
     {
         // GET: Doctor
-        public ActionResult Index()
+        public ActionResult Index(UserModel user)
         {
-            UserModel doctor = (UserModel)TempData["user"];
-            TempData.Keep("user");           
+            //UserModel doctor = (UserModel)TempData["user"];
+            //TempData.Keep("user");           
 
             //var data = LoadUser(doctor.Id);            
             //List<UserModel> users = new List<UserModel>();
@@ -41,7 +41,7 @@ namespace medexnet.Controllers
             //}
             //TempData["patients"] = users;
 
-            return View(doctor);
+            return View(user);
         }
 
         public ActionResult Patients()

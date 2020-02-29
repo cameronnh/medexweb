@@ -5,51 +5,79 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
-using static DataLibrary.BusinessLogic.Processor;
+using DataLibrary.BusinessLogic;
 
 namespace medexnet.Controllers
 {
     public class DoctorController : Controller
-    {
-        // GET: Doctor
-        public ActionResult Index(UserModel user)
-        {
-            //UserModel doctor = (UserModel)TempData["user"];
-            //TempData.Keep("user");           
-
-            //var data = LoadUser(doctor.Id);            
-            //List<UserModel> users = new List<UserModel>();
-
-            //foreach (var row in data)
-            //{
-            //    users.Add(new UserModel
-            //    {
-            //        Id = row.Id,
-            //        fName = row.fName,
-            //        lName = row.lName,
-            //        email = row.email,
-            //        password = row.password,
-            //        phoneNumber = row.phoneNumber,
-            //        streetAddress = row.streetAddress,
-            //        city = row.city,
-            //        state = row.state,
-            //        zipcode = row.zipcode,
-            //        accountType = row.accountType,
-            //        officeHours = row.officeHours
-            //    });
-                
-            //}
-            //TempData["patients"] = users;
-
-            return View(user);
+    {      
+        public ActionResult Index(UserModel doctor)
+        {              
+              
+            return View(doctor);
         }
 
-        public ActionResult Patients()
+        public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)
         {
+            return new UserModel
+            {
+                Id = temp.Id,
+                fName = temp.fName,
+                lName = temp.lName,
+                email = temp.email,
+                password = temp.password,
+                phoneNumber = temp.phoneNumber,
+                streetAddress = temp.streetAddress,
+                city = temp.city,
+                state = temp.state,
+                zipcode = temp.zipcode,
+                accountType = temp.accountType,
+                officeHours = temp.officeHours,
+            };
+        }
 
+        public static PatientPrescriptions DataAccessPatientPerscriptions(DataLibrary.Models.PatientPrescriptions temp)
+        {                                                       
+            return new PatientPrescriptions
+            {
+                id = temp.id,
+                patientId = temp.patientId,
+                doctorId = temp.doctorId,
+                prescriptionId = temp.prescriptionId,
+                deliveryId = temp.deliveryId,
+                name = temp.name,
+                dosage = temp.dosage,
+                pillcount = temp.pillcount,
+                numberofrefills = temp.numberofrefills,
+                useBefore = temp.useBefore,
+                description = temp.description,
+                datePrescribed = temp.datePrescribed
+            };
+        }
+     
+        public ActionResult Patients(UserModel doctor)
+        {
+            List<int> patientIds = DoctorProcessor.GetPatientIds(doctor.Id);
 
+            List<UserModel> patients = new List<UserModel>();
 
-            return View();
+            foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
+            {
+                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+
+                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(patientId);//(2nd list) gets data with datamodel
+
+                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                UserModel patient = tempPatientData[0];
+
+                patients.Add(patient);//adds the patient to doctors list of patients
+            }
+
+            doctor.SetPatients(patients);//sets the list of patients 
+            //maybe i can make a add function
+          
+
+            return View(doctor);
         }
 
         

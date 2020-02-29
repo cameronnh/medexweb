@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLibrary.DataAccess;
 using DataLibrary.Models;
+using System.Data.SqlClient;
 
 namespace DataLibrary.BusinessLogic
 {
@@ -34,7 +35,7 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public List<int>GetPatientIds(int id)
+        public static List<int>GetPatientIds(int id)
         {
             string sql = @"SELECT patientFID FROM dbo.[bridgeDoctorPatient] WHERE doctorFID = '" + id + "';";
 
@@ -49,6 +50,6 @@ namespace DataLibrary.BusinessLogic
             //string sql = @"SELECT user.Id, user.fName, user.lName, user.password, user.phoneNumber, user.streetAddress, user.city, user.state, user.zipcode From dbo.[user] INNER JOIN [bridgeDoctorPatient] on [user].Id = [bridgeDoctorPatient]."
             
             return SqlDataAccess.LoadData<UserModel>(sql);
-        }
+        }        
     }
 }

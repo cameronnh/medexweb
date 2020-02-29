@@ -25,5 +25,7 @@ namespace medexnet.Models
 
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }
+        public List<UserModel> GetPatients() { return myPatients;}
+        public void SetPatients(List<UserModel> doctorsPatients) { myPatients = doctorsPatients; }
     }
 }

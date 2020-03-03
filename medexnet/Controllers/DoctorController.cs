@@ -80,6 +80,13 @@ namespace medexnet.Controllers
             return View(doctor);
         }
 
+        public ActionResult PatientModal(UserModel currentPatient)
+        {
+
+
+            return View(currentPatient);
+        }
+
         
     }
 }

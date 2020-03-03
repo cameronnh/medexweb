@@ -2,45 +2,117 @@
 
 @{
     Layout = "~/Views/Shared/DoctorLayout.cshtml";
+
+    medexnet.Models.UserModel current = null;
 }
 
 <div class="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title m-b-0">Your Patients</h5>
+
+        <div id="patientList">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0">Your Patients</h5>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    @*<th scope="col">OTHER</th>
+                                <th scope="col">OTHER</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @
+
+                                @foreach (medexnet.Models.UserModel item in Model.myPatients)
+                                {
+                                
+                                    <tr>
+                                        @*<td><a href="@Url.Action("Index", "Doctor", item)">&nbsp;</a></td>*@
+                                        <td onclick="">@Html.DisplayFor(modelItem => item.fName)</td>
+                                        <td onclick="location.href='@Url.Action("PatientModal", "Doctor", item)'">@Html.DisplayFor(modelItem => item.lName)</td>
+                                    </tr>
+                                
+                                }
+                                @*<tr>
+                                <th scope="row">1</th>
+                                <td>MIKE</td>
+                                <td>HUNT</td>
+                            </tr>*@
+                            </tbody>
+                        </table>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                @*<th scope="col">OTHER</th>
-                                    <th scope="col">OTHER</th>*@
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (medexnet.Models.UserModel item in Model.myPatients)
-                            {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.fName)</td>
-                                <td>@Html.DisplayFor(modelItem => item.lName)</td>
-                            </tr>
-                            }
-                        @*<tr>
-                            <th scope="row">1</th>
-                            <td>MIKE</td>
-                            <td>HUNT</td>
-                        </tr>*@
-                        </tbody>
-                    </table>
                 </div>
-
             </div>
-
         </div>
-    </div>
 
+        <div id="patientDetails">
+            <div class="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
+                            {
+                                <div class="card">
+                                    <form class="form-horizontal">
+                                        <div class="card-body">
+                                            <h4 class="card-title">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Perscription Name: @Html.DisplayFor(modelItem => item.name)</label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Dosage: @Html.DisplayFor(modelItem => item.dosage)</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Description: @Html.DisplayFor(modelItem => item.description)</label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Date Prescribed: @Html.DisplayFor(modelItem => item.datePrescribed)</label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Use Before: @Html.DisplayFor(modelItem => item.useBefore)</label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Number of Refills: @Html.DisplayFor(modelItem => item.numberofrefills)</label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3">Pill Count: @Html.DisplayFor(modelItem => item.pillcount)</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
+
+<script>//NOT USED
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+    // ==============================================================
+    $('#to-patient').on("click", function() {
+        $("#patientList").slideUp();
+        $("#patientDetails").fadeIn();
+    });
+    $('#to-login').click(function(){
+        $("#patientDetails").hide();
+        $("#patientList").fadeIn();
+    });
+</script>

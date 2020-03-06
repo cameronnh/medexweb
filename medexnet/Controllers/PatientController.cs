@@ -25,19 +25,19 @@ namespace medexnet.Controllers
         {
             return new PatientPrescriptions
                 {
-                    id = temp.id,
-                    patientId = temp.patientId,
-                    doctorId = temp.doctorId,
-                    prescriptionId = temp.prescriptionId,
-                    deliveryId = temp.deliveryId,
-                    name = temp.name,
-                    dosage = temp.dosage,
-                    pillcount = temp.pillcount,
-                    numberofrefills = temp.numberofrefills,
-                    useBefore = temp.useBefore,
-                    description = temp.description,
-                    datePrescribed = temp.datePrescribed
-                 };
+                Id = temp.Id,
+                patientFID = temp.patientFID,
+                doctorFID = temp.doctorFID,
+                prescriptionFID = temp.prescriptionFID,
+                deliveryFID = temp.deliveryFID,
+                name = temp.name,
+                dosage = temp.dosage,
+                pillCount = temp.pillCount,
+                numberofRefills = temp.numberofRefills,
+                useBefore = temp.useBefore,
+                description = temp.description,
+                datePrescribed = temp.datePrescribed
+            };
         }
 
         public ActionResult Perscriptions(UserModel patient)

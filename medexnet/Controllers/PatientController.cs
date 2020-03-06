@@ -75,6 +75,8 @@ namespace medexnet.Controllers
         {
             List<CalendarEvent> temp = new List<CalendarEvent>();
             temp.Add(new CalendarEvent { Sr = 2, Title = "Take Bumex", Start_Date = DateTime.Today.ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Take prescription of Bumex", PriorityColor = "#e9fc0f"});
+            temp.Add(new CalendarEvent { Sr = 2, Title = "Take Perc30", Start_Date = DateTime.Today.ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Take prescription of perc30", PriorityColor = "#e9fF0f" });
+
             temp.Add(new CalendarEvent { Sr = 4, Title = "Delivery Arriving", Start_Date = DateTime.Today.AddDays(15).ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Estimated delivery arrival today", PriorityColor = "#0cf71c" });
             temp.Add(new CalendarEvent { Sr = 1, Title = "Doctor Appointment", Start_Date = DateTime.Today.AddDays(30).ToShortDateString(), End_Date = DateTime.Today.AddDays(30).ToShortDateString(), Desc = "Doctor appointment today!", PriorityColor = "#f70c0c"});
             return temp;

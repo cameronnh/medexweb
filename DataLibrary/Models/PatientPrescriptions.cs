@@ -8,10 +8,10 @@ namespace DataLibrary.Models
 {
     public class PatientPrescriptions
     {
-        public int id { get; set; }
-        public int patientId { get; set; }
-        public int prescriptionFID { get; set; }
+        public int Id { get; set; }
+        public int patientFID { get; set; }
         public int doctorFID { get; set; }
+        public int prescriptionFID { get; set; }
         public int deliveryFID { get; set; }
         public string name { get; set; }
         public string dosage { get; set; }

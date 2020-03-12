@@ -104,6 +104,11 @@ namespace medexnet.Controllers
             return result;
         }
 
+        public ActionResult Deliveries(UserModel patient)
+        {
+            return View(patient);
+        }
+
         public ActionResult GetCalendarData()
         {
             // Initialization.  

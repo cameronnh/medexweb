@@ -21,6 +21,7 @@ namespace medexnet.Models
         public int accountType { get; set; }
         public string officeHours { get; set; }
         public List<PatientPrescriptions> myPrescriptions { get; set; }
+        public List<UserModel> myDoctors { get; set; }
         public List<UserModel> myPatients { get; set; }
 
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}

@@ -66,5 +66,6 @@
     <Build Include="dbo\Tables\patientPrescription.sql" />
     <Build Include="dbo\Tables\prescription.sql" />
     <Build Include="dbo\Tables\prescriptionClasses.sql" />
+    <Build Include="dbo\Tables\deliveries.sql" />
   </ItemGroup>
 </Project>

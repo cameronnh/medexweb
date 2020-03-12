@@ -2,13 +2,67 @@
 
 @{
     Layout = "~/Views/Shared/PatientLayout.cshtml";
+    List<medexnet.Models.UserModel> doctors = new List<medexnet.Models.UserModel>();
 }
 
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Patient/LoadDoctorData',
+                type: "GET",
+                dataType: "JSON",
+
+                success: function (result) {
+                    document.getElementsByName("doctors") = result;
+                }
+            });
+        });
+    </script>
+}
 
 <div class="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
+        <div id="DeliveryList">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0">Your Doctors</h5>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Office Hours</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (medexnet.Models.UserModel UM in Model.myDoctors)
+                                {
+                                    string name = UM.fName + " " + UM.lName;
+                                    string address = UM.streetAddress.ToString() + " " + UM.city.ToString() + " " + UM.state.ToString() + " " + UM.zipcode.ToString();
+                                    <tr>
+                                        <td onclick="">@Html.DisplayFor(modelItem => name)</td>
+                                        <td onclick="">@Html.DisplayFor(modelItem => UM.officeHours)</td>
+                                        <td onclick="">@Html.DisplayFor(modelItem => address)</td>
+                                        <td onclick="">@Html.DisplayFor(modelItem => UM.phoneNumber)</td>
+                                        <td onclick="">@Html.DisplayFor(modelItem => UM.email)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<div class="col-lg-9">
+                        <div class="card-body b-l calender-sidebar">
+                            <div id="calendar"></div>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </div>

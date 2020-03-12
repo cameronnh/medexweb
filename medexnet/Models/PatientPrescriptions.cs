@@ -19,5 +19,7 @@ namespace medexnet.Models
         public string useBefore { get; set; }
         public string description { get; set; }
         public string datePrescribed { get; set; }
+
+        public List<Delivery> dDates { get; set; }
     }
 }

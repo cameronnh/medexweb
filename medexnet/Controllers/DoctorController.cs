@@ -42,13 +42,13 @@ namespace medexnet.Controllers
             {
                 id = temp.id,
                 patientId = temp.patientId,
-                doctorId = temp.doctorId,
-                prescriptionId = temp.prescriptionId,
-                deliveryId = temp.deliveryId,
+                doctorId = temp.doctorFID,
+                prescriptionId = temp.prescriptionFID,
+                deliveryId = temp.deliveryFID,
                 name = temp.name,
                 dosage = temp.dosage,
-                pillcount = temp.pillcount,
-                numberofrefills = temp.numberofrefills,
+                pillcount = temp.pillCount,
+                numberofrefills = temp.numberofRefills,
                 useBefore = temp.useBefore,
                 description = temp.description,
                 datePrescribed = temp.datePrescribed

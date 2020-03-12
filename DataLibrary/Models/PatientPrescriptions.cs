@@ -10,13 +10,13 @@ namespace DataLibrary.Models
     {
         public int id { get; set; }
         public int patientId { get; set; }
-        public int doctorId { get; set; }
-        public int prescriptionId { get; set; }
-        public int deliveryId { get; set; }
+        public int prescriptionFID { get; set; }
+        public int doctorFID { get; set; }
+        public int deliveryFID { get; set; }
         public string name { get; set; }
         public string dosage { get; set; }
-        public int pillcount { get; set; }
-        public int numberofrefills { get; set; }
+        public int pillCount { get; set; }
+        public int numberofRefills { get; set; }
         public string useBefore { get; set; }
         public string description { get; set; }
         public string datePrescribed { get; set; }

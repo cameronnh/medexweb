@@ -49,6 +49,7 @@
     <Compile Include="BusinessLogic\PatientProcessor.cs" />
     <Compile Include="BusinessLogic\Processor.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
+    <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\PatientPrescriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

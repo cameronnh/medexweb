@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddPrescription.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\DoctorRegister.cs" />
     <Compile Include="Models\Login.cs" />
@@ -177,7 +178,8 @@
     <Content Include="Views\Patient\Settings.cshtml" />
     <Content Include="Views\Patient\MessageInbox.cshtml" />
     <Content Include="Views\Patient\Deliveries.cshtml" />
-    <Content Include="Views\Doctor\PatientModal.cshtml" />
+    <Content Include="Views\Doctor\PatientDetails.cshtml" />
+    <Content Include="Views\Doctor\AddPrescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

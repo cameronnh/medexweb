@@ -50,6 +50,29 @@ namespace DataLibrary.BusinessLogic
             //string sql = @"SELECT user.Id, user.fName, user.lName, user.password, user.phoneNumber, user.streetAddress, user.city, user.state, user.zipcode From dbo.[user] INNER JOIN [bridgeDoctorPatient] on [user].Id = [bridgeDoctorPatient]."
             
             return SqlDataAccess.LoadData<UserModel>(sql);
-        }        
+        }
+
+        public static int AddPrescription(int patientFID, int doctorFID, int prescriptionFID, int deliveryFID, string name, string dosage,
+            int pillCount, int numberofRefills, string useBefore, string description, string datePrescribed)
+        {
+            PatientPrescriptions data = new PatientPrescriptions
+            {                
+                patientFID = patientFID,
+                doctorFID = doctorFID,
+                prescriptionFID = prescriptionFID,
+                deliveryFID = deliveryFID,
+                name = name,
+                dosage = dosage,
+                pillCount = pillCount,
+                numberofRefills = numberofRefills,
+                useBefore = useBefore,
+                description = description,
+                datePrescribed = datePrescribed
+            };
+            string sql = @"INSERT into dbo.[patientPrescriptions] (patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, numberofRefills, useBefore, description, datePrescribed)
+                            values(@patientFID, @doctorFID, @prescriptionFID, @deliveryFID, @name, @dosage, @pillCount, @numberofRefills, @useBefore, @description, @datePrescribed)";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
     }
 }

@@ -1,0 +1,84 @@
+﻿@model medexnet.Models.AddPrescription
+
+<div>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add Prescription</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <dl class="dl-horizontal">
+
+            <dd>
+                Select Prescription:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.prescriptionFID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.prescriptionFID, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Prescription Name:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Pill Dosage:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dosage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.dosage, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Pill Count:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.pillCount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pillCount, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Number of Refills:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.numberofRefills, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.numberofRefills, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Use Before:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.useBefore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.useBefore, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+            <dd>
+                Description:
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </dd>
+
+        </dl>
+        }
+    </div>
+
+
+    <div class="modal-footer">       
+        <input type="submit" value="Create Prescription" class="btn btn-primary" />
+    </div>
+
+</div>

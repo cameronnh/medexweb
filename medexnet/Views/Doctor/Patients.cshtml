@@ -51,10 +51,11 @@
 
                     <td>
                         @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
 
-                        <a href="javascript:void(0);" class="anchorDetail" data-id="@item.Id">Details</a>
+                        <a href="javascript:void(0);" class="detailsModal" data-id="@item.Id">Details</a> |
+                        <a href="javascript:void(0);" class="addPrescriptionModal" data-id="@item.Id">Write Prescription</a>
 
                     </td>
                 </tr>
@@ -78,16 +79,50 @@
 {
     
     <script>
-        var TeamDetailPostBackURL = '/Doctor/PatientModal';
+        var detailsModalURL = '/Doctor/PatientDetails';
+        var addPrescriptionURL = '/Doctor/AddPrescription';
+
         $(function () {
-            $(".anchorDetail").click(function () {
+            $(".detailsModal").click(function () {
                 debugger;
                 var $buttonClicked = $(this);
                 var id = $buttonClicked.attr('data-id');
                 var options = { "backdrop": "static", keyboard: true };
                 $.ajax({
                     type: "GET",
-                    url: TeamDetailPostBackURL,
+                    url: detailsModalURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },                    
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+        $(function () {
+            $(".addPrescriptionModal").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: addPrescriptionURL,
                     contentType: "application/json; charset=utf-8",
                     data: { "Id": id },                    
                     datatype: "json",

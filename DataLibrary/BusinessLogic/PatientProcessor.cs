@@ -43,5 +43,27 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
         }
+
+        public static List<Delivery> loadPrescriptionDelivery(int id)
+        {
+            string sql = @"SELECT Id, shippedDate, arrivalDate FROM dbo.[deliveries] WHERE Id = '" + id + "';";
+
+            return SqlDataAccess.LoadData<Delivery>(sql);
+        }
+
+        public static List<UserModel> loadDoctorData(int id)
+        {
+            string sql = @"SELECT doctorFID FROM dbo.[bridgeDoctorPatient] WHERE patientFID = '" + id + "';";
+            List<int> temp = SqlDataAccess.LoadData<int>(sql);
+            List<UserModel> DoctorList = new List<UserModel>();
+            foreach(int I in temp)
+            {
+                sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
+                            FROM dbo.[user] WHERE Id = '" + I + "';";
+                List<UserModel> tempDoc = SqlDataAccess.LoadData<UserModel>(sql);
+                DoctorList.Add(tempDoc[0]);
+            }
+            return DoctorList;
+        }
     }
 }

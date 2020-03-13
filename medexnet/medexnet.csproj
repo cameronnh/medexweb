@@ -134,6 +134,8 @@
     </Compile>
     <Compile Include="Models\AddPrescription.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
+    <Compile Include="Models\DALtoMedex.cs" />
+    <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\DoctorRegister.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\UserModel.cs" />

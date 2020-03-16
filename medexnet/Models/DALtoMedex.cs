@@ -11,15 +11,15 @@ namespace medexnet.Models
         {
             return new PatientPrescriptions
             {
-                id = temp.id,
-                patientId = temp.patientId,
-                doctorId = temp.doctorFID,
-                prescriptionId = temp.prescriptionFID,
-                deliveryId = temp.deliveryFID,
+                Id = temp.Id,
+                patientFID = temp.patientFID,
+                doctorFID = temp.doctorFID,
+                prescriptionFID = temp.prescriptionFID,
+                deliveryFID = temp.deliveryFID,
                 name = temp.name,
                 dosage = temp.dosage,
-                pillcount = temp.pillCount,
-                numberofrefills = temp.numberofRefills,
+                pillCount = temp.pillCount,
+                numberofRefills = temp.numberofRefills,
                 useBefore = temp.useBefore,
                 description = temp.description,
                 datePrescribed = temp.datePrescribed

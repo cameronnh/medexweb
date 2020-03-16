@@ -44,12 +44,12 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
         }
 
-        public static List<Delivery> loadPrescriptionDelivery(int id)
-        {
-            string sql = @"SELECT Id, shippedDate, arrivalDate FROM dbo.[deliveries] WHERE Id = '" + id + "';";
+        //public static List<Delivery> loadPrescriptionDelivery(int id)
+        //{
+        //    string sql = @"SELECT Id, shippedDate, arrivalDate FROM dbo.[deliveries] WHERE Id = '" + id + "';";
 
-            return SqlDataAccess.LoadData<Delivery>(sql);
-        }
+        //    return SqlDataAccess.LoadData<Delivery>(sql);
+        //}
 
         public static List<UserModel> loadDoctorData(int id)
         {

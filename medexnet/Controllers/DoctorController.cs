@@ -112,9 +112,16 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {//the number 2 should be the doctor id not a 2// same with the 0 this might not need to change
-                DoctorProcessor.AddPrescription(model.Id, 2, model.prescriptionFID, 0, model.name, model.dosage,
+             //    DoctorProcessor.AddPrescription(model.Id, 2, model.prescriptionFID, 0, model.name, model.dosage,
+             //model.pillCount, model.numberofRefills, model.useBefore, model.description, DateTime.Now.ToString());
+
+
+             //TOOK OUT PRESCRIPTION FID SO A DOCTOR CAN MAKE ANY PRESCRIPTION AND DELIVERY FID SO THAT THE DELIVERY CAN BE ADDED AFTERWARDS
+
+
+                DoctorProcessor.AddPrescription(model.Id, 2, model.name, model.dosage,
             model.pillCount, model.numberofRefills, model.useBefore, model.description, DateTime.Now.ToString());
-                
+
                 return RedirectToAction("Login", "Home", model);
             }
             return View();

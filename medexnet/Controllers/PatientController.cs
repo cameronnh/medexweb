@@ -22,7 +22,7 @@ namespace medexnet.Controllers
             currentPatient.SetPrescriptions(patientPrescriptions);
             foreach(PatientPrescriptions temp in currentPatient.myPrescriptions)
             {
-                temp.dDates = PatientProcessor.loadPrescriptionDelivery(temp.deliveryId).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
+                //temp.dDates = PatientProcessor.loadPrescriptionDelivery(temp.deliveryFID).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
             }
             return View(currentPatient);
         }
@@ -102,12 +102,7 @@ namespace medexnet.Controllers
 
             // Return info.  
             return result;
-        }
-
-        public ActionResult Deliveries(UserModel patient)
-        {
-            return View(patient);
-        }
+        }        
 
         public ActionResult GetCalendarData()
         {

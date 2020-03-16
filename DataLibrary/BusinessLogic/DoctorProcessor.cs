@@ -52,15 +52,36 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<UserModel>(sql);
         }
 
-        public static int AddPrescription(int patientFID, int doctorFID, int prescriptionFID, int deliveryFID, string name, string dosage,
+        //public static int AddPrescription(int patientFID, int doctorFID, int prescriptionFID, int deliveryFID, string name, string dosage,
+        //    int pillCount, int numberofRefills, string useBefore, string description, string datePrescribed)
+        //{
+        //    PatientPrescriptions data = new PatientPrescriptions
+        //    {                
+        //        patientFID = patientFID,
+        //        doctorFID = doctorFID,
+        //        prescriptionFID = prescriptionFID,
+        //        deliveryFID = deliveryFID,
+        //        name = name,
+        //        dosage = dosage,
+        //        pillCount = pillCount,
+        //        numberofRefills = numberofRefills,
+        //        useBefore = useBefore,
+        //        description = description,
+        //        datePrescribed = datePrescribed
+        //    };
+        //    string sql = @"INSERT into dbo.[patientPrescriptions] (patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, numberofRefills, useBefore, description, datePrescribed)
+        //                    values(@patientFID, @doctorFID, @prescriptionFID, @deliveryFID, @name, @dosage, @pillCount, @numberofRefills, @useBefore, @description, @datePrescribed)";
+
+        //    return SqlDataAccess.SaveData(sql, data);
+        //}
+
+        public static int AddPrescription(int patientFID, int doctorFID, string name, string dosage,
             int pillCount, int numberofRefills, string useBefore, string description, string datePrescribed)
         {
             PatientPrescriptions data = new PatientPrescriptions
-            {                
+            {
                 patientFID = patientFID,
-                doctorFID = doctorFID,
-                prescriptionFID = prescriptionFID,
-                deliveryFID = deliveryFID,
+                doctorFID = doctorFID,                                
                 name = name,
                 dosage = dosage,
                 pillCount = pillCount,

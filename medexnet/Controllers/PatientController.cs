@@ -12,33 +12,42 @@ namespace medexnet.Controllers
 {
     public class PatientController : Controller
     {
-        public static UserModel currentPatient;
+        public static UserModel currentPatient = new UserModel();
         public ActionResult Index(UserModel patient)
         {
-            currentPatient = patient;
-            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(patient.Id);
-            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
-            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALtoMedex.DMPatientPrescriptions));
-            currentPatient.SetPrescriptions(patientPrescriptions);
-            foreach(PatientPrescriptions temp in currentPatient.myPrescriptions)
-            {
-                //temp.dDates = PatientProcessor.loadPrescriptionDelivery(temp.deliveryFID).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
-            }
+            currentPatient = GetInfo(patient);
+
             return View(currentPatient);
         }
         
+        public UserModel GetInfo(UserModel temp)
+        {
+            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(temp.Id);
+            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALtoMedex.DMPatientPrescriptions));
+            temp.SetPrescriptions(patientPrescriptions);
+            foreach (PatientPrescriptions p in temp.myPrescriptions)
+            {
+                p.dDates = PatientProcessor.loadPrescriptionDelivery(p.deliveryFID).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
+            }
+            return temp;
+        }
+
         public ActionResult Perscriptions(UserModel patient)
         {
+            currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
 
         public ActionResult Deliveries(UserModel patient)
         {
+            currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
 
         public ActionResult DoctorInfo(UserModel patient)
         {
+            currentPatient = GetInfo(patient);
             currentPatient.myDoctors = PatientProcessor.loadDoctorData(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.DMDoctorData)); ;
 
             return View(currentPatient);
@@ -55,17 +64,17 @@ namespace medexnet.Controllers
         }
         public ActionResult Appointments(UserModel patient)
         {
-
+            currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
         public ActionResult MessageInbox(UserModel patient)
         {
-
+            currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
         {
-
+            currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
 

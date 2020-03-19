@@ -133,6 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddPrescription.cs" />
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\DALtoMedex.cs" />
     <Compile Include="Models\Delivery.cs" />

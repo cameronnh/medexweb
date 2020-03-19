@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[patientPrescriptions] (
-    [Id]               INT           IDENTITY (1, 1) NOT NULL,
+    [Id]               INT  IDENTITY (1, 1)   PRIMARY KEY ,
     [patientFID]       INT           NOT NULL,
     [prescriptionFID]  INT           NOT NULL,
     [deliveryFID]        INT           NOT NULL,

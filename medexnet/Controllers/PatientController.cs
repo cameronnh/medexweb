@@ -30,6 +30,8 @@ namespace medexnet.Controllers
             {
                 p.dDates = PatientProcessor.loadPrescriptionDelivery(p.deliveryFID).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
             }
+            temp.myAppointments = PatientProcessor.loadAppointmentData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
+
             return temp;
         }
 
@@ -76,6 +78,39 @@ namespace medexnet.Controllers
         {
             currentPatient = GetInfo(patient);
             return View(currentPatient);
+        }
+
+        private List<CalendarEvent> LoadAppointmentData()
+        {
+            List<CalendarEvent> temp = new List<CalendarEvent>();
+            foreach (Appointment item in currentPatient.myAppointments)
+            {
+
+                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#f70c0c" });
+
+            }
+            return temp;
+        }
+
+        public ActionResult GetAppointmentData()
+        {
+            // Initialization.  
+            JsonResult result = new JsonResult();
+            try
+            {
+                // Loading.  
+                List<CalendarEvent> data = this.LoadAppointmentData();
+                // Processing.  
+                result = this.Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+
+            // Return info.  
+            return result;
         }
 
         private List<CalendarEvent> LoadDeliveryCalendarData()

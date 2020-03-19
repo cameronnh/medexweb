@@ -54,5 +54,17 @@ namespace medexnet.Models
                 streetAddress = temp.streetAddress
             };
         }
+
+        public static Appointment DMAppointmentData(DataLibrary.Models.Appointment temp)
+        {
+            return new Appointment
+            {
+                Id = temp.Id,
+                date = temp.date,
+                desc = temp.desc,
+                isConfirmed = temp.isConfirmed,
+                doctor = DMDoctorData(temp.doctor)
+            };
+        }
     }
 }

@@ -39,7 +39,7 @@
                                         start: moment(data.Start_Date).format('YYYY-MM-DD'),
                                         end: moment(data.End_Date).format('YYYY-MM-DD'),
                                         backgroundColor: data.PriorityColor,
-                                        borderColor: "#ffffff"
+                                        borderColor: "#000000"
                                     });
                             });
 
@@ -70,6 +70,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col"> </th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Doctor</th>
@@ -90,15 +91,14 @@
                                 {
                                     confirmation = "No";
                                 }
-                                <tr>
-                                    @*<td><a href="@Url.Action("Index", "Doctor", item)">&nbsp;</a></td>*@
-                                    <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
-                                    <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
-                                    <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
-                                    <td onclick="">@Html.DisplayFor(modelItem => item.doctor.phoneNumber)</td>
-                                    <td onclick="">@Html.DisplayFor(modelItem => confirmation)</td>
-                                    @*<td onclick="location.href='@Url.Action("PatientModal", "Doctor", item)'">@Html.DisplayFor(modelItem => item.lName)</td>*@
-                                </tr>
+                            <tr>
+                                <td><a href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.doctor.phoneNumber)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => confirmation)</td>
+                            </tr>
                             }
                         </tbody>
                     </table>

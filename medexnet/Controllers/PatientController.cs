@@ -84,10 +84,8 @@ namespace medexnet.Controllers
         {
             List<CalendarEvent> temp = new List<CalendarEvent>();
             foreach (Appointment item in currentPatient.myAppointments)
-            {
-
-                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#f70c0c" });
-
+            { 
+                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
             }
             return temp;
         }
@@ -120,8 +118,8 @@ namespace medexnet.Controllers
             {
                 foreach (Delivery d in item.dDates)
                 {
-                    temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#0cf71c" });
-                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#0cf71c" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
                 }
             }
             return temp;
@@ -174,15 +172,17 @@ namespace medexnet.Controllers
             List<CalendarEvent> temp = new List<CalendarEvent>();
             foreach (PatientPrescriptions item in currentPatient.myPrescriptions)
             {
-                temp.Add(new CalendarEvent { Sr = 2, Title = "Take Bumex", Start_Date = DateTime.Today.ToShortDateString(), End_Date = DateTime.Today.AddDays(15).ToShortDateString(), Desc = "Take prescription of Bumex", PriorityColor = "#e9fc0f" });
+                temp.Add(new CalendarEvent { Sr = 2, Title = "Take "+ item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(item.pillCount).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
                 foreach (Delivery d in item.dDates)
                 {
-                    temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#0cf71c" });
-                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#0cf71c" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
                 }
             }
-
-            temp.Add(new CalendarEvent { Sr = 1, Title = "Doctor Appointment", Start_Date = DateTime.Today.AddDays(30).ToShortDateString(), End_Date = DateTime.Today.AddDays(30).ToShortDateString(), Desc = "Doctor appointment today!", PriorityColor = "#f70c0c" });
+            foreach (Appointment item in currentPatient.myAppointments)
+            {
+                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
+            }
             return temp;
         }
     }

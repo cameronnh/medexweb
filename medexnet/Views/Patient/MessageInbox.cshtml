@@ -3,86 +3,115 @@
 @{
     Layout = "~/Views/Shared/PatientLayout.cshtml";
 }
-<style>
-    /* Chat containers */
-.container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-/* Darker chat container */
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
-}
-
-/* Clear floats */
-.container::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Style images */
-.container img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-/* Style the right image */
-.container img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
-
-/* Style time text */
-.time-right {
-  float: right;
-  color: #aaa;
-}
-
-/* Style time text */
-.time-left {
-  float: left;
-  color: #999;
-}
-
-</style>
 
 <div class="page-wrapper">
-    <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
         <div class="row">
-            <div class="col-md-6">
-                <h1>@Html.DisplayFor(modelItem => Model.myChats[0].topic)</h1>
-                @foreach (medexnet.Models.Message m in Model.myChats[0].messageList)
-                {
-                    if (m.user == "1")
-                    {
-                    <div class="container">
-                        <img src="" alt="Avatar">
-                        <h2 style="float:left">@Html.DisplayFor(modelItem => m.user)</h2>
-                        <p>@Html.DisplayFor(modelItem => m.text)</p>
-                        <span class="time-right">@Html.DisplayFor(modelItem => m.time)</span>
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Chat Option</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Library</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => Model.myChats[0].topic)</h4>
+                        <div class="chat-box scrollable" style="height:475px;">
+                            <!--chat Row -->
+                            <ul class="chat-list">
+                                <!--chat Row -->
+                                @foreach (medexnet.Models.Message M in Model.myChats[0].messageList)
+                                {
+                                    if (M.userID != Model.Id)
+                                    {
+                                        <li class="chat-item">
+                                            <div class="chat-img"><img src="../../assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="chat-content">
+                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                            </div>
+                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="odd chat-item">
+                                            <div class="chat-content">
+                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                            </div>
+                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                        </li>
+                                    }
+
+                                }
+                            </ul>
+                        </div>
                     </div>
-                    }
-                    else
-                    {
-                    <div class="container darker">
-                        <img src="" alt="Avatar" class="right">
-                        <h2>@Html.DisplayFor(modelItem => m.user)</h2>
-                        <p>@Html.DisplayFor(modelItem => m.text)</p>
-                        <span class="time-left">@Html.DisplayFor(modelItem => m.time)</span>
+                    <div class="card-body border-top">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="input-field m-t-0 m-b-0">
+                                    <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    }
-                }
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(function posttext() {
+        $("#sendBtn").click(function () {
+            debugger;
+            var message = {};
+            message.text = $("#newMessage").val();
+            message.id = 0;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddMessage")',
+                data: {
+                    text: $("#newMessage").val(),
+                    id: 0
+                },
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    alert("Prescription has been written.");
+                },
+                error: function () {
+                    alert("Cannot write this prescription. Please check all of the fields.");
+                }
+        });
+        return false;
+    });
+});
+</script>

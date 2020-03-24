@@ -91,5 +91,22 @@ namespace DataLibrary.BusinessLogic
             }
             return temp;
         }
+
+        public static int AddMessage(int userId, string text, string user, 
+            string time, string date, int chatID)
+        {
+            Message data = new Message
+            {
+                userID = userId,
+                text = text,
+                user = user,
+                time = time,
+                date = date
+            };
+            string sql = @"INSERT into dbo.[messages] (userId, text, user, time, date, chatID)
+                            values(@userId, @text, @user, @time, @date, " + chatID +")";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
     }
 }

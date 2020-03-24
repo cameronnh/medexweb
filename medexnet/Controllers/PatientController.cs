@@ -19,7 +19,7 @@ namespace medexnet.Controllers
 
             return View(currentPatient);
         }
-        
+
         public UserModel GetInfo(UserModel temp)
         {
             List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(temp.Id);
@@ -51,7 +51,6 @@ namespace medexnet.Controllers
         {
             currentPatient = GetInfo(patient);
             currentPatient.myDoctors = PatientProcessor.loadDoctorData(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.DMDoctorData)); ;
-
             return View(currentPatient);
         }
 
@@ -71,10 +70,10 @@ namespace medexnet.Controllers
         }
         public ActionResult MessageInbox(UserModel patient)
         {
-           currentPatient = GetInfo(patient);
+            currentPatient = GetInfo(patient);
 
-           currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
-           return View(currentPatient);
+            currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
         {
@@ -86,7 +85,7 @@ namespace medexnet.Controllers
         {
             List<CalendarEvent> temp = new List<CalendarEvent>();
             foreach (Appointment item in currentPatient.myAppointments)
-            { 
+            {
                 temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
             }
             return temp;
@@ -146,7 +145,7 @@ namespace medexnet.Controllers
 
             // Return info.  
             return result;
-        }        
+        }
 
         public ActionResult GetCalendarData()
         {
@@ -174,7 +173,7 @@ namespace medexnet.Controllers
             List<CalendarEvent> temp = new List<CalendarEvent>();
             foreach (PatientPrescriptions item in currentPatient.myPrescriptions)
             {
-                temp.Add(new CalendarEvent { Sr = 2, Title = "Take "+ item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(item.pillCount).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
+                temp.Add(new CalendarEvent { Sr = 2, Title = "Take " + item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(item.pillCount).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
                 foreach (Delivery d in item.dDates)
                 {
                     temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });
@@ -186,6 +185,24 @@ namespace medexnet.Controllers
                 temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
             }
             return temp;
+        }
+
+        [HttpPost]
+        public ActionResult AddMessage(messageobj data)
+        {
+            if (ModelState.IsValid)
+            {
+                PatientProcessor.AddMessage(currentPatient.Id, data.msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), data.id);
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+
+        public class messageobj
+        {
+            public string msg { get; set; }
+            public int id { get; set; }
         }
     }
 }

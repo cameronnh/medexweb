@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\DoctorProcessor.cs" />
     <Compile Include="BusinessLogic\PatientProcessor.cs" />
+    <Compile Include="BusinessLogic\PharmacyProcessor.cs" />
     <Compile Include="BusinessLogic\Processor.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
     <Compile Include="Models\Appointment.cs" />

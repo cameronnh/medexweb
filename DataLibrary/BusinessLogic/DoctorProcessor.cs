@@ -73,4 +73,12 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }        
     }
+
+    //public static List<PatientPrescriptions> GetPatientPrescriptions(int id)
+    //{
+    //    string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, name, dosage, pillCount, 
+    //                        numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPrescriptions] WHERE patientFID = '" + id + "';";
+
+    //    return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
+    //}  
 }

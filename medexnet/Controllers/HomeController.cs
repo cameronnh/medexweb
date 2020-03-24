@@ -79,7 +79,7 @@ namespace medexnet.Controllers
                 }
                 else if(user.accountType == 3)
                 {
-                    return View();
+                    return RedirectToAction("Index", "Pharmacy", user);
                 }
                 else if(user.accountType == 4)
                 {

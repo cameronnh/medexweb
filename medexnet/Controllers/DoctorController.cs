@@ -10,12 +10,82 @@ using DataLibrary.BusinessLogic;
 namespace medexnet.Controllers
 {
     public class DoctorController : Controller
-    {      
+    {
+        public static UserModel currentDoctor = new UserModel();
+
         public ActionResult Index(UserModel doctor)
-        {              
-              
-            return View(doctor);
+        {
+            currentDoctor = doctor;
+
+            List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
+            List<UserModel> patients = new List<UserModel>();
+
+            foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
+            {
+                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(patientId);//(2nd list) gets data with datamodel
+                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                UserModel patient = tempPatientData[0];
+
+                patients.Add(patient);
+            }
+            currentDoctor.SetPatients(patients);          
+            return View(currentDoctor);
         }
+
+        public ActionResult Patients()
+        {
+
+            return View(currentDoctor);
+        }
+
+        public ActionResult Messages()
+        {
+            return View(currentDoctor);
+        }
+
+        [HttpPost]
+        public ActionResult AddPrescription(PatientPrescriptions pers)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.AddPrescription(pers.patientFID, currentDoctor.Id, pers.name, pers.dosage, pers.pillCount, pers.numberofRefills,
+                    pers.useBefore, pers.description, DateTime.Now.ToString());
+
+                string message = "Prescription has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();           
+        }
+
+        [HttpPost]
+        public ActionResult DeletePrescription(UserModel currentPatient)
+        {           
+            //----------------------    Getting Patients Prescriptions
+            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id);
+            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
+            currentPatient.SetPrescriptions(patientPrescriptions);
+
+            return View(currentPatient);
+        }
+
+        public ActionResult PatientDetails(UserModel currentPatient)
+        {
+            //---------------------- Getting Patients Details
+            List<UserModel> tempPatientData = new List<UserModel>();
+            List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(currentPatient.Id);
+            tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));
+            currentPatient = tempPatientData[0];      
+
+            //----------------------    Getting Patients Prescriptions
+            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id);
+            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
+            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
+            currentPatient.SetPrescriptions(patientPrescriptions);
+
+            return View(currentPatient);
+        }  
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)
         {
@@ -37,7 +107,7 @@ namespace medexnet.Controllers
         }
 
         public static PatientPrescriptions DataAccessPatientPerscriptions(DataLibrary.Models.PatientPrescriptions temp)
-        {                                                       
+        {
             return new PatientPrescriptions
             {
                 Id = temp.Id,
@@ -53,80 +123,6 @@ namespace medexnet.Controllers
                 description = temp.description,
                 datePrescribed = temp.datePrescribed
             };
-        }
-     
-        public ActionResult Patients(UserModel doctor)
-        {
-            List<int> patientIds = DoctorProcessor.GetPatientIds(doctor.Id);
-
-            List<UserModel> patients = new List<UserModel>();
-
-            foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
-            {
-                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
-                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(patientId);//(2nd list) gets data with datamodel
-                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
-                UserModel patient = tempPatientData[0];
-
-                patients.Add(patient);//adds the patient to doctors list of patients
-            }
-
-            doctor.SetPatients(patients);//sets the list of patients 
-            //maybe i can make a add function         
-
-            return View(doctor);
-        }
-
-        public ActionResult PatientDetails(UserModel currentPatient)
-        {
-            //---------------------- Getting Patient Details Again
-            List<UserModel> tempPatientData = new List<UserModel>();
-            List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(currentPatient.Id);
-            tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));
-            currentPatient = tempPatientData[0];      
-
-            //----------------------    Getting Pateints Prescriptions
-            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id);
-            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
-            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
-            currentPatient.SetPrescriptions(patientPrescriptions);
-
-            return View(currentPatient);
-        }
-
-        //public ActionResult AddPrescription(AddPrescription model)
-        //{
-        //    patientId = model.Id;
-
-        //    return View();
-        //}
-
-        public ActionResult AddPrescription()
-        {           
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddPrescription(AddPrescription model)
-        {
-            if (ModelState.IsValid)
-            {//the number 2 should be the doctor id not a 2// same with the 0 this might not need to change
-             //    DoctorProcessor.AddPrescription(model.Id, 2, model.prescriptionFID, 0, model.name, model.dosage,
-             //model.pillCount, model.numberofRefills, model.useBefore, model.description, DateTime.Now.ToString());
-
-
-             //TOOK OUT PRESCRIPTION FID SO A DOCTOR CAN MAKE ANY PRESCRIPTION AND DELIVERY FID SO THAT THE DELIVERY CAN BE ADDED AFTERWARDS
-
-
-                DoctorProcessor.AddPrescription(model.Id, 2, model.name, model.dosage,
-            model.pillCount, model.numberofRefills, model.useBefore, model.description, DateTime.Now.ToString());
-
-                return RedirectToAction("Login", "Home", model);
-            }
-            return View();
-        }
-
-
+        }       
     }
 }

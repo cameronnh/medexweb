@@ -4,10 +4,111 @@
     Layout = "~/Views/Shared/PatientLayout.cshtml";
 }
 
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                //theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+
+                handleWindowResize: true,
+                defaultView: 'month',
+                editable: false,
+                allDaySlot: false,
+                selectable: true,
+                slotMinutes: 15,
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Patient/GetAppointmentData',
+                        type: "GET",
+                        dataType: "JSON",
+
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.Title,
+                                        description: data.Desc,
+                                        start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: data.PriorityColor,
+                                        borderColor: "#000000"
+                                    });
+                            });
+
+                            callback(events);
+                        }
+                    });
+                },
+                //eventRender: function (event, element)
+                //{
+                //    element.qtip(
+                //    {
+                //        content: event.description
+                //    });
+                //},
+            });
+        });
+    </script>
+}
 
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title m-b-0">Your Appointments</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"> </th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Doctor</th>
+                                <th scope="col">Doctor's Phone Number</th>
+                                <th scope="col">Confirmed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (medexnet.Models.Appointment item in Model.myAppointments)
+                            {
+                                string doctorName = "Dr. " + item.doctor.lName;
+                                string confirmation = "";
+                                if (item.isConfirmed)
+                                {
+                                    confirmation = "Yes";
+                                }
+                                else
+                                {
+                                    confirmation = "No";
+                                }
+                            <tr>
+                                <td><a href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => item.doctor.phoneNumber)</td>
+                                <td onclick="">@Html.DisplayFor(modelItem => confirmation)</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="card-body b-l calender-sidebar">
+                    <div id="calendar"></div>
+                </div>
+            </div>
             <div class="col-md-6">
             </div>
         </div>

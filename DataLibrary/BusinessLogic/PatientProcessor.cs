@@ -65,5 +65,18 @@ namespace DataLibrary.BusinessLogic
             }
             return DoctorList;
         }
+        public static List<Appointment> loadAppointmentData(int id)
+        {
+            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE patientFID = '" + id + "';";
+            List<Appointment> temp = SqlDataAccess.LoadData<Appointment>(sql);
+            for(int i = 0; i < temp.Count(); i++)
+            {
+                 sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
+                            FROM dbo.[user] WHERE Id = '" + temp[i].DoctorFID + "';";
+                List<UserModel> tempDoc = SqlDataAccess.LoadData<UserModel>(sql);
+                temp[i].doctor = tempDoc[0];
+            }
+            return temp;
+        }
     }
 }

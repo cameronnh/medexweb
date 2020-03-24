@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\DALtoMedex.cs" />
     <Compile Include="Models\Delivery.cs" />

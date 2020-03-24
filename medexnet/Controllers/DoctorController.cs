@@ -114,7 +114,6 @@ namespace medexnet.Controllers
                 patientFID = temp.patientFID,
                 doctorFID = temp.doctorFID,
                 prescriptionFID = temp.prescriptionFID,
-                deliveryFID = temp.deliveryFID,
                 name = temp.name,
                 dosage = temp.dosage,
                 pillCount = temp.pillCount,

@@ -28,7 +28,7 @@ namespace medexnet.Controllers
             temp.SetPrescriptions(patientPrescriptions);
             foreach (PatientPrescriptions p in temp.myPrescriptions)
             {
-                p.dDates = PatientProcessor.loadPrescriptionDelivery(p.deliveryFID).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
+                p.dDates = PatientProcessor.loadPrescriptionDelivery(p.Id).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
             }
             temp.myAppointments = PatientProcessor.loadAppointmentData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
 
@@ -72,6 +72,14 @@ namespace medexnet.Controllers
         public ActionResult MessageInbox(UserModel patient)
         {
             currentPatient = GetInfo(patient);
+
+            currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            //temp.Id = 0;
+            //temp.topic = "Colonoscopy";
+            //temp.messageList.Add(new Message() { text = "Hello Dr. Hassan!", time = "4:00 PM", user = currentPatient.lName, userID = 1 });
+            //temp.messageList.Add(new Message() { text = "Hello Mr. " + currentPatient.lName, time = "4:20 PM", user = "Dr. Hassan", userID = 2 });
+            //temp.messageList.Add(new Message() { text = "I have a question about my appointment...", time = "4:21 PM", user = currentPatient.lName, userID = 1 });
+            //temp.messageList.Add(new Message() { text = "What's your question?", time = "4:22 PM", user = "Dr. Hassan", userID = 2 });
             return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
@@ -119,7 +127,7 @@ namespace medexnet.Controllers
                 foreach (Delivery d in item.dDates)
                 {
                     temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });
-                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = "Delivery Arrives: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
                 }
             }
             return temp;
@@ -176,7 +184,7 @@ namespace medexnet.Controllers
                 foreach (Delivery d in item.dDates)
                 {
                     temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });
-                    temp.Add(new CalendarEvent { Sr = 4, Title = "Next Delivery: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
+                    temp.Add(new CalendarEvent { Sr = 4, Title = "Delivery Arrives: " + item.name + " " + item.dosage, Start_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.arrivalDate).ToShortDateString(), Desc = "Estimated Delivery Date", PriorityColor = "#1313ad" });
                 }
             }
             foreach (Appointment item in currentPatient.myAppointments)

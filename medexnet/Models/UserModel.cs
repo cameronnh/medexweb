@@ -24,6 +24,7 @@ namespace medexnet.Models
         public List<UserModel> myDoctors { get; set; }
         public List<UserModel> myPatients { get; set; }
         public List<Appointment> myAppointments { get; set; }
+        public List<Chats> myChats { get; set; }
 
         public UserModel()
         {
@@ -31,6 +32,7 @@ namespace medexnet.Models
             myDoctors = new List <UserModel>();
             myPatients = new List <UserModel>();
             myAppointments = new List<Appointment>();
+            myChats = new List<Chats>();
         }
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }

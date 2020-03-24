@@ -38,7 +38,7 @@ namespace DataLibrary.BusinessLogic
 
         public static List<PatientPrescriptions> LoadPatientPrescriptions(int id)
         {
-            string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, 
+            string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, name, dosage, pillCount, 
                             numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPrescriptions] WHERE patientFID = '" + id + "';";
 
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
@@ -46,7 +46,7 @@ namespace DataLibrary.BusinessLogic
 
         public static List<Delivery> loadPrescriptionDelivery(int id)
         {
-            string sql = @"SELECT Id, shippedDate, arrivalDate FROM dbo.[deliveries] WHERE Id = '" + id + "';";
+            string sql = @"SELECT Id, shippedDate, arrivalDate FROM dbo.[deliveries] WHERE patientRXFID = '" + id + "';";
 
             return SqlDataAccess.LoadData<Delivery>(sql);
         }
@@ -75,6 +75,19 @@ namespace DataLibrary.BusinessLogic
                             FROM dbo.[user] WHERE Id = '" + temp[i].DoctorFID + "';";
                 List<UserModel> tempDoc = SqlDataAccess.LoadData<UserModel>(sql);
                 temp[i].doctor = tempDoc[0];
+            }
+            return temp;
+        }
+
+        public static List<Chats> loadChats(int id)
+        {
+            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE patientID = '" + id + "';";
+            List<Chats> temp = SqlDataAccess.LoadData<Chats>(sql);
+            foreach (Chats C in temp)
+            {
+                sql = @"SELECT Id, userId, text, user, time, date FROM dbo.[messages] WHERE chatID = '" + C.Id + "';";
+                List<Message> tempMessage = SqlDataAccess.LoadData<Message>(sql);
+                C.messageList = tempMessage;
             }
             return temp;
         }

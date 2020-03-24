@@ -1,0 +1,47 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[user]
+     Clustered indexes that will be dropped
+       unnamed constraint on [dbo].[deliveries]
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[deliveries] (Primary Key)
+     Alter
+       [dbo].[patientPrescriptions] (Table)
+     Table rebuild
+       [dbo].[user] (Table)
+     Create
+       [dbo].[Chats] (Table)
+       [dbo].[Messages] (Table)
+       [dbo].[FK_Chats_PatientID] (Foreign Key)
+       [dbo].[FK_Chats_DoctorID] (Foreign Key)
+       [dbo].[FK_Messages_ChatId] (Foreign Key)
+       [dbo].[FK_Messages_UserId] (Foreign Key)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_doctorPatients_ToTable] (Foreign Key)
+       [dbo].[FK_doctorPatients_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_2] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_2] (Foreign Key)
+       [dbo].[FK_PatientFID] (Foreign Key)
+       [dbo].[FK_DoctorFID] (Foreign Key)
+     Create
+       [dbo].[FK_doctorPatients_ToTable] (Foreign Key)
+       [dbo].[FK_doctorPatients_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_2] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_2] (Foreign Key)
+       [dbo].[FK_PatientFID] (Foreign Key)
+       [dbo].[FK_DoctorFID] (Foreign Key)
+
+The column deliveryFID on table [dbo].[patientPrescriptions] must be changed from NULL to NOT NULL. If the table contains data, the ALTER script may not work. To avoid this issue, you must add values to this column for all rows or mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+

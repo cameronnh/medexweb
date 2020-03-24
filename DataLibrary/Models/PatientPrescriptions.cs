@@ -12,7 +12,6 @@ namespace DataLibrary.Models
         public int patientFID { get; set; }
         public int doctorFID { get; set; }
         public int prescriptionFID { get; set; }
-        public int deliveryFID { get; set; }
         public string name { get; set; }
         public string dosage { get; set; }
         public int pillCount { get; set; }

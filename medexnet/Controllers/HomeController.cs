@@ -64,7 +64,7 @@ namespace medexnet.Controllers
             {
                 List<UserModel> userList = new List<UserModel>();
                 
-                userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALToMedex));
+                userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.GetUserData));
                 UserModel user = userList[0];
 
                 Session["Id"] = user.Id;
@@ -96,25 +96,6 @@ namespace medexnet.Controllers
                 return View();
             }
             
-        }
-
-        public static UserModel DALToMedex(DataLibrary.Models.UserModel temp)
-        {
-            return new UserModel
-            {
-                Id = temp.Id,
-                fName = temp.fName,
-                lName = temp.lName,
-                email = temp.email,
-                password = temp.password,
-                phoneNumber = temp.phoneNumber,
-                streetAddress = temp.streetAddress,
-                city = temp.city,
-                state = temp.state,
-                zipcode = temp.zipcode,
-                accountType = temp.accountType,
-                officeHours = temp.officeHours,
-            };
         }
     }
 }

@@ -68,6 +68,8 @@
     <Build Include="dbo\Tables\prescriptionClasses.sql" />
     <Build Include="dbo\Tables\deliveries.sql" />
     <Build Include="dbo\Tables\appointments.sql" />
+    <Build Include="dbo\Tables\chats.sql" />
+    <Build Include="dbo\Tables\messages.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MedDB.refactorlog" />

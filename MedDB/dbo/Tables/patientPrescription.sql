@@ -2,7 +2,6 @@
     [Id]               INT  IDENTITY (1, 1)   PRIMARY KEY ,
     [patientFID]       INT           NOT NULL,
     [prescriptionFID]  INT           NOT NULL,
-    [deliveryFID]        INT           NOT NULL,
     [name]           VARCHAR (100) NOT NULL,
     [dosage]         VARCHAR (50) NOT NULL,
     [pillCount]      INT           NOT NULL,

@@ -36,19 +36,9 @@
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav" class="p-t-30">
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Schedule.aspx" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-truck"></i><span class="hide-menu">Deliveries</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Doctor</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging </span></a>
-                                <ul aria-expanded="false" class="collapse  first-level">
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-inbox"></i><span class="hide-menu"> Inbox </span></a></li>
-                                    <li class="sidebar-item"><a href="#l" class="sidebar-link"><i class="mdi mdi-send"></i><span class="hide-menu"> Send Message </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-trash-alt"></i><span class="hide-menu"> Trash </span></a></li>
-                                </ul>
-                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Pharmacy", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Prescriptions", "Pharmacy")" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
+                            
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">

@@ -19,7 +19,6 @@ C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\bin\Debug\DataLibrary.dll
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\bin\Debug\DataLibrary.pdb
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\bin\Debug\Dapper.dll
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\bin\Debug\Dapper.xml
-C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.csprojAssemblyReference.cache
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb

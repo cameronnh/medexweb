@@ -22,3 +22,8 @@ C:\Users\Connor\Desktop\Github\medexweb\MedDB\bin\Debug\MedDB.dll
 C:\Users\Connor\Desktop\Github\medexweb\MedDB\bin\Debug\MedDB.pdb
 C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\MedDB.dll
 C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\MedDB.pdb
+C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\MedDB.sqlprojAssemblyReference.cache
+C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\Model.xml
+C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\refactor.xml
+C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\postdeploy.sql
+C:\Users\Connor\Desktop\Github\medexweb\MedDB\obj\Debug\predeploy.sql

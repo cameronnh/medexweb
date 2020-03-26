@@ -173,7 +173,10 @@ namespace medexnet.Controllers
             List<CalendarEvent> temp = new List<CalendarEvent>();
             foreach (PatientPrescriptions item in currentPatient.myPrescriptions)
             {
-                temp.Add(new CalendarEvent { Sr = 2, Title = "Take " + item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(item.pillCount).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
+                for(int i = 0; i < item.pillCount; i++)
+                {
+                    temp.Add(new CalendarEvent { Sr = 2, Title = "Take " + item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
+                }
                 foreach (Delivery d in item.dDates)
                 {
                     temp.Add(new CalendarEvent { Sr = 4, Title = item.name + " " + item.dosage + " Shipped", Start_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), End_Date = Convert.ToDateTime(d.shippedDate).ToShortDateString(), Desc = "Shipped", PriorityColor = "#1313ad" });

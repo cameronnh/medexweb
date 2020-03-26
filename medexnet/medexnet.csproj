@@ -185,6 +185,7 @@
     <Content Include="Views\Doctor\PatientDetails.cshtml" />
     <Content Include="Views\Doctor\Messages.cshtml" />
     <Content Include="Views\Pharmacy\Prescriptions.cshtml" />
+    <Content Include="Views\Doctor\PatientsPrescriptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

@@ -16,7 +16,12 @@ namespace medexnet.Controllers
         public ActionResult Index(UserModel doctor)
         {
             currentDoctor = doctor;
+                      
+            return View(currentDoctor);
+        }
 
+        public ActionResult Patients()
+        {
             List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
             List<UserModel> patients = new List<UserModel>();
 
@@ -29,12 +34,7 @@ namespace medexnet.Controllers
 
                 patients.Add(patient);
             }
-            currentDoctor.SetPatients(patients);          
-            return View(currentDoctor);
-        }
-
-        public ActionResult Patients()
-        {
+            currentDoctor.SetPatients(patients);
 
             return View(currentDoctor);
         }
@@ -59,9 +59,30 @@ namespace medexnet.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeletePrescription(UserModel currentPatient)
-        {           
-            //----------------------    Getting Patients Prescriptions
+        public ActionResult AddAppointment(Appointment app)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.AddAppointment(app.PatientFID, currentDoctor.Id, app.date, app.desc);
+
+                string message = "Appointment has been made.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+
+        public ActionResult PatientDetails(UserModel currentPatient)
+        {         
+            List<UserModel> tempPatientData = new List<UserModel>();
+            List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(currentPatient.Id);
+            tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));
+            currentPatient = tempPatientData[0];      
+
+            return View(currentPatient);
+        }
+
+        public ActionResult PatientsPrescriptions(UserModel currentPatient)
+        {                
             List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id);
             List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
             patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
@@ -69,23 +90,6 @@ namespace medexnet.Controllers
 
             return View(currentPatient);
         }
-
-        public ActionResult PatientDetails(UserModel currentPatient)
-        {
-            //---------------------- Getting Patients Details
-            List<UserModel> tempPatientData = new List<UserModel>();
-            List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(currentPatient.Id);
-            tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));
-            currentPatient = tempPatientData[0];      
-
-            //----------------------    Getting Patients Prescriptions
-            List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id);
-            List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
-            patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
-            currentPatient.SetPrescriptions(patientPrescriptions);
-
-            return View(currentPatient);
-        }  
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)
         {

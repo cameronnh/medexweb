@@ -1,0 +1,37 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       Primary Key: unnamed constraint on [dbo].[patientPrescriptions]
+     Possible data issues
+       The column [dbo].[patientPrescriptions].[deliveryFID] is being dropped, data loss could occur.
+
+** User actions
+     Alter
+       [dbo].[patientPrescriptions] (Table)
+     Create
+       Primary Key: unnamed constraint on [dbo].[patientPrescriptions] (Primary Key)
+       [dbo].[appointments] (Table)
+       [dbo].[chats] (Table)
+       [dbo].[deliveries] (Table)
+       [dbo].[messages] (Table)
+       [dbo].[FK_PatientFID] (Foreign Key)
+       [dbo].[FK_DoctorFID] (Foreign Key)
+       [dbo].[FK_Chats_PatientID] (Foreign Key)
+       [dbo].[FK_Chats_DoctorID] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_1] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_2] (Foreign Key)
+       [dbo].[FK_Messages_ChatId] (Foreign Key)
+       [dbo].[FK_Messages_UserId] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_2] (Foreign Key)
+
+** Supporting actions
+
+The column [dbo].[patientPrescriptions].[deliveryFID] is being dropped, data loss could occur.
+The column prescriptionFID on table [dbo].[patientPrescriptions] must be changed from NULL to NOT NULL. If the table contains data, the ALTER script may not work. To avoid this issue, you must add values to this column for all rows or mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
+

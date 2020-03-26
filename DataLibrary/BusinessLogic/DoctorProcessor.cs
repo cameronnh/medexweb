@@ -67,18 +67,27 @@ namespace DataLibrary.BusinessLogic
                 description = description,
                 datePrescribed = datePrescribed
             };
-            string sql = @"INSERT into dbo.[patientPrescriptions] (patientFID, doctorFID, prescriptionFID, deliveryFID, name, dosage, pillCount, numberofRefills, useBefore, description, datePrescribed)
-                            values(@patientFID, @doctorFID, @prescriptionFID, @deliveryFID, @name, @dosage, @pillCount, @numberofRefills, @useBefore, @description, @datePrescribed)";
+            string sql = @"INSERT into dbo.[patientPrescriptions] (patientFID, doctorFID, prescriptionFID, name, dosage, pillCount, numberofRefills, useBefore, description, datePrescribed)
+                            values(@patientFID, @doctorFID, @prescriptionFID, @name, @dosage, @pillCount, @numberofRefills, @useBefore, @description, @datePrescribed)";
 
             return SqlDataAccess.SaveData(sql, data);
-        }        
-    }
+        }
 
-    //public static List<PatientPrescriptions> GetPatientPrescriptions(int id)
-    //{
-    //    string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, name, dosage, pillCount, 
-    //                        numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPrescriptions] WHERE patientFID = '" + id + "';";
+        public static int AddAppointment(int PatientFID, int DoctorFID, string date, string desc)
+        {
+            Appointment data = new Appointment
+            {
+                PatientFID = PatientFID,
+                DoctorFID = DoctorFID,
+                date = date,
+                desc = desc
+            };
+            //string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date, `desc`, isconfirmed)
+            //                values(@PatientFID, @DoctorFID, @date, `@desc`, '1')";
 
-    //    return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
-    //}  
+            string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date `desc`, isconfirmed)
+                            values(@PatientFID, @DoctorFID, @date, @`desc`, '1')";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+    }   
 }

@@ -1,0 +1,143 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/DoctorLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dl></dl>
+                    <dt>
+                        Change Contact Information
+                    </dt>
+                    <form>
+                        @* START OF EMAIL *@
+                        <dl>
+
+                            Current Email Address: @Html.DisplayFor(model => model.email)
+                            <input type="email" name="email" id="email" class="form-control" required />
+                        </dl>
+                        <dl>
+                            <input class="btn btn-primary" name="change Email" @*data-id="@item.Id"*@ id="changeEmail" value="Change Email" type="button">
+                        </dl>
+                    </form>
+                    <dl></dl>
+                    <form>
+                        @* START OF PHONE *@
+                    <dl>
+                        Current Phone Number: @Html.DisplayFor(model => model.phoneNumber)
+                        <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control" required />
+                    </dl>
+                    <dl>
+                        <input class="btn btn-primary" name="change Phone" @*data-id="@item.Id"*@ id="changePhone" value="Change Phone" type="button">
+                    </dl>
+                </form>
+                <dl></dl>
+                <dt>
+                    Change Address Information
+                </dt>
+                <form>
+                    @* START OF ADDRESS *@
+                    <dl>
+                        Current Address: @Html.DisplayFor(model => model.streetAddress)
+                        <input type="text" name="streetAdress" id="email" class="form-control" required />
+                    </dl>
+                    <dl></dl>
+                    <dl>
+                        Current City: @Html.DisplayFor(model => model.city)
+                        <input type="text" name="city" id="city" class="form-control" required />
+                    </dl>
+                    <dl></dl>
+                    <dl>
+                        Current State: @Html.DisplayFor(model => model.state)
+                        <input type="text" name="state" id="state" class="form-control" required />
+                    </dl>
+                    <dl></dl>
+                    <dl>
+                        Current State: @Html.DisplayFor(model => model.zipcode)
+                        <input type="text" name="zipcode" id="zipcode" class="form-control" required />
+                    </dl>
+                    <dl>
+                        <input class="btn btn-primary" name="change address" @*data-id="@item.Id"*@ id="changeAddress" value="Change Address" type="button">
+                    </dl>
+                </form>
+                <dl></dl>
+                <dt>
+                    Change Password
+                </dt>
+                <form>
+                    @* START OF PASSWORD *@
+                    <dl>
+                        Current Password:
+                        <input type="password" name="currentpassword" id="currentpassword" class="form-control" required />
+                    </dl>
+                    <dl></dl>
+                    <dl>
+                        New Password:
+                        <input type="password" name="newpassword" id="newpassword" class="form-control" required />
+                    </dl>
+
+                    <dl>
+                        <input class="btn btn-primary" name="change password" @*data-id="@item.Id"*@ id="changePassword" value="Change Password" type="button">
+                    </dl>
+                </form>
+            </dl>
+
+        </div>
+    </div>
+</div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#changePhone").click(function () {
+                debugger;
+                var newData = {};
+                newData.email = $("#email").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeEmail")',
+                    data: '{newData: ' + JSON.stringify(newData) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Your Email Address has changed aswell.");
+                    },
+                    error: function () {
+                        alert("Cannot change email address.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#changeEmail").click(function () {
+                debugger;
+                var newData = {};
+                newData.email = $("#email").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeEmail")',
+                    data: '{newData: ' + JSON.stringify(newData) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Your Email Address has changed aswell.");
+                    },
+                    error: function () {
+                        alert("Cannot change email address.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+}

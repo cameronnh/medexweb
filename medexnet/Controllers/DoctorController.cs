@@ -14,11 +14,11 @@ namespace medexnet.Controllers
         public static UserModel currentDoctor = new UserModel();
 
         public ActionResult Index(UserModel doctor)
-        {
+        {           
             currentDoctor = doctor;
                       
             return View(currentDoctor);
-        }
+        }       
 
         public ActionResult Patients()
         {
@@ -89,6 +89,25 @@ namespace medexnet.Controllers
             currentPatient.SetPrescriptions(patientPrescriptions);
 
             return View(currentPatient);
+        }
+
+        public ActionResult Settings()
+        {
+            return View(currentDoctor);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeEmail(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                //CHECK IF EMAIL IS GOOD
+                DoctorProcessor.ChangeEmail(currentDoctor.Id, newData.email);
+
+                string message = "You Email has been changed.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
         }
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)

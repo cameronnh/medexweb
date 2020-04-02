@@ -45,9 +45,7 @@ namespace DataLibrary.BusinessLogic
         public static List<UserModel> LoadPatientInfo(int id)
         {
             string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode
-                           FROM dbo.[user] WHERE Id = '"+ id +"';";
-
-            //string sql = @"SELECT user.Id, user.fName, user.lName, user.password, user.phoneNumber, user.streetAddress, user.city, user.state, user.zipcode From dbo.[user] INNER JOIN [bridgeDoctorPatient] on [user].Id = [bridgeDoctorPatient]."
+                           FROM dbo.[user] WHERE Id = '"+ id +"';";          
             
             return SqlDataAccess.LoadData<UserModel>(sql);
         }
@@ -89,5 +87,18 @@ namespace DataLibrary.BusinessLogic
                             values(@PatientFID, @DoctorFID, @date, @`desc`, '1')";
             return SqlDataAccess.SaveData(sql, data);
         }
+
+        public static int ChangeEmail(int Id, string email)
+        {
+            UserModel data = new UserModel
+            {
+                Id = Id,
+                email = email
+            };
+            string sql = @"UPDATE dbo.[user] SET email = '" + email + "' WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
     }   
+
+    
 }

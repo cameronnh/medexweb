@@ -195,6 +195,11 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(data.msg == null)
+                {
+                    data.msg = "Error!";
+                    data.id = 3;
+                }
                 PatientProcessor.AddMessage(currentPatient.Id, data.msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), data.id);
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });

@@ -128,15 +128,14 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("AddMessage")',
-                    data: '{message: ' + JSON.stringify(message) + '}',
+                    data: JSON.stringify(message),
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        alert("Message has been written.");
-                        $("#newMessage").val() = "";
+                        location.reload();
                     },
                     error: function () {
-                        alert("Cannot write this prescription. Please check all of the fields.");
+                        alert("Error sending message!");
                     }
             });
             return false;

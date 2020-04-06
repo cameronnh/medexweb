@@ -26,16 +26,29 @@ namespace medexnet.Controllers
             return View();
         }
 
+        public ActionResult PharmacistRegister()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PatientRegister(PatientRegister model)
         {
             if (ModelState.IsValid)
             {
-                PatientProcessor.CreatePatient(model.fName, model.lName, model.email, model.password,
-                    model.phoneNumber, model.streetAddress, model.city,
-                    model.state, model.zipcode);
-                return RedirectToAction("Login", "Home", model);
+                try
+                {
+                    PatientProcessor.CreatePatient(model.fName, model.lName, model.email, model.password,
+                        model.phoneNumber, model.streetAddress, model.city,
+                        model.state, model.zipcode);
+                    return RedirectToAction("Login", "Home", model);
+                }
+                catch
+                {
+                    ModelState.AddModelError("email", "There is already a user with this email. Please use a different email.");
+                    return View(model);
+                }
             }
             return View();
         }
@@ -46,10 +59,39 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                DoctorProcessor.CreateDoctor(model.fName, model.lName, model.email, model.password,
-                    model.phoneNumber, model.streetAddress, model.city,
-                    model.state, model.zipcode, model.officeHours);
-                return RedirectToAction("Login", "Home", model);
+                try
+                {
+                    DoctorProcessor.CreateDoctor(model.fName, model.lName, model.email, model.password,
+                        model.phoneNumber, model.streetAddress, model.city,
+                        model.state, model.zipcode, model.officeHours);
+                    return RedirectToAction("Login", "Home", model);
+                }
+                catch
+                {
+                    ModelState.AddModelError("email", "There is already a user with this email. Please use a different email.");
+                    return View(model);
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PharmacistRegister(PharmacistRegister model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PharmacyProcessor.CreatePharmacist(model.fName, model.lName, model.email, model.password,
+                        model.phoneNumber);
+                    return RedirectToAction("Login", "Home", model);
+                }
+                catch
+                {
+                    ModelState.AddModelError("email", "There is already a user with this email. Please use a different email.");
+                    return View(model);
+                }
             }
             return View();
         }
@@ -63,7 +105,7 @@ namespace medexnet.Controllers
             if (data.Count > 0)
             {
                 List<UserModel> userList = new List<UserModel>();
-                
+
                 userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.GetUserData));
                 UserModel user = userList[0];
 

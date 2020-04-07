@@ -1,4 +1,4 @@
-﻿@model medexnet.Models.DoctorRegister
+﻿@model medexnet.Models.PharmacistRegister
 
 @{
     Layout = null;
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Doctor Register - Medex</title>
+    <title>Patient Register - Medex</title>
     <link rel="icon" type="#" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/style")
@@ -37,14 +37,13 @@
                             <span class="db"><img src="#" alt="logo" /></span>
                         </div>*@
                     <!-- Form -->
-                    @using (Html.BeginForm("DoctorRegister", "Home", Model, FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal m-t-20" } }))
+                    @using (Html.BeginForm("PharmacistRegister", "Home", Model, FormMethod.Post, new { htmlAttributes = new { @class = "form-horizontal m-t-20" } }))
                     {
                         @Html.AntiForgeryToken()
 
                         <div class="row p-b-30">
                             <div class="col-12">
                                 @Html.ValidationMessageFor(model => model.fName, "", new { @class = "badge badge-danger" })
-
                                 <div class="input-group mb-3">
                                     @Html.EditorFor(model => model.fName, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "First Name" } })
                                 </div>
@@ -74,37 +73,13 @@
                                     @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Confirm Password" } })
                                 </div>
 
-
-                                @Html.ValidationMessageFor(model => model.officeHours, "", new { @class = "badge badge-danger" })
-                                <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.officeHours, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Hours" } })
-                                </div>
-
                                 @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "badge badge-danger" })
                                 <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = " Office Phone Number" } })
+                                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Phone Number" } })
                                 </div>
 
-                                @Html.ValidationMessageFor(model => model.streetAddress, "", new { @class = "badge badge-danger" })
-                                <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.streetAddress, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Street Address" } })
-                                </div>
-
-                                @Html.ValidationMessageFor(model => model.city, "", new { @class = "badge badge-danger" })
-                                <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office City" } })
-                                </div>
-
-                                @Html.ValidationMessageFor(model => model.state, "", new { @class = "badge badge-danger" })
-                                <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office State" } })
-                                </div>
-
-                                @Html.ValidationMessageFor(model => model.zipcode, "", new { @class = "badge badge-danger" })
-                                <div class="input-group mb-3">
-                                    @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control form-control-lg", @placeholder = "Office Zipcode" } })
-                                </div>
                             </div>
+
                         </div>
 
                         <div class="row border-top border-secondary">

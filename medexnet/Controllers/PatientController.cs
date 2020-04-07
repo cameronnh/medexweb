@@ -191,21 +191,27 @@ namespace medexnet.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMessage(messageobj data)
+        public ActionResult AddMessage(string msg, int id)
         {
             if (ModelState.IsValid)
             {
-                PatientProcessor.AddMessage(currentPatient.Id, data.msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), data.id);
+                PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
             return View();
         }
 
-        public class messageobj
+        [HttpPost]
+        public ActionResult AddAppointment(int doctorID, string date, string desc)
         {
-            public string msg { get; set; }
-            public int id { get; set; }
+            if (ModelState.IsValid)
+            {
+                PatientProcessor.AddAppointment(currentPatient.Id, doctorID, Convert.ToDateTime(date).ToShortDateString(), desc, false);
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
         }
     }
 }

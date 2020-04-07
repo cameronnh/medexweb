@@ -22,3 +22,12 @@ C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\bin\Debug\Dapper.xml
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
 C:\Users\Connor\Desktop\Github\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\bin\Debug\DataLibrary.dll
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\bin\Debug\DataLibrary.pdb
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\bin\Debug\Dapper.dll
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\bin\Debug\Dapper.xml
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.csprojAssemblyReference.cache
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CoreCompileInputs.cache
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
+C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb

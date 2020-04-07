@@ -103,8 +103,24 @@ namespace DataLibrary.BusinessLogic
                 time = time,
                 date = date
             };
-            string sql = @"INSERT into dbo.[messages] (userId, text, user, time, date, chatID)
+            string sql = @"INSERT into dbo.[messages] (userId, text, [user], time, date, chatID)
                             values(@userId, @text, @user, @time, @date, " + chatID +")";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int AddAppointment(int patientID, int doctorID, string date, string desc, bool isConfirmed)
+        {
+            Appointment data = new Appointment
+            {
+                PatientFID = patientID,
+                DoctorFID = doctorID,
+                date = date,
+                desc = desc,
+                isConfirmed = isConfirmed
+            };
+            string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date, [desc], isconfirmed)
+                            values(@PatientFID, @DoctorFID, @date, @desc, @isConfirmed)";
 
             return SqlDataAccess.SaveData(sql, data);
         }

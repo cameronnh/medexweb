@@ -3,6 +3,7 @@
 }
 
 @section scripts{
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#calendar').fullCalendar({
@@ -12,13 +13,48 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+
                 handleWindowResize: true,
-                defaultView: 'month',                                  
+                defaultView: 'month',
                 editable: true,
                 allDaySlot: false,
                 selectable: true,
                 slotMinutes: 15,
-                //events: "/home/getevents/"
+                //events: "/Patient/GetCalendarData/"
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Doctor/GetCalendarData',
+                        type: "GET",
+                        dataType: "JSON",
+
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.Title,
+                                        description: data.Desc,
+                                        start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: data.PriorityColor,
+                                        borderColor: "#000000"
+                                    });
+                            });
+
+                            callback(events);
+                        }
+                    });
+                },
+                //eventRender: function (event, element)
+                //{
+                //    element.qtip(
+                //    {
+                //        content: event.description
+                //    });
+                //}//,
+
+                editable: false
             });
         });
     </script>
@@ -33,17 +69,21 @@
                         <div class="row">
                             <div class="col-lg-3 border-right p-r-0">
                                 <div class="card-body border-bottom">
-                                    <h4 class="card-title m-t-15">Upcoming</h4>
+                                    <h4 class="card-title m-t-15">Upcoming Appoitments</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-
-                                            
-
+                                            @foreach (medexnet.Models.Appointment item in Model.myAppointments)
+                                            {
+                                                <a href="#" class="text-secondary">
+                                                    <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.date)</h4>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.desc)</p>
+                                                </a>
+                                            }
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                             </div>
                             <div class="col-lg-9">
                                 <div class="card-body b-l calender-sidebar">

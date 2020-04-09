@@ -7,6 +7,6 @@
     [time] VARCHAR(50) NOT NULL, 
     [date] VARCHAR(50) NOT NULL, 
     [chatID] INT NOT NULL,
-    CONSTRAINT [FK_Messages_ChatId] FOREIGN KEY ([chatID]) REFERENCES [dbo].[Chats] ([Id]),
+    CONSTRAINT [FK_Messages_ChatId] FOREIGN KEY ([chatID]) REFERENCES [dbo].[chats] ([Id]),
     CONSTRAINT [FK_Messages_UserId] FOREIGN KEY ([userId]) REFERENCES [dbo].[user] ([Id])
 )

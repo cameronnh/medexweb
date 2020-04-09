@@ -174,11 +174,35 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                //CHECK IF EMAIL IS GOOD ALONG WITH OTHERS
-                DoctorProcessor.ChangeEmail(currentDoctor.Id, newData.email);
+                bool validEmail = true;
 
-                string message = "Your email address has been changed.";
-                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                if(newData.email.Contains("@"))
+                {
+                }
+                else
+                {
+                    validEmail = false;
+                }
+                if(newData.email.Contains("."))
+                {
+                }
+                else
+                {
+                    validEmail = false;
+                }
+
+                if(validEmail)
+                {
+                    DoctorProcessor.ChangeEmail(currentDoctor.Id, newData.email);
+
+                    string message = "Your email address has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your email address is not valid.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
             }           
             return View("Settings", "Doctor");
         }

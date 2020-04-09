@@ -37,7 +37,7 @@
                                     confirmation = "No";
                                 }
                                 <tr>
-                                    <td><a href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
+                                    <td onclick=""><a id="chat" data-id="@item.DoctorFID" href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
                                     <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
@@ -111,6 +111,30 @@
                 //}
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#chat").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var chat = {};
+                chat.doctorFID =  $("#chat").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeChatID")',
+                    data: JSON.stringify(chat),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                    },
+                    error: function () {
+                        alert("Error");
+                    }
+            });
+            return false;
+        });
+    });
     </script>
 
 }

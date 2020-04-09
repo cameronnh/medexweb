@@ -40,8 +40,8 @@
                         <!-- This is for the sidebar toggle which is visible on mobile only -->
                         <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
                         <a class="navbar-brand" href="javascript:void(0)">
-                            <b class="logo-icon p-l-10">
-                                <img src="~/img/MedexLogo50x50.png" alt="homepage" class="light-logo" />
+                            <b class="logo-icon ">
+                                <img src="~/img/MedexLogo50x50newBlue.png" alt="homepage" class="light-logo" />
                             </b>
                             <!--<span class="logo-text">
                                 <img src="" alt="homepage" class="light-logo" />
@@ -179,3 +179,50 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {  
+        setInterval(function () {  
+            UpdateNotifications();  
+        }, 30);  
+    });  
+  
+    function UpdateNotifications() {  
+        $.ajax({  
+            type: "GET",  
+            url: "/Patient/GetNotifications",  
+            contentType: "application/json; charset=utf-8",  
+            dataType: "json",  
+            success: function (response) {  
+                console.log(response);  
+                if (response != null) {  
+                                      
+                    var j = ""; var p = 0; var Q = "";  
+                    $.each(response, function (k, v) {  
+                        j += '<li><div class=""><a href="javascript:void(0)" class="link border-top">'
+                        j += '<div class="d-flex no-block align-items-center p-10"><span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>'
+                        j += '<div class="m-l-10"><h5 class="m-b-0">Event today</h5><span class="mail-desc">Just a reminder that event</span>'
+                        j += '</div></div></a></div></li>'
+                        
+                    });  
+
+                    $('#2').html("");
+                    $('#2').append(j);
+
+                    
+                    //$('#myNotifyList').html("");  
+                    //j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";  
+                    //$('#myNotifyList').append(j);  
+                    //$('#countNotify').html("<span>" + p + "</span>");  
+                    //$('#myAllNotifications').html("");  
+                    //$('#myAllNotifications').append(Q);  
+                }  
+            },  
+            failure: function (response) {  
+                alert(response.d);  
+            }  
+        });  
+    }  
+    </script>
+}

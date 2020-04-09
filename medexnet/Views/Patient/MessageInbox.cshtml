@@ -42,7 +42,7 @@
                             <!--chat Row -->
                             <ul class="chat-list">
                                 <!--chat Row -->
-                                @foreach (medexnet.Models.Message M in Model.myChats[0].messageList)
+                                @foreach (medexnet.Models.Message M in Model.getChat(Model.Id, Model.currentChatID).messageList)
                                 {
                                     if (M.userID != Model.Id)
                                     {
@@ -124,7 +124,7 @@
                 debugger;
                 var message = {};
                 message.msg = $("#newMessage").val();
-                message.id = 3;
+                message.id = @Model.getChatID(Model.Id,Model.currentChatID);
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("AddMessage")',

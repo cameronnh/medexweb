@@ -20,6 +20,7 @@ namespace medexnet.Models
         public string zipcode { get; set; }
         public int accountType { get; set; }
         public string officeHours { get; set; }
+        public int currentChatID { get; set; }
         public List<PatientPrescriptions> myPrescriptions { get; set; }
         public List<UserModel> myDoctors { get; set; }
         public List<UserModel> myPatients { get; set; }
@@ -33,6 +34,7 @@ namespace medexnet.Models
             myPatients = new List <UserModel>();
             myAppointments = new List<Appointment>();
             myChats = new List<Chats>();
+            currentChatID = -1;
         }
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }
@@ -48,6 +50,17 @@ namespace medexnet.Models
                 }
             }
             return -1;
+        }
+        public Chats getChat(int patientID, int doctorID)
+        {
+            foreach (Chats c in myChats)
+            {
+                if (c.patientID == patientID && c.doctorID == doctorID)
+                {
+                    return c;
+                }
+            }
+            return null;
         }
     }
 }

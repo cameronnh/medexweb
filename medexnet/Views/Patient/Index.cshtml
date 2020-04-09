@@ -19,11 +19,10 @@
 
                 handleWindowResize: true,
                 defaultView: 'month',
-                editable: true,
+                editable: false,
                 allDaySlot: false,
                 selectable: true,
                 slotMinutes: 15,
-                //events: "/Patient/GetCalendarData/"
                 events: function (start, end, timezone, callback) {
                     $.ajax({
                         url: '/Patient/GetCalendarData',
@@ -48,7 +47,7 @@
                             callback(events);
                         }
                     });
-                },
+                }//,
                 //eventRender: function (event, element)  
                 //{  
                 //    element.qtip(  
@@ -57,7 +56,6 @@
                 //    });  
                 //}//,  
   
-                editable: false    
             });
         });
     </script>

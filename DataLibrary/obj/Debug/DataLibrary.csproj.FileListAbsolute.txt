@@ -1,11 +1,3 @@
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.csprojAssemblyReference.cache
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\DataLibrary.dll
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\DataLibrary.pdb
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\Dapper.dll
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\Dapper.xml
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
-C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb
 C:\Users\Cameron\Documents\GitHub\medexweb\DataLibrary\bin\Debug\DataLibrary.dll
 C:\Users\Cameron\Documents\GitHub\medexweb\DataLibrary\bin\Debug\DataLibrary.pdb
 C:\Users\Cameron\Documents\GitHub\medexweb\DataLibrary\bin\Debug\Dapper.dll
@@ -31,3 +23,11 @@ C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.cspro
 C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
 C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
 C:\Users\timjd\Documents\GitHub\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\DataLibrary.dll
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\DataLibrary.pdb
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\Dapper.dll
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\bin\Debug\Dapper.xml
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.csprojAssemblyReference.cache
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.csproj.CopyComplete
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.dll
+C:\Users\camer\Documents\Repos\medexweb\DataLibrary\obj\Debug\DataLibrary.pdb

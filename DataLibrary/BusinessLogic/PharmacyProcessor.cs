@@ -37,5 +37,17 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
         }
 
+        public static List<PharmacyPrescriptions> GetPrescriptionsByPatient()
+        {
+            string sql = @"SELECT [MedDB].[dbo].[patientPrescriptions].prescriptionFID, [MedDB].[dbo].[user].[fName], [MedDB].[dbo].[user].lName,
+                            [MedDB].[dbo].[patientPrescriptions].[name], patientPrescriptions.dosage, patientPrescriptions.pillCount,
+                            [patientPrescriptions].[description], patientPrescriptions.numberofRefills, patientPrescriptions.useBefore,
+                            patientPrescriptions.datePrescribed
+                           FROM [MedDB].[dbo].[patientPrescriptions]
+                           INNER JOIN [MedDB].[dbo].[user] ON [MedDB].[dbo].[patientPrescriptions].patientFID=[MedDB].[dbo].[user].Id
+                           ORDER BY [MedDB].[dbo].[user].lName;";
+
+            return SqlDataAccess.LoadData<PharmacyPrescriptions>(sql);
+        }
     }
 }

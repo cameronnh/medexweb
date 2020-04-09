@@ -38,5 +38,16 @@ namespace medexnet.Models
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }
         public List<UserModel> GetPatients() { return myPatients;}
         public void SetPatients(List<UserModel> doctorsPatients) { myPatients = doctorsPatients; }
+        public int getChatID(int patientID, int doctorID)
+        {
+            foreach(Chats c in myChats)
+            {
+                if(c.patientID == patientID && c.doctorID == doctorID)
+                {
+                    return c.Id;
+                }
+            }
+            return -1;
+        }
     }
 }

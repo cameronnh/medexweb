@@ -25,14 +25,6 @@ namespace DataLibrary.DataAccess
             }
         }
 
-        //public static int Load1Data(string sql)
-        //{
-        //    using(IDbConnection cnn = new SqlConnection(GetConnectionString()))
-        //    {
-        //        return cnn.Execute(sql);
-        //    }
-        //}
-
         public static int SaveData<T>(string sql, T data)
         {
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))

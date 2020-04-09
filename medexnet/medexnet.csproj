@@ -142,6 +142,7 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\PharmacistRegister.cs" />
+    <Compile Include="Models\PharmacyPrescriptions.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\PatientPrescriptions.cs" />
     <Compile Include="Models\PatientRegister.cs" />

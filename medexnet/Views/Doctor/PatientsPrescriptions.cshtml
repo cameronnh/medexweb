@@ -3,7 +3,7 @@
 <div>
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Patints Prescriptions</h4>
+        <h4 class="modal-title" id="myModalLabel">Patint Prescriptions</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
         </button>
@@ -11,36 +11,48 @@
 
     <div class="modal-body">
 
-        <div class="table-responsive">
-            <table id="zero_config" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Dosage</th>
-                        <th>Description</th>
-                        <th>Pill Count</th>
-                        <th>Refills</th>
-                        <th>Use Before</th>                        
-                        <th>DatePrescribed</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <dl class="dl-horizontal">
 
-                    @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.name)</td>
-                            <td>@Html.DisplayFor(modelItem => item.dosage)</td>
-                            <td>@Html.DisplayFor(modelItem => item.description)</td>
-                            <td>@Html.DisplayFor(modelItem => item.pillCount)</td>
-                            <td>@Html.DisplayFor(modelItem => item.numberofRefills)</td>
-                            <td>@Html.DisplayFor(modelItem => item.useBefore)</td>
-                            <td>@Html.DisplayFor(modelItem => item.datePrescribed)</td>                           
-                        </tr>
-                    }
-                </tbody>               
-            </table>
-        </div>     
+            @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
+            {
+                <dt>
+                    @Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)
+                </dt>
+
+                <dd>
+                    Perscription Name: @Html.DisplayFor(modelItem => item.name)
+                </dd>
+
+                <dd>
+                    Dosage: @Html.DisplayFor(modelItem => item.dosage)
+                </dd>
+
+                <dd>
+                    Description: @Html.DisplayFor(modelItem => item.description)
+                </dd>
+
+                <dd>
+                    Date Prescribed: @Html.DisplayFor(modelItem => item.datePrescribed)
+                </dd>
+
+                <dd>
+                    Use Before: @Html.DisplayFor(modelItem => item.useBefore)
+                </dd>
+
+                <dd>
+                    Number of Refills: @Html.DisplayFor(modelItem => item.numberofRefills)
+                </dd>
+
+                <dd>
+                    Pill Count: @Html.DisplayFor(modelItem => item.pillCount)
+                </dd>
+            }
+        </dl>
     </div>
-</div>
 
+    <div class="modal-footer">
+        <button class="btn btn-primary">Delete Prescription</button>
+        <button class="btn btn-primary">Add Prescription</button>
+    </div>
+
+</div>

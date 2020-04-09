@@ -83,9 +83,17 @@ namespace DataLibrary.BusinessLogic
             //string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date, `desc`, isconfirmed)
             //                values(@PatientFID, @DoctorFID, @date, `@desc`, '1')";
 
-            string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date `desc`, isconfirmed)
-                            values(@PatientFID, @DoctorFID, @date, @`desc`, '1')";
+            string sql = @"INSERT into dbo.[appointments] (patientFID, doctorFID, date, [desc], isconfirmed)
+                            values(@PatientFID, @DoctorFID, @date, '"+ desc + "', '1')";
             return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<UserModel> LoadUser(int id)
+        {
+            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
+                            FROM dbo.[user] WHERE Id = '" + id + "';";
+
+            return SqlDataAccess.LoadData<UserModel>(sql);
         }
 
         public static int ChangeEmail(int Id, string email)
@@ -98,7 +106,76 @@ namespace DataLibrary.BusinessLogic
             string sql = @"UPDATE dbo.[user] SET email = '" + email + "' WHERE Id = '" + Id + "';";
             return SqlDataAccess.SaveData(sql, data);
         }
-    }   
 
-    
+        public static int ChangePhone(int Id, string phoneNumber)
+        {
+            UserModel data = new UserModel
+            {
+                Id = Id,
+                phoneNumber = phoneNumber
+            };
+            string sql = @"UPDATE dbo.[user] SET phoneNumber = '" + phoneNumber + "' WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int ChangePassword(int Id, string password)
+        {
+            UserModel data = new UserModel
+            {
+                Id = Id,
+                password = password
+            };
+            string sql = @"UPDATE dbo.[user] SET passwword = '" + password + "' WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int ChangeAddress(int Id, string streetAddress, string city, string state, string zipcode)
+        {
+            UserModel data = new UserModel
+            {
+                Id = Id,
+                streetAddress = streetAddress,
+                city = city,
+                state = state,
+                zipcode = zipcode
+            };//NEED TO FINISH QUERY
+            string sql = @"UPDATE dbo.[user] SET streetAddress = '" + streetAddress + "' WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<Appointment> loadAppointmentData(int id)
+        {
+            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE doctorFID = '" + id + "';";
+            List<Appointment> temp = SqlDataAccess.LoadData<Appointment>(sql);
+            for (int i = 0; i < temp.Count(); i++)
+            {
+                sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
+                            FROM dbo.[user] WHERE Id = '" + temp[i].DoctorFID + "';";
+                List<UserModel> tempDoc = SqlDataAccess.LoadData<UserModel>(sql);
+                temp[i].doctor = tempDoc[0];
+            }
+            return temp;
+        }
+
+        public static List<UserModel> checkIfPatientExists(string fName, string lName, string email, string streetAddress, string city, string state)
+        {
+            string sql = @"SELECT Id, fName, lName, email, password, phoneNumber, streetAddress, city, state, zipcode, accountType, officeHours
+                            FROM dbo.[user] WHERE fName = '"+fName+"' AND lName = '"+lName+"' AND email = '"+email+"' AND streetAddress = '"+streetAddress+"' AND city = '"+city+"' AND state = '"+state+"';";
+
+            return SqlDataAccess.LoadData<UserModel>(sql);
+        }
+
+        public static int AddPatient(int PatientFID, int DoctorFID)
+        {
+            Appointment data = new Appointment//this appointment doesnt apply its really for doctor patient bridge
+            {
+                PatientFID = PatientFID,
+                DoctorFID = DoctorFID                
+            };            
+
+            string sql = @"INSERT into dbo.[bridgeDoctorPatient] (patientFID, doctorFID)
+                            values(@PatientFID, @DoctorFID)";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+    }
 }

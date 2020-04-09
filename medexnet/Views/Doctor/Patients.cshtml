@@ -8,20 +8,13 @@
     <div class="container-fluid">
         <h2>Patients</h2>
         <p>
-            @using (Html.BeginForm("Search", "Home", FormMethod.Post))
-            {
-                <table>
-                    <tr>
-                        <td>
-                            <input type="text" id="txtName" name="searchparam" placeholder="type here to search" />
-                        </td>
-                        <td>
-                            <input type="submit" id="btnSubmit" value="Search" />
-                        </td>
-                    </tr>
-                </table>
-            }
-
+            <table>
+                <tr>
+                    <td>
+                        <a href="javascript:void(0);" class="btn" data-toggle="modal" data-target="#addPatientModal">Add Patient</a>
+                    </td>
+                </tr>
+            </table>
         </p>
         <table class="table">
             <tr>
@@ -65,7 +58,7 @@
                             </div>
                             <div class="modal-body">
                                 <form>
-                                    <dl class="dl-horizontal">
+                                    <dl class="dl-horizontal">                                      
                                         <dd>
                                             Prescription Name:
                                             <div class="input-group col-md-10">
@@ -134,7 +127,7 @@
                                         <dd>
                                             Description:
                                             <div class="input-group col-md-10">
-                                                <input type="text" name="description" id="desc" class="form-control" required />
+                                                <input type="text" name="description" id="description2" class="form-control" required />
                                             </div>
                                         </dd>
 
@@ -154,6 +147,67 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div id='myModalContent'></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="addPatientModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Patient</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <dl class="dl-horizontal">
+                                <dt>Enter the exact fields for the patient.</dt>
+                                <dd></dd>
+                                <dd>
+                                    First Name:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patFirst" id="patFirst" class="form-control" required />
+                                    </div>
+                                </dd>
+                                <dd>
+                                    Last Name:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patLast" id="patLast" class="form-control" required />
+                                    </div>
+                                </dd>
+                                <dd>
+                                    Email Address:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patEmail" id="patEmail" class="form-control" required />
+                                    </div>
+                                </dd>
+                                <dd>
+                                    Street Address:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patStreetAddress" id="patStreetAddress" class="form-control" required />
+                                    </div>
+                                </dd>
+                                <dd>
+                                    City:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patCity" id="patCity" class="form-control" required />
+                                    </div>
+                                </dd>
+                                <dd>
+                                    State:
+                                    <div class="input-group col-md-10">
+                                        <input type="text" name="patState" id="patState" class="form-control" required />
+                                    </div>
+                                </dd>
+
+                                <dd>
+                                    <input class="btn btn-primary" name="submitButton" id="btnAdd" value="Set Appointment" type="button">
+                                </dd>
+                            </dl>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,10 +318,9 @@
             $("#btnSet").click(function () {
                 debugger;
                 var $buttonClicked = $(this);
-                var app = {};
-                app.patientFID = $buttonClicked.attr('data-id');
-                app.date = $("#date").val();             
-                app.description = $("#desc").val();
+                var app = {};               
+                app.date = $("#date").val();
+                app.desc = $("#description2").val();
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("AddAppointment")',
@@ -279,6 +332,36 @@
                     },
                     error: function () {
                         alert("Cannot make this appointment. Please check all of the fields.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnAdd").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var pat = {};
+                pat.fName = $("#patFirst").val();
+				pat.lName = $("#patLast").val();
+				pat.email = $("#patEmail").val();
+				pat.streetAddress = $("#patStreetAddress").val();
+				pat.city = $("#patCity").val();
+				pat.state = $("#patState").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddPatientToDoctorRequest")',
+                    data: '{pat: ' + JSON.stringify(pat) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Patient has been added.");
+                    },
+                    error: function () {
+                        alert("Cannot add this patient. Please check all of the fields.");
                     }
             });
             return false;

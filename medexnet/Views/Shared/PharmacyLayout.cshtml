@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Patient Dashboard - Medex</title>
+    <title>Pharmacy Dashboard - Medex</title>
     <link rel="icon" type="image/png" sizes="16x16" href="#">
 
     @Styles.Render("~/bundles/calendarcss")
@@ -36,9 +36,10 @@
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav" class="p-t-30">
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Prescriptions", "Pharmacy")" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Patient Prescriptions</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Pharmacy", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Prescriptions", "Pharmacy")" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
-                            
+
+
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">

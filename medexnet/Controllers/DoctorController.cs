@@ -16,9 +16,40 @@ namespace medexnet.Controllers
         public ActionResult Index(UserModel doctor)
         {           
             currentDoctor = doctor;
-                      
+            currentDoctor.myAppointments = DoctorProcessor.loadAppointmentData(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
+
             return View(currentDoctor);
-        }       
+        }        
+
+        public ActionResult GetCalendarData()
+        {
+            // Initialization.  
+            JsonResult result = new JsonResult();
+            try
+            {
+                // Loading.  
+                List<CalendarEvent> data = this.LoadCalendarData();
+                // Processing.  
+                result = this.Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+            // Return info.  
+            return result;
+        }
+
+        private List<CalendarEvent> LoadCalendarData()
+        {
+            List<CalendarEvent> temp = new List<CalendarEvent>();           
+            foreach (Appointment item in currentDoctor.myAppointments)
+            {
+                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
+            }
+            return temp;
+        }
 
         public ActionResult Patients()
         {
@@ -71,6 +102,34 @@ namespace medexnet.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddPatientToDoctorRequest(UserModel pat)
+        {           
+            if (ModelState.IsValid)
+            {
+                List<DataLibrary.Models.UserModel> data = DoctorProcessor.checkIfPatientExists(pat.fName, pat.lName, pat.email, pat.streetAddress, pat.city, pat.state);
+                if (data.Count == 0)
+                {
+                    string message = "Cannot add this patient. Please check all of the fields.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else if (data.Count == 1)
+                {
+                    List<UserModel> patient = new List<UserModel>();
+                    patient = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.GetUserData));
+                    UserModel patientToAdd = patient[0];
+
+                    DoctorProcessor.AddPatient(patientToAdd.Id, currentDoctor.Id);
+                }
+                else
+                {
+                    string message = "This patient is already added.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }                         
+            }
+            return View();
+        }
+       
         public ActionResult PatientDetails(UserModel currentPatient)
         {         
             List<UserModel> tempPatientData = new List<UserModel>();
@@ -91,8 +150,22 @@ namespace medexnet.Controllers
             return View(currentPatient);
         }
 
+        public UserModel refreshUserDetails(UserModel user)
+        {
+            List<DataLibrary.Models.UserModel> data = DoctorProcessor.LoadUser(user.Id);
+
+            List<UserModel> userList = new List<UserModel>();
+            userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.GetUserData));
+
+            user = userList[0];
+
+            return user;
+        }
+
         public ActionResult Settings()
         {
+            currentDoctor = refreshUserDetails(currentDoctor);
+
             return View(currentDoctor);
         }
 
@@ -101,13 +174,52 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                //CHECK IF EMAIL IS GOOD
+                //CHECK IF EMAIL IS GOOD ALONG WITH OTHERS
                 DoctorProcessor.ChangeEmail(currentDoctor.Id, newData.email);
 
-                string message = "You Email has been changed.";
+                string message = "Your email address has been changed.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }           
+            return View("Settings", "Doctor");
+        }
+
+        [HttpPost]
+        public ActionResult ChangePhone(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {               
+                DoctorProcessor.ChangePhone(currentDoctor.Id, newData.phoneNumber);
+
+                string message = "Your phone number has been has been changed.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
-            return View();
+            return View("Settings", "Doctor");
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.ChangePassword(currentDoctor.Id, newData.password);
+
+                string message = "Your password has been has been changed.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View("Settings", "Doctor");
+        }
+
+        [HttpPost]
+        public ActionResult ChangeAddress(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.ChangePassword(currentDoctor.Id, newData.password);
+
+                string message = "Your address has been has been changed.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View("Settings", "Doctor");
         }
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)

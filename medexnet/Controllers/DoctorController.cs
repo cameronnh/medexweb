@@ -276,10 +276,10 @@ namespace medexnet.Controllers
             {
                 bool validPhone = true;
 
-                if(newData.phoneNumber.Any())
-                {
-                    validPhone = false;
-                }
+                //if(newData.phoneNumber.Any())
+                //{
+                //    validPhone = false;
+                //}
 
                 if(validPhone)
                 {

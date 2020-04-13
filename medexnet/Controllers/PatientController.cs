@@ -93,7 +93,7 @@ namespace medexnet.Controllers
             currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
             if(currentPatient.currentChatID == -1 && currentPatient.myChats.Count > 0)
             {
-                currentPatient.currentChatID = currentPatient.myChats[0].ID;
+                currentPatient.currentChatID = currentPatient.myChats[0].Id;
             }
             else
             {
@@ -240,11 +240,15 @@ namespace medexnet.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ChangeChatID(int id)
-        {
-            currentPatient.currentChatID = id;
-            string message = "Message has been written.";
-            return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+        public ActionResult ChangeChatID(int id, string topic)
+        { 
+            if (ModelState.IsValid)
+            {
+                currentPatient.currentChatID = currentPatient.getChatID(currentPatient.Id, id, topic);
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
         }
 
     }

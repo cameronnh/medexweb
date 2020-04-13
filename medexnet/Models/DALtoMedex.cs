@@ -78,6 +78,7 @@ namespace medexnet.Models
             return new Appointment
             {
                 Id = temp.Id,
+                PatientFID = temp.PatientFID,
                 date = temp.date,
                 desc = temp.desc,
                 isConfirmed = temp.isConfirmed,

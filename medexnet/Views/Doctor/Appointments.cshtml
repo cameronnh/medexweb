@@ -1,0 +1,121 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/DoctorLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <h2>Requested Appointments</h2>
+        <p>
+            <table>
+                <tr>
+                    <td>
+                        @*<a href="javascript:void(0);" class="btn" data-toggle="modal" data-target="#addPatientModal">Add Patient</a>*@
+                    </td>
+                </tr>
+            </table>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    Patient
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Accept / Deline
+                </th>
+            </tr>
+
+            @foreach (medexnet.Models.DoctorEvents item in Model.unacceptedAppointments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient_Phonenumber)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+
+                    <td>
+                        @*<a href="javascript:void(0);" class="" data-toggle="modal" data-id="@item.id" data-target="#acceptApp">Accept</a> |
+                        <a href="javascript:void(0);" class="" data-toggle="modal" data-id="@item.id" data-target="#declineApp">Delcine</a>*@
+
+                        <input class="btn btn-primary" name="submitButton" data-id="@item.id" id="acceptApp" value="Accept" type="button"> 
+                        <input class="btn btn-primary" name="submitButton" data-id="@item.id" id="declineApp" value="Decline" type="button">
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#acceptApp").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var app = {};
+                app.Id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("acceptApp")',
+                    data: '{app: ' + JSON.stringify(app) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Appointment has been confirmed.");
+                    },
+                    error: function () {
+                        alert("Appointment cannot be confirmed.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#declineApp").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var app = {};
+                app.Id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("declineApp")',
+                    data: '{app: ' + JSON.stringify(app) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Appointment has been declined.");
+                    },
+                    error: function () {
+                        alert("Appointment cannot be declined.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+}

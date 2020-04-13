@@ -120,8 +120,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-user" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                    <a class="dropdown-item" href="#"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
-                                    <a class="dropdown-item" href="/Home/Login"><i class="mdi mdi-logout m-r-5 m-l-5"></i> Logout</a>
+                                    <a class="dropdown-item" href="@Url.Action("Settings", "Doctor", Model)"><i class="mdi mdi-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                    <a class="dropdown-item" href="@Url.Action("LogOut", "Home")"><i class="mdi mdi-logout m-r-5 m-l-5"></i> Logout</a>
                                 </div>
                             </li>
                         </ul>
@@ -135,24 +135,17 @@
                         <ul id="sidebarnav" class="p-t-30">
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Doctor", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Patients", "Doctor", Model)" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Patients</span></a></li>                 
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Patients", "Doctor", Model)" aria-expanded="false"><i class="fas fa-stethoscope"></i><span class="hide-menu">Patients</span></a></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Appointments", "Doctor", Model)" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
 
-                            <li class="sidebar-item">
-                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging</span></a>
-                                <ul aria-expanded="false" class="collapse  first-level">
-                                    <li class="sidebar-item"><a href="@Url.Action("Messages", "Doctor", Model)" class="sidebar-link"><i class="fas fa-inbox"></i><span class="hide-menu"> Inbox </span></a></li>
-                                    <li class="sidebar-item"><a href="#l" class="sidebar-link"><i class="mdi mdi-send"></i><span class="hide-menu"> Send Message </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-trash-alt"></i><span class="hide-menu"> Trash </span></a></li>
-                                </ul>
-                            </li>
-
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Messages", "Doctor", Model)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging</span></a></li>
+                          
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">
                                     <li class="sidebar-item"><a href="@Url.Action("Settings", "Doctor", Model)" class="sidebar-link"><i class="mdi mdi-settings"></i><span class="hide-menu"> Settings </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-logout"></i><span class="hide-menu"> Logout </span></a></li>
+                                    <li class="sidebar-item"><a href="@Url.Action("LogOut", "Home")" class="sidebar-link"><i class="mdi mdi-logout"></i><span class="hide-menu"> Logout </span></a></li>
                                 </ul>
                             </li>
                             <!--SOME GOOD ONES ARE fas fa-capsules    fas fa-ambulance         fas fa-heartbeat    fas fa-hospital -->

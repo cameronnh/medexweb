@@ -137,6 +137,7 @@
     <Compile Include="Models\Chats.cs" />
     <Compile Include="Models\DALtoMedex.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\DoctorEvents.cs" />
     <Compile Include="Models\DoctorRegister.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Message.cs" />
@@ -191,6 +192,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\PatientRegister.cshtml" />
     <Content Include="Views\Home\PharmacistRegister.cshtml" />
+    <Content Include="Views\Doctor\Appointments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

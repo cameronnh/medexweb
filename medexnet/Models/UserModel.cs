@@ -26,6 +26,8 @@ namespace medexnet.Models
         public List<UserModel> myPatients { get; set; }
         public List<Appointment> myAppointments { get; set; }
         public List<Chats> myChats { get; set; }
+        public List<DoctorEvents> myEvents { get; set; }
+        public List<DoctorEvents> unacceptedAppointments { get; set; }
 
         public UserModel()
         {
@@ -35,6 +37,8 @@ namespace medexnet.Models
             myAppointments = new List<Appointment>();
             myChats = new List<Chats>();
             currentChatID = -1;
+            myEvents = new List<DoctorEvents>();
+            unacceptedAppointments = new List<DoctorEvents>();
         }
         public List<PatientPrescriptions> GetPrescriptions(){return myPrescriptions;}
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }

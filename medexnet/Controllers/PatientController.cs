@@ -94,6 +94,8 @@ namespace medexnet.Controllers
             if(currentPatient.currentChatID == -1 && currentPatient.myChats.Count > 0)
             {
                 currentPatient.currentChatID = currentPatient.myChats[0].Id;
+                //currentPatient.currentChatID = currentPatient.myChats[0].ID;
+
             }
             else
             {

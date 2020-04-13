@@ -139,7 +139,7 @@ namespace DataLibrary.BusinessLogic
                 state = state,
                 zipcode = zipcode
             };//NEED TO FINISH QUERY
-            string sql = @"UPDATE dbo.[user] SET streetAddress = '" + streetAddress + "' WHERE Id = '" + Id + "';";
+            string sql = @"UPDATE dbo.[user] SET streetAddress = '"+ streetAddress +"', city = '"+ city +"', state = '"+ state +"', zipcode = '"+ zipcode +"'  WHERE Id = '" + Id + "';";
             return SqlDataAccess.SaveData(sql, data);
         }
 
@@ -175,6 +175,26 @@ namespace DataLibrary.BusinessLogic
 
             string sql = @"INSERT into dbo.[bridgeDoctorPatient] (patientFID, doctorFID)
                             values(@PatientFID, @DoctorFID)";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int acceptApp(int Id)
+        {
+            Appointment data = new Appointment
+            {
+                Id = Id              
+            };
+            string sql = @"UPDATE dbo.[appointments] SET isconfirmed = 1 WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int declineApp(int Id)
+        {
+            Appointment data = new Appointment
+            {
+                Id = Id
+            };
+            string sql = @"DELETE FROM dbo.[appointments] WHERE Id = '" + Id + "';";
             return SqlDataAccess.SaveData(sql, data);
         }
     }

@@ -49,7 +49,8 @@ namespace medexnet.Controllers
                 p.dDates = PatientProcessor.loadPrescriptionDelivery(p.Id).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
             }
             temp.myAppointments = PatientProcessor.loadAppointmentData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
-
+            temp.myChats = PatientProcessor.loadChats(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            temp.currentChatID = currentPatient.currentChatID;
             return temp;
         }
 
@@ -89,18 +90,6 @@ namespace medexnet.Controllers
         public ActionResult MessageInbox(UserModel patient)
         {
             currentPatient = GetInfo(patient);
-
-            currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
-            if(currentPatient.currentChatID == -1 && currentPatient.myChats.Count > 0)
-            {
-                currentPatient.currentChatID = currentPatient.myChats[0].Id;
-                //currentPatient.currentChatID = currentPatient.myChats[0].ID;
-
-            }
-            else
-            {
-                
-            }
             return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
@@ -247,6 +236,12 @@ namespace medexnet.Controllers
             if (ModelState.IsValid)
             {
                 currentPatient.currentChatID = currentPatient.getChatID(currentPatient.Id, id, topic);
+                if(currentPatient.currentChatID == -1)
+                {
+                    PatientProcessor.AddChat(currentPatient.Id, id, topic);
+                    GetInfo(currentPatient);
+                    currentPatient.currentChatID = currentPatient.getChatID(currentPatient.Id, id, topic);
+                }
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }

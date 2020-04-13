@@ -37,9 +37,9 @@
                                     confirmation = "No";
                                 }
                                 <tr>
-                                    <td onclick=""><a id="chat" data-id="@item.DoctorFID" href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
+                                    <td onclick=""><a id="docID" data-id="@item.DoctorFID" href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
                                     <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
-                                    <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
+                                    <td onclick=""><a id="desc" data-id="@item.desc"> @Html.DisplayFor(modelItem => item.desc)</a></td>
                                     <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => item.doctor.phoneNumber)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => confirmation)</td>
@@ -115,11 +115,12 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#chat").click(function () {
+            $("#docID").click(function () {
                 debugger;
                 var $buttonClicked = $(this);
                 var chat = {};
-                chat.doctorFID =  $("#chat").val();
+                chat.doctorFID = $("#docID").val();
+                chat.desc =  $("#desc").val();
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("ChangeChatID")',

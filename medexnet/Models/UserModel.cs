@@ -44,22 +44,22 @@ namespace medexnet.Models
         public void SetPrescriptions(List<PatientPrescriptions> patientPrescriptions) { myPrescriptions = patientPrescriptions; }
         public List<UserModel> GetPatients() { return myPatients;}
         public void SetPatients(List<UserModel> doctorsPatients) { myPatients = doctorsPatients; }
-        public int getChatID(int patientID, int doctorID)
+        public int getChatID(int patientID, int doctorID, string chatTopic)
         {
             foreach(Chats c in myChats)
             {
-                if(c.patientID == patientID && c.doctorID == doctorID)
+                if(c.patientID == patientID && c.doctorID == doctorID && c.topic == chatTopic)
                 {
                     return c.Id;
                 }
             }
             return -1;
         }
-        public Chats getChat(int patientID, int doctorID)
+        public Chats getChat(int chatID)
         {
             foreach (Chats c in myChats)
             {
-                if (c.patientID == patientID && c.doctorID == doctorID)
+                if (c.Id == chatID)
                 {
                     return c;
                 }

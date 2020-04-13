@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/PatientLayout.cshtml";
+    medexnet.Models.Chats cChat = Model.getChat(Model.currentChatID);
 }
 
 <div class="page-wrapper">
@@ -37,17 +38,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">@Html.DisplayFor(modelItem => Model.myChats[0].topic)</h4>
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => cChat.topic)</h4>
                         <div class="chat-box scrollable" style="height:475px;">
                             <!--chat Row -->
                             <ul class="chat-list">
                                 <!--chat Row -->
-                                @foreach (medexnet.Models.Message M in Model.getChat(Model.Id, Model.currentChatID).messageList)
+                                @foreach (medexnet.Models.Message M in cChat.messageList)
                                 {
                                     if (M.userID != Model.Id)
                                     {
                                         <li class="chat-item">
-                                            <div class="chat-img"><img src="../../assets/images/users/1.jpg" alt="user"></div>
                                             <div class="chat-content">
                                                 <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
                                                 <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
@@ -89,32 +89,6 @@
 </div>
 
 
-@*<script type="text/javascript">
-    $(function posttext() {
-        $("#sendBtn").click(function () {
-            debugger;
-            var message = {};
-            message.text = $("#newMessage").val();
-            message.id = 0;
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("AddMessage")',
-                data: {
-                    text: $("#newMessage").val(),
-                    id: 0
-                },
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    alert("Prescription has been written.");
-                },
-                error: function () {
-                    alert("Cannot write this prescription. Please check all of the fields.");
-                }
-        });
-        return false;
-    });
-});
-</script>*@
 
 @section scripts
 {
@@ -124,7 +98,7 @@
                 debugger;
                 var message = {};
                 message.msg = $("#newMessage").val();
-                message.id = @Model.getChatID(Model.Id,Model.currentChatID);
+                message.id = @cChat.Id;
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("AddMessage")',

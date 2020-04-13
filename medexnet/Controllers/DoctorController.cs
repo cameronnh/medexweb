@@ -23,22 +23,17 @@ namespace medexnet.Controllers
         }        
 
         public ActionResult GetCalendarData()
-        {
-            // Initialization.  
+        {          
             JsonResult result = new JsonResult();
             try
             {
-                // Loading.  
                 List<CalendarEvent> data = this.LoadCalendarData();
-                // Processing.  
                 result = this.Json(data, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                // Info  
                 Console.Write(ex);
-            }
-            // Return info.  
+            }          
             return result;
         }
 
@@ -83,20 +78,27 @@ namespace medexnet.Controllers
 
             foreach (medexnet.Models.Appointment item in user.myAppointments)
             {
-                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
-                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
-                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
-                UserModel patient = tempPatientData[0];
-
-                unAcceptedAppointments.Add(new DoctorEvents()
+                if(item.isConfirmed)
                 {
-                    //Date = Convert.ToDateTime(item.date),
-                    Date = item.date,
-                    Patient_Name = (patient.fName + " " + patient.lName),
-                    Description = item.desc,
-                    Type = "Appointment",
-                    Patient_Phonenumber = patient.phoneNumber
-                });
+                }
+                else
+                {
+                    List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+                    List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
+                    tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                    UserModel patient = tempPatientData[0];
+
+                    unAcceptedAppointments.Add(new DoctorEvents()
+                    {
+                        //Date = Convert.ToDateTime(item.date),
+                        id = item.Id,
+                        Date = item.date,
+                        Patient_Name = (patient.fName + " " + patient.lName),
+                        Description = item.desc,
+                        Type = "Appointment",
+                        Patient_Phonenumber = patient.phoneNumber
+                    });
+                }              
             }
             user.unacceptedAppointments = unAcceptedAppointments;
 
@@ -201,22 +203,24 @@ namespace medexnet.Controllers
 
             foreach(medexnet.Models.Appointment item in user.myAppointments)
             {
-                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
-                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
-                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
-                UserModel patient = tempPatientData[0];               
-                
-                eventsList.Add(new DoctorEvents()
+                if (item.isConfirmed)
                 {
-                    //Date = Convert.ToDateTime(item.date),
-                    Date = item.date,
-                    Patient_Name = (patient.fName+" "+patient.lName),
-                    Description = item.desc,
-                    Type = "Appointment"
-                });               
+                    List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+                    List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
+                    tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                    UserModel patient = tempPatientData[0];
+
+                    eventsList.Add(new DoctorEvents()
+                    {
+                        //Date = Convert.ToDateTime(item.date),
+                        Date = item.date,
+                        Patient_Name = (patient.fName + " " + patient.lName),
+                        Description = item.desc,
+                        Type = "Appointment"
+                    });
+                }                  
             }
             user.myEvents = eventsList;
-
             return user;
         }
 
@@ -345,6 +349,34 @@ namespace medexnet.Controllers
                 
             }
             return View("Settings", "Doctor");
+        }
+
+        [HttpPost]
+        public ActionResult acceptApp(Appointment app)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.acceptApp(app.Id);
+
+                string message = "Appointment has been accepted.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+
+            return View("Appointments", "Doctor");
+        }
+
+        [HttpPost]
+        public ActionResult declineApp(Appointment app)
+        {
+            if (ModelState.IsValid)
+            {
+                DoctorProcessor.declineApp(app.Id);
+
+                string message = "Appointment has been declined.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+
+            return View("Appointments", "Doctor");
         }
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)

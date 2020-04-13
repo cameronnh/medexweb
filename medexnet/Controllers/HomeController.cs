@@ -131,13 +131,18 @@ namespace medexnet.Controllers
                 {
                     return View();
                 }
-
             }
             else
             {
                 return View();
             }
             
+        }
+
+        public ActionResult LogOut()
+        {           
+            Session.Abandon();
+            return RedirectToAction("Login", "Home");
         }
     }
 }

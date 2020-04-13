@@ -177,5 +177,25 @@ namespace DataLibrary.BusinessLogic
                             values(@PatientFID, @DoctorFID)";
             return SqlDataAccess.SaveData(sql, data);
         }
+
+        public static int acceptApp(int Id)
+        {
+            Appointment data = new Appointment
+            {
+                Id = Id              
+            };
+            string sql = @"UPDATE dbo.[appointments] SET isconfirmed = 1 WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int declineApp(int Id)
+        {
+            Appointment data = new Appointment
+            {
+                Id = Id
+            };
+            string sql = @"DELETE FROM dbo.[appointments] WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
     }
 }

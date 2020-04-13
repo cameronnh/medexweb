@@ -17,6 +17,7 @@ namespace medexnet.Controllers
         {           
             currentDoctor = doctor;
             currentDoctor.myAppointments = DoctorProcessor.loadAppointmentData(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
+            currentDoctor = getDoctorEvents(currentDoctor);
 
             return View(currentDoctor);
         }        
@@ -70,6 +71,38 @@ namespace medexnet.Controllers
             return View(currentDoctor);
         }
 
+        public ActionResult Appointments()
+        {
+            currentDoctor = getUnacceptedAppointments(currentDoctor);
+            return View(currentDoctor);
+        }
+
+        public UserModel getUnacceptedAppointments(UserModel user)
+        {
+            List<DoctorEvents> unAcceptedAppointments = new List<DoctorEvents>();
+
+            foreach (medexnet.Models.Appointment item in user.myAppointments)
+            {
+                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
+                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                UserModel patient = tempPatientData[0];
+
+                unAcceptedAppointments.Add(new DoctorEvents()
+                {
+                    //Date = Convert.ToDateTime(item.date),
+                    Date = item.date,
+                    Patient_Name = (patient.fName + " " + patient.lName),
+                    Description = item.desc,
+                    Type = "Appointment",
+                    Patient_Phonenumber = patient.phoneNumber
+                });
+            }
+            user.unacceptedAppointments = unAcceptedAppointments;
+
+            return user;
+        }
+
         public ActionResult Messages()
         {
             return View(currentDoctor);
@@ -93,7 +126,7 @@ namespace medexnet.Controllers
         public ActionResult AddAppointment(Appointment app)
         {
             if (ModelState.IsValid)
-            {
+            {              
                 DoctorProcessor.AddAppointment(app.PatientFID, currentDoctor.Id, app.date, app.desc);
 
                 string message = "Appointment has been made.";
@@ -162,6 +195,31 @@ namespace medexnet.Controllers
             return user;
         }
 
+        public UserModel getDoctorEvents(UserModel user)
+        {
+            List<DoctorEvents> eventsList = new List<DoctorEvents>();
+
+            foreach(medexnet.Models.Appointment item in user.myAppointments)
+            {
+                List<UserModel> tempPatientData = new List<UserModel>();//(1st list)
+                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(item.PatientFID);
+                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));//1st list = 2nd list
+                UserModel patient = tempPatientData[0];               
+                
+                eventsList.Add(new DoctorEvents()
+                {
+                    //Date = Convert.ToDateTime(item.date),
+                    Date = item.date,
+                    Patient_Name = (patient.fName+" "+patient.lName),
+                    Description = item.desc,
+                    Type = "Appointment"
+                });               
+            }
+            user.myEvents = eventsList;
+
+            return user;
+        }
+
         public ActionResult Settings()
         {
             currentDoctor = refreshUserDetails(currentDoctor);
@@ -211,11 +269,26 @@ namespace medexnet.Controllers
         public ActionResult ChangePhone(UserModel newData)
         {
             if (ModelState.IsValid)
-            {               
-                DoctorProcessor.ChangePhone(currentDoctor.Id, newData.phoneNumber);
+            {
+                bool validPhone = true;
 
-                string message = "Your phone number has been has been changed.";
-                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                if(newData.phoneNumber.Any())
+                {
+                    validPhone = false;
+                }
+
+                if(validPhone)
+                {
+                    DoctorProcessor.ChangePhone(currentDoctor.Id, newData.phoneNumber);
+
+                    string message = "Your phone number has been has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your phone number has not been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }                
             }
             return View("Settings", "Doctor");
         }
@@ -238,10 +311,38 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                DoctorProcessor.ChangePassword(currentDoctor.Id, newData.password);
+                bool validAddress = true;
 
-                string message = "Your address has been has been changed.";
-                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                if(newData.streetAddress.Length < 4)
+                {
+                    validAddress = false;
+                }
+                if (newData.city.Length < 2)
+                {
+                    validAddress = false;
+                }
+                if (newData.state.Length < 2)
+                {
+                    validAddress = false;
+                }
+                if (newData.zipcode.Length < 5)
+                {
+                    validAddress = false;
+                }
+
+                if(validAddress)
+                {
+                    DoctorProcessor.ChangeAddress(currentDoctor.Id, newData.streetAddress, newData.city, newData.state, newData.zipcode);
+
+                    string message = "Your address has been has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your address cant be has be changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                
             }
             return View("Settings", "Doctor");
         }

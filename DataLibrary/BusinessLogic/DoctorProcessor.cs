@@ -139,7 +139,7 @@ namespace DataLibrary.BusinessLogic
                 state = state,
                 zipcode = zipcode
             };//NEED TO FINISH QUERY
-            string sql = @"UPDATE dbo.[user] SET streetAddress = '" + streetAddress + "' WHERE Id = '" + Id + "';";
+            string sql = @"UPDATE dbo.[user] SET streetAddress = '"+ streetAddress +"', city = '"+ city +"', state = '"+ state +"', zipcode = '"+ zipcode +"'  WHERE Id = '" + Id + "';";
             return SqlDataAccess.SaveData(sql, data);
         }
 

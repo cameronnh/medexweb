@@ -74,12 +74,13 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @foreach (medexnet.Models.Appointment item in Model.myAppointments)
+                                            @foreach (medexnet.Models.DoctorEvents item in Model.myEvents)
                                             {
-                                                <a href="#" class="text-secondary">
-                                                    <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.date)</h4>
-                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.desc)</p>
-                                                </a>
+                                            <a href="#" class="text-secondary">
+                                                <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.Date)</h4>
+                                                @*<h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => Convert.ToDateTime(item.date))</h4>*@
+                                            <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.Patient_Name) | @Html.DisplayFor(modelItem => item.Description)</p>
+                                            </a>
                                             }
                                         </div>
                                     </div>

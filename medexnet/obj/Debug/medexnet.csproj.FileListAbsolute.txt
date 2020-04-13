@@ -246,6 +246,7 @@ C:\Users\timjd\Documents\GitHub\medexweb\medexnet\obj\Debug\medexnet.csproj.Core
 C:\Users\timjd\Documents\GitHub\medexweb\medexnet\obj\Debug\medexnet.csproj.CopyComplete
 C:\Users\timjd\Documents\GitHub\medexweb\medexnet\obj\Debug\medexnet.dll
 C:\Users\timjd\Documents\GitHub\medexweb\medexnet\obj\Debug\medexnet.pdb
+C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.csprojAssemblyReference.cache
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\medexnet.dll.config
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\medexnet.dll
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\medexnet.pdb
@@ -324,7 +325,6 @@ C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Newtonsoft.Json.xml
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Antlr3.Runtime.pdb
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\camer\Documents\Repos\medexweb\medexnet\bin\Dapper.xml
-C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.csprojAssemblyReference.cache
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.csproj.CopyComplete
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.dll
 C:\Users\camer\Documents\Repos\medexweb\medexnet\obj\Debug\medexnet.pdb

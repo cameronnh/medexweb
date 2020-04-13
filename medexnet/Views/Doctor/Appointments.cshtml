@@ -1,0 +1,80 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/DoctorLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <h2>Requested Appointments</h2>
+        <p>
+            <table>
+                <tr>
+                    <td>
+                        @*<a href="javascript:void(0);" class="btn" data-toggle="modal" data-target="#addPatientModal">Add Patient</a>*@
+                    </td>
+                </tr>
+            </table>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    Patient
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Accept
+                </th>
+                <th>
+                    Decline
+                </th>
+            </tr>
+
+            @foreach (medexnet.Models.DoctorEvents item in Model.unacceptedAppointments)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient_Phonenumber)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                
+            </td>
+
+            <td>
+                
+            </td>
+        </tr>
+
+                
+
+                
+            }
+        </table>
+
+        
+
+      
+
+
+    </div>
+</div>

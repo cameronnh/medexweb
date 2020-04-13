@@ -93,7 +93,7 @@ namespace medexnet.Controllers
             currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
             if(currentPatient.currentChatID == -1 && currentPatient.myChats.Count > 0)
             {
-                currentPatient.currentChatID = currentPatient.myChats[0].ID;
+                //currentPatient.currentChatID = currentPatient.myChats[0].ID;
             }
             else
             {

@@ -51,6 +51,7 @@ namespace medexnet.Controllers
         {
             List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
             List<UserModel> patients = new List<UserModel>();
+            //currentDoctor.doctorSelection =
 
             foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
             {
@@ -64,6 +65,12 @@ namespace medexnet.Controllers
             currentDoctor.SetPatients(patients);
 
             return View(currentDoctor);
+        }
+
+        public UserModel getDoctorSelection(UserModel user)
+        {
+            List<docPreClasses> classes = new List<docPreClasses>();
+            return user;
         }
 
         public ActionResult Appointments()

@@ -137,6 +137,8 @@
     <Compile Include="Models\Chats.cs" />
     <Compile Include="Models\DALtoMedex.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\docPre.cs" />
+    <Compile Include="Models\docPreClasses.cs" />
     <Compile Include="Models\DoctorEvents.cs" />
     <Compile Include="Models\DoctorRegister.cs" />
     <Compile Include="Models\Login.cs" />

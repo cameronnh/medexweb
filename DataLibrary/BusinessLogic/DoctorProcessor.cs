@@ -197,5 +197,17 @@ namespace DataLibrary.BusinessLogic
             string sql = @"DELETE FROM dbo.[appointments] WHERE Id = '" + Id + "';";
             return SqlDataAccess.SaveData(sql, data);
         }
+
+        public static List<docPreClasses> getSelections()
+        {
+            string sql = @"SELECT classId, className FROM dbo.[prescriptionClasses];";
+            List<docPreClasses> temp = SqlDataAccess.LoadData<docPreClasses>(sql);
+            for (int i = 0; i < temp.Count(); i++)
+            {
+                sql = @"SELECT prescriptionId, prescriptionName, prescriptionDosage FROM dbo.[prescription] WHERE classFID = '" + temp[i] + "';";
+
+            }                     
+            return temp;
+        }       
     }
 }

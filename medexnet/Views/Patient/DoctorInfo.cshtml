@@ -22,12 +22,20 @@
     </script>
 
     <script type="text/javascript">
+        var data;
         $(function () {
+            $(".doctorID").click(function () {
+                var $buttonClicked = $(this);
+                data = $buttonClicked.attr('data-id');
+                 $('#ApptModal').modal('show');
+            return false;
+            });
+
             $("#btnReq").click(function () {
                 debugger;
                 var $buttonClicked = $(this);
                 var appt = {};
-                appt.doctorID = $buttonClicked.attr('data-id');
+                appt.doctorID = data;
                 appt.date = $("#reqDate").val();
                 appt.desc = $("#desc").val();
                 $.ajax({
@@ -43,10 +51,9 @@
                     error: function () {
                         alert("Please check all of the fields.");
                     }
+                });
             });
-            return false;
-        });
-    });
+         });
 
     </script>
 }
@@ -81,9 +88,10 @@
                                     <td onclick="">@Html.DisplayFor(modelItem => address)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => UM.phoneNumber)</td>
                                     <td onclick="">@Html.DisplayFor(modelItem => UM.email)</td>
-                                    <td><a href="javascript:void(0);" class="" data-toggle="modal" data-id="@UM.Id" data-target="#ApptModal">Request Appointment</a></td>
+                                    <td><a href="javascript:void(0);" class="doctorID" data-toggle="modal" data-id="@UM.Id" data-target="#ApptModal">Request Appointment</a></td>
                                 </tr>
-                                    <div class="modal" id="ApptModal">
+                                
+                                <div class="modal" id="ApptModal">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -108,7 +116,7 @@
                                                                 </div>
                                                             </dd>
                                                             <dd>
-                                                                <input class="btn btn-primary" name="submitButton" data-id="@UM.Id" id="btnReq" value="Request Appointment" type="button">
+                                                                <input class="btn btn-primary" name="submitButton" data-id="" id="btnReq" value="Request Appointment" type="button">
                                                             </dd>
                                                         </dl>
                                                     </form>

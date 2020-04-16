@@ -12,12 +12,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">@Html.DisplayFor(modelItem => Model.fName)</h4>
+                <h4 class="page-title">Messages</h4>
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Library</li>
+                            @*<li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Library</li>*@
                         </ol>
                     </nav>
                 </div>
@@ -35,50 +35,76 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">@Html.DisplayFor(modelItem => cChat.topic)</h4>
-                        <div class="chat-box scrollable" style="height:475px;">
-                            <!--chat Row -->
-                            <ul class="chat-list">
-                                <!--chat Row -->
-                                @foreach (medexnet.Models.Message M in cChat.messageList)
-                                {
-                                    if (M.userID != Model.Id)
-                                    {
-                                        <li class="chat-item">
-                                            <div class="chat-content">
-                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                            </div>
-                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="odd chat-item">
-                                            <div class="chat-content">
-                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                            </div>
-                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                        </li>
-                                    }
-
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-body border-top">
+                    <div class="">
                         <div class="row">
-                            <div class="col-9">
-                                <div class="input-field m-t-0 m-b-0">
-                                    <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
+                            <div class="col-lg-3 border-right p-r-0">
+                                <div class="card-body border-bottom">
+                                    <h4 class="card-title m-t-15">Chats</h4>
+                                </div>
+                                <div class="card-body border-bottom">
+                                    <div class="row">
+                                        @foreach (medexnet.Models.Chats c in Model.myChats)
+                                        {
+                                            <div class="col-md-12">
+                                                <a class="chatID" data-Id="@c.Id" href="">
+                                                    <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => c.topic)</h4>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => c.doctorID)</p>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
+                            <div class="col-lg-9">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">@Html.DisplayFor(modelItem => cChat.topic)</h4>
+                                        <div class="chat-box scrollable" style="height:475px;">
+                                            <!--chat Row -->
+                                            <ul class="chat-list">
+                                                <!--chat Row -->
+                                                @foreach (medexnet.Models.Message M in cChat.messageList)
+                                                {
+                                                    if (M.userID != Model.Id)
+                                                    {
+                                                        <li class="chat-item">
+                                                            <div class="chat-content">
+                                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                                            </div>
+                                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="odd chat-item">
+                                                            <div class="chat-content">
+                                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                                            </div>
+                                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                                        </li>
+                                                    }
+
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body border-top">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <div class="input-field m-t-0 m-b-0">
+                                                    <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,6 +141,32 @@
             return false;
         });
     });
-    </script>             
+    </script>
 
-    }
+    <script type="text/javascript">
+        $(function () {
+            $(".chatID").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var chatId = {};
+                chatId.Id = $buttonClicked.attr('data-Id');
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MessageChangeChatID")',
+                    data: JSON.stringify(chatId),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        Location.reload();
+                    },
+                    error: function () {
+                        alert("Error");
+                    }
+                });
+                Location.reload();
+            return false;
+        });
+    });
+    </script>
+
+}

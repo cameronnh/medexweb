@@ -90,6 +90,10 @@ namespace medexnet.Controllers
         public ActionResult MessageInbox(UserModel patient)
         {
             currentPatient = GetInfo(patient);
+            if(currentPatient.currentChatID == -1)
+            {
+                currentPatient.currentChatID = currentPatient.myChats[0].Id;
+            }
             return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
@@ -242,6 +246,17 @@ namespace medexnet.Controllers
                     GetInfo(currentPatient);
                     currentPatient.currentChatID = currentPatient.getChatID(currentPatient.Id, id, topic);
                 }
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult MessageChangeChatID(int Id)
+        { 
+            if (ModelState.IsValid)
+            {
+                currentPatient.currentChatID = Id;
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }

@@ -186,7 +186,6 @@
     <Content Include="Views\Patient\MessageInbox.cshtml" />
     <Content Include="Views\Patient\Deliveries.cshtml" />
     <Content Include="Views\Doctor\PatientDetails.cshtml" />
-    <Content Include="Views\Doctor\Messages.cshtml" />
     <Content Include="Views\Pharmacy\Prescriptions.cshtml" />
     <Content Include="Views\Doctor\PatientsPrescriptions.cshtml" />
     <Content Include="Views\Doctor\Settings.cshtml" />
@@ -195,6 +194,7 @@
     <Content Include="Views\Home\PatientRegister.cshtml" />
     <Content Include="Views\Home\PharmacistRegister.cshtml" />
     <Content Include="Views\Doctor\Appointments.cshtml" />
+    <Content Include="Views\Doctor\MessageInbox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

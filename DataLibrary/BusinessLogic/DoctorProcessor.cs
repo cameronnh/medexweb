@@ -198,16 +198,16 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<docPreClasses> getSelections()//not used atm
+        public static List<docPreClasses> getSelections()
         {
             string sql = @"SELECT classId, className FROM dbo.[prescriptionClasses];";
-            List<docPreClasses> temp = SqlDataAccess.LoadData<docPreClasses>(sql);
-            for (int i = 0; i < temp.Count(); i++)
+            List<docPreClasses> tempClass = SqlDataAccess.LoadData<docPreClasses>(sql);
+            for (int i = 0; i < tempClass.Count(); i++)
             {
-                sql = @"SELECT prescriptionId, prescriptionName, prescriptionDosage FROM dbo.[prescription] WHERE classFID = '" + temp[i] + "';";
-
+                string sql2 = @"SELECT prescriptionId, prescriptionName, prescriptionDosage FROM dbo.[prescription] WHERE classFID = '" + tempClass[i].classId + "';";
+                tempClass[i].prescriptions = SqlDataAccess.LoadData<docPre>(sql2);             
             }                     
-            return temp;
+            return tempClass;
         }
 
         public static List<Chats> loadChats(int id)

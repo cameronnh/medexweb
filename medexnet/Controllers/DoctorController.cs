@@ -50,8 +50,7 @@ namespace medexnet.Controllers
         public ActionResult Patients()
         {
             List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
-            List<UserModel> patients = new List<UserModel>();
-            //currentDoctor.doctorSelection =
+            List<UserModel> patients = new List<UserModel>();        
 
             foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
             {
@@ -63,6 +62,11 @@ namespace medexnet.Controllers
                 patients.Add(patient);
             }
             currentDoctor.SetPatients(patients);
+
+            List<docPreClasses> tempSelection = new List<docPreClasses>();
+            List<DataLibrary.Models.docPreClasses> tempSelData = DoctorProcessor.getSelections();
+            tempSelection = tempSelData.ConvertAll(new Converter<DataLibrary.Models.docPreClasses, docPreClasses>(DataAccessSelection));
+            currentDoctor.doctorSelection = tempSelection;
 
             return View(currentDoctor);
         }
@@ -449,6 +453,28 @@ namespace medexnet.Controllers
                 zipcode = temp.zipcode,
                 accountType = temp.accountType,
                 officeHours = temp.officeHours,
+            };
+        }
+
+        public static docPreClasses DataAccessSelection(DataLibrary.Models.docPreClasses temp)
+        {
+            return new docPreClasses
+            {
+                classId = temp.classId,
+                className = temp.className,
+                prescriptions = temp.prescriptions.ConvertAll(new Converter<DataLibrary.Models.docPre, docPre>(DataAccessPreSelection))
+                
+            };
+        }
+
+        public static docPre DataAccessPreSelection(DataLibrary.Models.docPre temp)
+        {
+            return new docPre
+            {
+                prescriptionId = temp.prescriptionId,
+                prescriptionName = temp.prescriptionName,
+                prescriptionDosage = temp.prescriptionDosage,
+                classFID = temp.classFID
             };
         }
 

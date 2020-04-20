@@ -13,6 +13,6 @@ namespace DataLibrary.Models
         public string arrivalDate { get; set; }
         public string prescriptionName { get; set; }
         public string prescriptionDosage { get; set; }
-
+        public int patientFID { get; set; }
     }
 }

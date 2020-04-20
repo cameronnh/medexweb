@@ -49,5 +49,44 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<PharmacyPrescriptions>(sql);
         }
+
+        //FOR MERGE
+        public static List<int> getAlreadyDelPers()
+        {
+            string sql = @"SELECT patientRXFID FROM dbo.[deliveries];";
+
+            return SqlDataAccess.LoadData<int>(sql);
+        }
+
+        public static List<PatientPrescriptions> GetPrescriptionByPatient(int patientFID)
+        {
+            string sql = @"SELECT Id, patientFID, name, dosage, pillCount, 
+                            numberofRefills, datePrescribed, description FROM dbo.[patientPrescriptions] WHERE patientFID = '" + patientFID + "';";
+
+            return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
+        }
+
+        public static List<int> getPatientIds()
+        {
+            string sql = @"SELECT Id FROM dbo.[user] WHERE accountType = 1;";
+
+            return SqlDataAccess.LoadData<int>(sql);
+        }
+
+        public static int CreateDelivery(int PerId, int PatId, string shippedDate, string ArrivalDate)
+        {
+            Delivery data = new Delivery
+            {
+                patientFID = PatId,
+                Id = PerId,
+                shippedDate = shippedDate,
+                arrivalDate = ArrivalDate                
+            };
+            string sql = @"INSERT into dbo.[deliveries] (patientFID, patientRXFID, shippedDate, arrivalDate)
+                            values(@patientFID, @Id, @shippedDate, @arrivalDate)";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+        //
     }
 }

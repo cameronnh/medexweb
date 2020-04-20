@@ -1,0 +1,136 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/PharmacyLayout.cshtml";
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                //theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+
+                handleWindowResize: true,
+                defaultView: 'month',
+                editable: true,
+                allDaySlot: false,
+                selectable: true,
+                slotMinutes: 15,
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Pharmacy/GetData',
+                        type: "GET",
+                        dataType: "JSON",
+
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.Title,
+                                        description: data.Desc,
+                                        start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: data.PriorityColor,
+                                        borderColor: "#0271e0"
+                                    });
+                            });
+
+                            callback(events);
+                        }
+                    });
+                },
+                editable: false
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSet").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var del = {};
+                del.patientFID = $buttonClicked.attr('data-id');               
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetAsDelivered")',
+                    data: '{del: ' + JSON.stringify(del) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Prescriptions Have been marked as sent.");
+                    },
+                    error: function () {
+                        alert("Cannot mark as sent. Contact your manager.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0">Current Patient ID: @Model.Id </h5>
+                            <h5></h5>
+                            <input class="btn btn-primary" name="submitButton" data-id="@Model.Id" id="btnSet" value="Pills are Packed" type="button">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0">Patients Prescriptions to fill</h5>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Perscription Name</th>
+                                    <th scope="col">Dosage</th>
+                                    <th scope="col">Pill Count</th>
+                                    <th scope="col">Number Of Refills</th>
+                                    <th scope="col">Date Prescribed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.dosage)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.pillCount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.numberofRefills)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.datePrescribed)</td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="card-body b-l calender-sidebar">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  

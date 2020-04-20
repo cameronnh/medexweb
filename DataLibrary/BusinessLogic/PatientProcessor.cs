@@ -124,5 +124,19 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+
+        public static int AddChat(int patientID, int doctorID, string topic)
+        {
+            Chats data = new Chats
+            {
+                patientID = patientID,
+                doctorID = doctorID,
+                topic = topic
+            };
+            string sql = @"INSERT into dbo.[Chats] (patientID, doctorID, topic)
+                            values(@patientID, @doctorID, @topic)";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
     }
 }

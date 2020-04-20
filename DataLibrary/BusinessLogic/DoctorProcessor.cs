@@ -145,7 +145,7 @@ namespace DataLibrary.BusinessLogic
 
         public static List<Appointment> loadAppointmentData(int id)
         {
-            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE doctorFID = '" + id + "';";
+            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE doctorFID = '" + id + "' AND isconfirmed = 1;";
             List<Appointment> temp = SqlDataAccess.LoadData<Appointment>(sql);
             for (int i = 0; i < temp.Count(); i++)
             {
@@ -195,6 +195,62 @@ namespace DataLibrary.BusinessLogic
                 Id = Id
             };
             string sql = @"DELETE FROM dbo.[appointments] WHERE Id = '" + Id + "';";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<docPreClasses> getSelections()
+        {
+            string sql = @"SELECT classId, className FROM dbo.[prescriptionClasses];";
+            List<docPreClasses> tempClass = SqlDataAccess.LoadData<docPreClasses>(sql);
+            for (int i = 0; i < tempClass.Count(); i++)
+            {
+                string sql2 = @"SELECT prescriptionId, prescriptionName, prescriptionDosage FROM dbo.[prescription] WHERE classFID = '" + tempClass[i].classId + "';";
+                tempClass[i].prescriptions = SqlDataAccess.LoadData<docPre>(sql2);             
+            }                     
+            return tempClass;
+        }
+
+        public static List<Chats> loadChats(int id)
+        {
+            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE patientID = '" + id + "';";
+            List<Chats> temp = SqlDataAccess.LoadData<Chats>(sql);
+            foreach (Chats C in temp)
+            {
+                sql = @"SELECT Id, userId, text, user, time, date FROM dbo.[messages] WHERE chatID = '" + C.Id + "';";
+                List<Message> tempMessage = SqlDataAccess.LoadData<Message>(sql);
+                C.messageList = tempMessage;
+            }
+            return temp;
+        }
+
+        public static int AddMessage(int userId, string text, string user,
+            string time, string date, int chatID)
+        {
+            Message data = new Message
+            {
+                userID = userId,
+                text = text,
+                user = user,
+                time = time,
+                date = date
+            };
+            string sql = @"INSERT into dbo.[messages] (userId, text, [user], time, date, chatID)
+                            values(@userId, @text, @user, @time, @date, " + chatID + ")";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int AddChat(int patientID, int doctorID, string topic)
+        {
+            Chats data = new Chats
+            {
+                patientID = patientID,
+                doctorID = doctorID,
+                topic = topic
+            };
+            string sql = @"INSERT into dbo.[Chats] (patientID, doctorID, topic)
+                            values(@patientID, @doctorID, @topic)";
+
             return SqlDataAccess.SaveData(sql, data);
         }
     }

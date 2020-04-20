@@ -19,5 +19,6 @@ namespace DataLibrary.Models
         public string useBefore { get; set; }
         public string description { get; set; }
         public string datePrescribed { get; set; }
+        public string color { get; set; }
     }
 }

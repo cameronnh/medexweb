@@ -21,23 +21,6 @@ namespace medexnet.Controllers
 
             return View(currentPatient);
         }
-
-        [HttpGet]
-        public JsonResult GetNotifications()
-        {
-            List<Notification> lstDataSubmit = new List<Notification>();
-
-            /// Should update from DB  
-            ///  
-            ///e.g. Generating Notification manually  
-            var No = 10;
-            while (No != 0)
-            {
-                lstDataSubmit.Add(new Notification() { description = "This is dynamic notification..." + No, time = DateTime.Now.ToString("ss") + " seconds ago..." });
-                No--;
-            }
-            return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
-        }
         public UserModel GetInfo(UserModel temp)
         {
             List<DataLibrary.Models.PatientPrescriptions> data = PatientProcessor.LoadPatientPrescriptions(temp.Id);
@@ -51,10 +34,19 @@ namespace medexnet.Controllers
             temp.myAppointments = PatientProcessor.loadAppointmentData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
             temp.myChats = PatientProcessor.loadChats(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
             temp.currentChatID = currentPatient.currentChatID;
+            temp.myDoctors = PatientProcessor.loadDoctorData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.DMDoctorData));
             return temp;
         }
+        public UserModel GetPatientInfo(UserModel temp)
+        {
+            List<DataLibrary.Models.UserModel> data = Processor.LoadUser(currentPatient.email, currentPatient.password);
+            List<UserModel> userList = new List<UserModel>();
+            userList = data.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.GetUserData));
+            temp = userList[0];
 
-        public ActionResult Perscriptions(UserModel patient)
+            return temp;
+        }
+            public ActionResult Perscriptions(UserModel patient)
         {
             currentPatient = GetInfo(patient);
             return View(currentPatient);
@@ -69,7 +61,6 @@ namespace medexnet.Controllers
         public ActionResult DoctorInfo(UserModel patient)
         {
             currentPatient = GetInfo(patient);
-            currentPatient.myDoctors = PatientProcessor.loadDoctorData(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.DMDoctorData)); ;
             return View(currentPatient);
         }
 
@@ -98,10 +89,35 @@ namespace medexnet.Controllers
         }
         public ActionResult Settings(UserModel patient)
         {
+            currentPatient = GetPatientInfo(patient);
+            currentPatient = GetInfo(currentPatient);
+            return View(currentPatient);
+        }
+
+        public ActionResult ChangeSettings(UserModel patient)
+        {
             currentPatient = GetInfo(patient);
             return View(currentPatient);
         }
 
+        [HttpGet]
+        public JsonResult GetNotifications()
+        {
+            List<Notification> lstDataSubmit = new List<Notification>();
+
+            /// Should update from DB  
+            ///  
+            ///e.g. Generating Notification manually  
+            var No = 10;
+            while (No != 0)
+            {
+                lstDataSubmit.Add(new Notification() { description = "This is dynamic notification..." + No, time = DateTime.Now.ToString("ss") + " seconds ago..." });
+                No--;
+            }
+            return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Calendar Methods
         private List<CalendarEvent> LoadAppointmentData()
         {
             List<CalendarEvent> temp = new List<CalendarEvent>();
@@ -196,7 +212,7 @@ namespace medexnet.Controllers
             {
                 for(int i = 0; i < item.pillCount; i++)
                 {
-                    temp.Add(new CalendarEvent { Sr = 2, Title = "Take " + item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), Desc = item.description, PriorityColor = "#4a807c" });
+                    temp.Add(new CalendarEvent { Sr = 2, Title = "Take " + item.name, Start_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), End_Date = Convert.ToDateTime(item.datePrescribed).AddDays(i).ToShortDateString(), Desc = item.description, PriorityColor = item.color });
                 }
                 foreach (Delivery d in item.dDates)
                 {
@@ -212,18 +228,6 @@ namespace medexnet.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMessage(string msg, int id)
-        {
-            if (ModelState.IsValid)
-            {
-                PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
-                string message = "Message has been written.";
-                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
-            }
-            return View();
-        }
-
-        [HttpPost]
         public ActionResult AddAppointment(int doctorID, string date, string desc)
         {
             if (ModelState.IsValid)
@@ -234,6 +238,8 @@ namespace medexnet.Controllers
             }
             return View();
         }
+        #endregion
+
         [HttpPost]
         public ActionResult ChangeChatID(int id, string topic)
         { 
@@ -251,6 +257,7 @@ namespace medexnet.Controllers
             }
             return View();
         }
+        #region Messaging Methods
         [HttpPost]
         public ActionResult MessageChangeChatID(int Id)
         { 
@@ -263,5 +270,161 @@ namespace medexnet.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddMessage(string msg, int id)
+        {
+            if (currentPatient.currentChatID == -1)
+            {
+                string message = "No Valid Chats";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            if (ModelState.IsValid)
+            {
+                PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+#endregion
+
+        #region settings Methods
+        [HttpPost]
+        public ActionResult ChangeEmail(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                bool validEmail = true;
+
+                if (!newData.email.Contains("@")){validEmail = false;}
+                if (!newData.email.Contains(".")){validEmail = false;}
+
+                if (validEmail)
+                {
+                    PatientProcessor.ChangeEmail(currentPatient.Id, newData.email);
+                    currentPatient.email = newData.email;
+                    string message = "Your email address has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your email address is not valid.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePhone(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                bool validPhone = true;
+
+                if (newData.phoneNumber.Any())
+                {
+                    validPhone = false;
+                }
+
+                if (validPhone)
+                {
+                    PatientProcessor.ChangePhone(currentPatient.Id, newData.phoneNumber);
+
+                    string message = "Your phone number has been has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your phone number has not been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string cPassword, string nPassword, string cnPassword)
+        {
+            if(currentPatient.password != cPassword)
+            {
+                string message = "Your current password is invalid.";
+                return Json(new { success = false, Message = message, JsonRequestBehavior.AllowGet });
+            }
+            if(nPassword != cnPassword)
+            {
+                string message = "Your new password does not match.";
+                return Json(new { success = false, Message = message, JsonRequestBehavior.AllowGet });
+            }
+            if (ModelState.IsValid)
+            {
+                PatientProcessor.ChangePassword(currentPatient.Id, nPassword);
+
+                string message = "Your password has been has been changed.";
+                return Json(new { success = true, Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeAddress(UserModel newData)
+        {
+            if (ModelState.IsValid)
+            {
+                bool validAddress = true;
+
+                if (newData.streetAddress.Length < 4)
+                {
+                    validAddress = false;
+                }
+                if (newData.city.Length < 2)
+                {
+                    validAddress = false;
+                }
+                if (newData.state.Length < 2)
+                {
+                    validAddress = false;
+                }
+                if (newData.zipcode.Length < 5)
+                {
+                    validAddress = false;
+                }
+
+                if (validAddress)
+                {
+                    PatientProcessor.ChangeAddress(currentPatient.Id, newData.streetAddress, newData.city, newData.state, newData.zipcode);
+
+                    string message = "Your address has been has been changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+                else
+                {
+                    string message = "Your address cant be has be changed.";
+                    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+                }
+
+            }
+            return View();
+        }
+        #endregion
+
+
+        [HttpPost]
+        public ActionResult ChangeRxColor(int id, string color)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach(PatientPrescriptions p in currentPatient.myPrescriptions)
+                {
+                    if(p.Id == id)
+                    {
+                        PatientProcessor.ChangeColor(currentPatient.Id, id, color);
+                    }
+                }
+                string message = "Your Color Changed.";
+                return Json(new { success = true, Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
     }
 }

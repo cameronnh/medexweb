@@ -2,7 +2,15 @@
 
 @{
     Layout = "~/Views/Shared/PatientLayout.cshtml";
-    medexnet.Models.Chats cChat = Model.getChat(Model.currentChatID);
+    medexnet.Models.Chats cChat = new medexnet.Models.Chats();
+    if(Model.currentChatID != -1)
+    {
+         cChat= Model.getChat(Model.currentChatID);
+    }
+    else
+    {
+        cChat.Id = 0;
+    }
 }
 
 <div class="page-wrapper">
@@ -12,7 +20,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Messages</h4>
+                <h4 class="page-title">Messenger</h4>
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -47,10 +55,27 @@
                                     <div class="row">
                                         @foreach (medexnet.Models.Chats c in Model.myChats)
                                         {
+                                            string displayName = "Test";
+                                            string lastmessage = "";
+
+                                            foreach(medexnet.Models.UserModel DM in Model.myDoctors)
+                                            {
+                                                if(DM.Id == c.doctorID)
+                                                {
+                                                    displayName = "Dr. " + DM.lName;
+                                                }
+                                            }
+
+                                            if(c.messageList.Count > 0)
+                                            {
+                                                lastmessage = c.messageList.FindLast(ele => ele.Id != Model.Id).text;
+                                            }
+
                                             <div class="col-md-12">
                                                 <a class="chatID" data-Id="@c.Id" href="">
                                                     <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => c.topic)</h4>
-                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => c.doctorID)</p>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => displayName)</p>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => lastmessage)</p>
                                                 </a>
                                             </div>
                                         }
@@ -60,34 +85,37 @@
                             <div class="col-lg-9">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">@Html.DisplayFor(modelItem => cChat.topic)</h4>
+                                        <h4 class="card-title">@if (Model.currentChatID != -1){@Html.DisplayFor(modelItem => cChat.topic)}</h4>
                                         <div class="chat-box scrollable" style="height:475px;">
                                             <!--chat Row -->
                                             <ul class="chat-list">
                                                 <!--chat Row -->
-                                                @foreach (medexnet.Models.Message M in cChat.messageList)
+                                                @if (Model.currentChatID != -1)
                                                 {
-                                                    if (M.userID != Model.Id)
+                                                    foreach (medexnet.Models.Message M in cChat.messageList)
                                                     {
-                                                        <li class="chat-item">
-                                                            <div class="chat-content">
-                                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                            </div>
-                                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                        </li>
-                                                    }
-                                                    else
-                                                    {
-                                                        <li class="odd chat-item">
-                                                            <div class="chat-content">
-                                                                <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                            </div>
-                                                            <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                        </li>
-                                                    }
+                                                        if (M.userID != Model.Id)
+                                                        {
+                                                            <li class="chat-item">
+                                                                <div class="chat-content">
+                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                                                </div>
+                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="odd chat-item">
+                                                                <div class="chat-content">
+                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                                                </div>
+                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                                                            </li>
+                                                        }
 
+                                                    }
                                                 }
                                             </ul>
                                         </div>

@@ -1,0 +1,220 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    ViewBag.Title = "ChangeSettings";
+    Layout = "~/Views/Shared/PatientLayout.cshtml";
+    string address = Model.streetAddress + " " + Model.city + ", " + Model.state + " " + Model.zipcode;
+}
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dl></dl>
+                    <dt>
+                        <h2>Contact Information</h2>
+                        <br />
+                        <form>
+                            @* START OF EMAIL *@
+                            <dl>
+                                Current Email Address: @Html.DisplayFor(model => model.email)
+                                <br />
+                                <input type="email" value="@Model.email" name="email" id="email" class="form-control" required />
+                            </dl>
+                            <dl>
+                                <input class="btn btn-primary" name="change Email" @*data-id="@item.Id"*@ id="changeEmail" value="Change Email" type="button">
+                            </dl>
+                            <br />
+                        </form>
+                        <form>
+                            @* START OF PHONE *@
+                            <dl>
+                                Current Phone Number: @Html.DisplayFor(model => model.phoneNumber)
+                                <br />
+                                <input type="tel" value="@Model.phoneNumber" name="phoneNumber" id="phoneNumber" class="form-control" required />
+                            </dl>
+                            <dl>
+                                <input class="btn btn-primary" name="change Phone" @*data-id="@item.Id"*@ id="changePhone" value="Change Phone" type="button">
+                            </dl>
+                            <br />
+                        </form>
+<dt>
+                        Change Address Information
+                        <br />
+                    </dt>
+                    <form>
+                        @* START OF ADDRESS *@
+                        <dl>
+                            Current Address: @Html.DisplayFor(model => model.streetAddress)
+                            <br />
+                            <input type="text" value="@Model.streetAddress" name="streetAddress" id="streetAddress" class="form-control" required />
+                        </dl>
+                        <dl></dl>
+                        <dl>
+                            Current City: @Html.DisplayFor(model => model.city)
+                            <br />
+                            <input type="text" value="@Model.city" name="city" id="city" class="form-control" required />
+                        </dl>
+                        <dl></dl>
+                        <dl>
+                            Current State: @Html.DisplayFor(model => model.state)
+                            <br />
+                            <input type="text" value="@Model.state" name="state" id="state" class="form-control" required />
+                        </dl>
+                        <dl></dl>
+                        <dl>
+                            Current State: @Html.DisplayFor(model => model.zipcode)
+                            <br />
+                            <input type="text" value="@Model.zipcode" name="zipcode" id="zipcode" class="form-control" required />
+                        </dl>
+                        <dl>
+                            <input class="btn btn-primary" name="change address" @*data-id="@item.Id"*@ id="changeAddress" value="Change Address" type="button">
+                        </dl>
+                        <br />
+                    </form>
+                    <dl></dl>
+                    <dt>
+                        Change Password
+                        <br/>
+                    </dt>
+                    <form>
+                        @* START OF PASSWORD *@
+                        <dl>
+                            Current Password:
+                            <input type="password" name="currentpassword" id="currentpassword" class="form-control" required />
+                        </dl>
+                        <br />
+                        <dl>
+                            New Password:
+                            <input type="password" name="newpassword" id="newpassword" class="form-control" required />
+                        </dl>
+                        <dl>
+                            Confirm Password:
+                            <input type="password" name="cnewpassword" id="cnewpassword" class="form-control" required />
+                        </dl>
+
+                        <dl>
+                            <input class="btn btn-primary" name="change password" @*data-id="@item.Id"*@ id="changePassword" value="Change Password" type="button">
+                        </dl>
+                    </form>
+                    </dt>
+
+                </dl>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#changeEmail").click(function () {
+                debugger;
+                var newData = {};
+                newData.email = $("#email").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeEmail")',
+                    data: '{newData: ' + JSON.stringify(newData) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Your email address has changed.");
+                        location.href = '@Url.Action("Settings", "Patient", Model)';
+                    },
+                    error: function () {
+                        alert("Cannot change email address.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#changePhone").click(function () {
+                debugger;
+                var newData = {};
+                newData.phoneNumber = $("#phoneNumber").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangePhone")',
+                    data: '{newData: ' + JSON.stringify(newData) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Your phone number has changed.");
+                        location.href = '@Url.Action("Settings", "Patient", Model)';
+                    },
+                    error: function () {
+                        alert("Cannot change phone number.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#changeAddress").click(function () {
+                debugger;
+                var newData = {};
+                newData.streetAddress = $("#streetAddress").val();
+                newData.city = $("#city").val();
+                newData.state = $("#state").val();
+                newData.zipcode = $("#zipcode").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeAddress")',
+                    data: '{newData: ' + JSON.stringify(newData) + '}',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        alert("Your address has been changed.");
+                        location.href = '@Url.Action("Settings", "Patient", Model)';
+                    },
+                    error: function () {
+                        alert("Cannot change address.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#changePassword").click(function () {
+                debugger;
+                var newData = {};
+                newData.cPassword = $("#currentpassword").val();
+                newData.nPassword = $("#newpassword").val();
+                newData.cnPassword = $("#cnewpassword").val();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangePassword")',
+                    data: JSON.stringify(newData),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Your password has been changed.");
+                            location.href = '@Url.Action("Settings", "Patient", Model)';
+                        } else {
+                            alert(response.Message);
+                        }
+                    },
+                    error: function () {
+                        alert("Cannot change password.");
+                    }
+            });
+            return false;
+        });
+    });
+    </script>
+}

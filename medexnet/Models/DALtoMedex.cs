@@ -40,7 +40,8 @@ namespace medexnet.Models
                 numberofRefills = temp.numberofRefills,
                 useBefore = temp.useBefore,
                 description = temp.description,
-                datePrescribed = temp.datePrescribed
+                datePrescribed = temp.datePrescribed,
+                color = temp.color
             };
         }
 

@@ -41,7 +41,21 @@ namespace DataLibrary.BusinessLogic
             string sql = @"SELECT Id, patientFID, doctorFID, prescriptionFID, name, dosage, pillCount, 
                             numberofRefills, useBefore, description, datePrescribed FROM dbo.[patientPrescriptions] WHERE patientFID = '" + id + "';";
 
-            return SqlDataAccess.LoadData<PatientPrescriptions>(sql);
+            List<PatientPrescriptions> temp = SqlDataAccess.LoadData<PatientPrescriptions>(sql);
+            foreach (PatientPrescriptions p in temp)
+            {
+                try
+                {
+                    sql = @"SELECT color FROM dbo.[prescriptioncolors] WHERE prescriptionFID = '" + p.Id + "' AND patientFID = '" + id + "';";
+                    List<string> color = SqlDataAccess.LoadData<string>(sql);
+                    p.color = color[0];
+                }
+                catch(Exception e)
+                {
+                    p.color = "#1bb9c2";
+                }
+            }
+            return temp;
         }
 
         public static List<Delivery> loadPrescriptionDelivery(int id)
@@ -79,36 +93,6 @@ namespace DataLibrary.BusinessLogic
             return temp;
         }
 
-        public static List<Chats> loadChats(int id)
-        {
-            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE patientID = '" + id + "';";
-            List<Chats> temp = SqlDataAccess.LoadData<Chats>(sql);
-            foreach (Chats C in temp)
-            {
-                sql = @"SELECT Id, userId, text, user, time, date FROM dbo.[messages] WHERE chatID = '" + C.Id + "';";
-                List<Message> tempMessage = SqlDataAccess.LoadData<Message>(sql);
-                C.messageList = tempMessage;
-            }
-            return temp;
-        }
-
-        public static int AddMessage(int userId, string text, string user, 
-            string time, string date, int chatID)
-        {
-            Message data = new Message
-            {
-                userID = userId,
-                text = text,
-                user = user,
-                time = time,
-                date = date
-            };
-            string sql = @"INSERT into dbo.[messages] (userId, text, [user], time, date, chatID)
-                            values(@userId, @text, @user, @time, @date, " + chatID +")";
-
-            return SqlDataAccess.SaveData(sql, data);
-        }
-
         public static int AddAppointment(int patientID, int doctorID, string date, string desc, bool isConfirmed)
         {
             Appointment data = new Appointment
@@ -125,18 +109,26 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static int AddChat(int patientID, int doctorID, string topic)
+        public static int ChangeColor(int patientId, int rxId, string color)
         {
-            Chats data = new Chats
+            PatientPrescriptions data = new PatientPrescriptions
             {
-                patientID = patientID,
-                doctorID = doctorID,
-                topic = topic
+                patientFID = patientId,
+                color = color,
+                Id = rxId
             };
-            string sql = @"INSERT into dbo.[Chats] (patientID, doctorID, topic)
-                            values(@patientID, @doctorID, @topic)";
+            int returnVal = 1;
 
-            return SqlDataAccess.SaveData(sql, data);
+            string sql = @"UPDATE dbo.[prescriptionColors] SET color = '" + color + "' WHERE prescriptionFID = '" + rxId + "' AND patientFID = '" + patientId + "';";
+            returnVal = SqlDataAccess.SaveData(sql, data);
+
+            if(returnVal == 0)
+            {
+                sql = @"INSERT into dbo.[prescriptionColors] (prescriptionFID, patientFID, color)
+                            values(@Id, @patientFID, @color)";
+                returnVal = SqlDataAccess.SaveData(sql, data);
+            }
+            return returnVal;
         }
     }
 }

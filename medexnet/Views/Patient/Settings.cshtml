@@ -4,12 +4,80 @@
     Layout = "~/Views/Shared/PatientLayout.cshtml";
 }
 
-
 <div class="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
+
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dl></dl>
+                    <dt>
+                        <h2>Contact Information</h2>
+                        <br />
+                    </dt>
+                    <form>
+                        <dl>
+                            <h5>Current Email Address: @Html.DisplayFor(model => model.email) </h5>
+                            <br />
+                            @{string address = Model.streetAddress + " " + Model.city + ", " + Model.state + " " + Model.zipcode;}
+                            <h5>Current Address: @Html.DisplayFor(model => address) </h5>
+                            <br />
+                            <h5>Current Phone Number: @Html.DisplayFor(model => model.phoneNumber) </h5>
+                            <br />
+                        </dl>
+                        <dl class="border-bottom">
+                            <input class="btn btn-primary" value="Change Info" name="Change Info" onclick="location.href = '@Url.Action("ChangeSettings", "Patient", Model)';" type="button">
+                        </dl>
+                        <br />
+                    </form>
+
+                    <form>
+                        <h2>Prescription Colors: </h2>
+                        <br />
+                        @foreach (medexnet.Models.PatientPrescriptions p in Model.myPrescriptions)
+                        {
+                            <dl class="border-bottom">
+                                <h5>Prescription: @Html.DisplayFor(model => p.name) @Html.DisplayFor(model => p.dosage) </h5>
+                                <br />
+                                <h5>
+                                    Color: <input class="changeColor" type="color" id="cColor" onchange="callChangefunc(@p.Id, this.value)" data-id="@p.Id" value="@p.color" style="width:40px; height:40px;">
+
+                                </h5>
+                                <br />
+                            </dl>
+                        }
+                    </form>
+
+                </dl>
+
             </div>
         </div>
     </div>
 </div>
+
+@section scripts
+{ 
+    <script type="text/javascript">
+
+        function callChangefunc(id, val) {
+            debugger;
+            var rxColor = {};
+                rxColor.id = id;
+                rxColor.color = val;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeRxColor")',
+                    data: JSON.stringify(rxColor),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Error sending message!");
+                    }
+            });
+            return false;
+        }
+    </script>
+}

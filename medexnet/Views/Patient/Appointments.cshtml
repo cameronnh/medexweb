@@ -17,7 +17,6 @@
                         <thead>
                             <tr>
                                 <th scope="col"> </th>
-                                <th scope="col">ID</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Doctor</th>
@@ -43,7 +42,6 @@
                                 }
                             <tr>
                                 <td onclick=""><a class="docID" data-Id="@item.doctor.Id" data-desc="@item.desc" href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
-                                <td onclick="">@Html.DisplayFor(modelItem => item.doctor.Id)</td>
                                 <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
                                 <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
                                 <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>

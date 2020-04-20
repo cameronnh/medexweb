@@ -42,7 +42,7 @@ namespace medexnet.Controllers
             List<CalendarEvent> temp = new List<CalendarEvent>();           
             foreach (Appointment item in currentDoctor.myAppointments)
             {
-                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#960f2a" });
+                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#0271e0" });
             }
             return temp;
         }
@@ -50,8 +50,7 @@ namespace medexnet.Controllers
         public ActionResult Patients()
         {
             List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
-            List<UserModel> patients = new List<UserModel>();
-            //currentDoctor.doctorSelection =
+            List<UserModel> patients = new List<UserModel>();        
 
             foreach (int patientId in patientIds)//gets the patient info for all the patients based of id
             {
@@ -63,6 +62,11 @@ namespace medexnet.Controllers
                 patients.Add(patient);
             }
             currentDoctor.SetPatients(patients);
+
+            List<docPreClasses> tempSelection = new List<docPreClasses>();
+            List<DataLibrary.Models.docPreClasses> tempSelData = DoctorProcessor.getSelections();
+            tempSelection = tempSelData.ConvertAll(new Converter<DataLibrary.Models.docPreClasses, docPreClasses>(DataAccessSelection));
+            currentDoctor.doctorSelection = tempSelection;
 
             return View(currentDoctor);
         }
@@ -386,6 +390,53 @@ namespace medexnet.Controllers
             return View("Appointments", "Doctor");
         }
 
+        public UserModel PullMessages(UserModel temp)
+        {            
+            temp.myChats = DoctorProcessor.loadChats(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            temp.currentChatID = currentDoctor.currentChatID;
+            return temp;
+        }
+
+        public ActionResult MessageInbox(UserModel doctor)
+        {
+            currentDoctor = PullMessages(doctor);
+            if (currentDoctor.currentChatID == -1 && currentDoctor.myChats.Count() > 0)
+            {
+                currentDoctor.currentChatID = currentDoctor.myChats[0].Id;
+            }
+            return View(currentDoctor);
+        }               
+
+        [HttpPost]
+        public ActionResult MessageChangeChatID(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                currentDoctor.currentChatID = Id;
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddMessage(string msg, int id)
+        {
+            if (currentDoctor.currentChatID == -1)
+            {
+                string message = "No Valid Chats";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+
+            if (ModelState.IsValid)
+            {
+                PatientProcessor.AddMessage(currentDoctor.Id, msg, currentDoctor.fName[0] + currentDoctor.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
+                string message = "Message has been written.";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            return View();
+        }
+
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)
         {
             return new UserModel
@@ -402,6 +453,28 @@ namespace medexnet.Controllers
                 zipcode = temp.zipcode,
                 accountType = temp.accountType,
                 officeHours = temp.officeHours,
+            };
+        }
+
+        public static docPreClasses DataAccessSelection(DataLibrary.Models.docPreClasses temp)
+        {
+            return new docPreClasses
+            {
+                classId = temp.classId,
+                className = temp.className,
+                prescriptions = temp.prescriptions.ConvertAll(new Converter<DataLibrary.Models.docPre, docPre>(DataAccessPreSelection))
+                
+            };
+        }
+
+        public static docPre DataAccessPreSelection(DataLibrary.Models.docPre temp)
+        {
+            return new docPre
+            {
+                prescriptionId = temp.prescriptionId,
+                prescriptionName = temp.prescriptionName,
+                prescriptionDosage = temp.prescriptionDosage,
+                classFID = temp.classFID
             };
         }
 

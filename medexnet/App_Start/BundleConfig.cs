@@ -9,7 +9,8 @@ namespace medexnet
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/js/jquery.min.js",
-                "~/Scripts/js/jquery-ui.min.js"));
+                "~/Scripts/js/jquery-ui.min.js",
+                "~/Scripts/js/jquery.dataTables.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/extras").Include(              
                 "~/Scripts/js/waves.js",
@@ -23,7 +24,8 @@ namespace medexnet
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/js/bootstrap.min.js",             
                 "~/Scripts/js/custom.min.js",
-                "~/Scripts/js/popper.min.js"));
+                "~/Scripts/js/popper.min.js",
+                "~/Scripts/js/dataTables.bootstrap.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/js/modernizr-*"));
@@ -34,6 +36,10 @@ namespace medexnet
 
             bundles.Add(new StyleBundle("~/bundles/style").Include(
                 "~/Scripts/css/style.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/dataTablesStyle").Include(
+                "~/Scripts/css/bootstrap.min.css",
+                "~/Scripts/css/dataTables.bootstrap.min.css"));
         }
     }
 }

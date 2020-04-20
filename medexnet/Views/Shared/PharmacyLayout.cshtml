@@ -17,6 +17,7 @@
 
     @Styles.Render("~/bundles/calendarcss")
     @Styles.Render("~/bundles/style")
+    @Styles.Render("~/bundles/dataTablesStyle")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 
@@ -36,8 +37,9 @@
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav" class="p-t-30">
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Pharmacy", Model)" aria-expanded="false"><i class="fas fa-boxes"></i><span class="hide-menu">Prescription Inventory</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Prescriptions", "Pharmacy")" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Patient Prescriptions</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Pharmacy", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
+                            
 
 
                             <li class="sidebar-item">
@@ -67,5 +69,13 @@
     @Scripts.Render("~/bundles/calendar")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @section scripts{
+    <script>
+    $(document).ready(function () {
+        $('#prescriptions').DataTable();
+    });
+    </script>
+    }
 </body>
 </html>

@@ -196,6 +196,7 @@
     <Content Include="Views\Doctor\Appointments.cshtml" />
     <Content Include="Views\Doctor\MessageInbox.cshtml" />
     <Content Include="Views\Pharmacy\PackerCalendar.cshtml" />
+    <Content Include="Views\Pharmacy\Inventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">

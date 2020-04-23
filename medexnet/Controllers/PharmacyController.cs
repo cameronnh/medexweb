@@ -22,6 +22,16 @@ namespace medexnet.Controllers
             return View(currentPacker);
         }
 
+        public ActionResult Inventory()
+        {
+            List<PharmacyPrescriptions> tempPrescriptions = new List<PharmacyPrescriptions>();
+            List<DataLibrary.Models.PharmacyPrescriptions> data = PharmacyProcessor.GetPrescriptionsByPatient();
+            tempPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PharmacyPrescriptions, PharmacyPrescriptions>(DataAccessPharmacyPrescriptions));
+            allPrescriptions = tempPrescriptions;
+
+            return View(allPrescriptions);
+        }
+
         public ActionResult Prescriptions()
         {
             List<PharmacyPrescriptions> tempPrescriptions = new List<PharmacyPrescriptions>();

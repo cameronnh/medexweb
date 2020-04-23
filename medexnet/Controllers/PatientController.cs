@@ -46,7 +46,7 @@ namespace medexnet.Controllers
 
             return temp;
         }
-            public ActionResult Perscriptions(UserModel patient)
+        public ActionResult Perscriptions(UserModel patient)
         {
             currentPatient = GetInfo(patient);
             return View(currentPatient);
@@ -105,13 +105,31 @@ namespace medexnet.Controllers
         {
             List<Notification> lstDataSubmit = new List<Notification>();
 
-            /// Should update from DB  
-            ///  
-            ///e.g. Generating Notification manually  
-            var No = 10;
+            UserModel temp = GetInfo(currentPatient);            
+            foreach(Chats c in temp.myChats)
+            {
+                if(currentPatient.myChats.Contains(c))
+                {
+                    foreach(Message m in c.messageList)
+                    {
+                        Chats tChat = currentPatient.myChats.Find(x => x.Id == c.Id);
+                        if (!tChat.messageList.Contains(m))
+                        {
+                            lstDataSubmit.Add(new Notification() { description = "New Message from" + c.doctorID + ", in " + c.topic, time = DateTime.Now.ToString("ss") + " seconds ago..." });
+                        }
+                    }
+                }
+                else
+                {
+                    lstDataSubmit.Add(new Notification() { description = "New Chat from" + c.doctorID, time = DateTime.Now.ToString("ss") + " seconds ago..." });
+                }
+            }
+
+
+            var No = 1;
             while (No != 0)
             {
-                lstDataSubmit.Add(new Notification() { description = "This is dynamic notification..." + No, time = DateTime.Now.ToString("ss") + " seconds ago..." });
+                lstDataSubmit.Add(new Notification() { description = "Nothing really.", time = DateTime.Now.ToString("ss") + " seconds ago..." });
                 No--;
             }
             return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);

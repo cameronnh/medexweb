@@ -2,7 +2,7 @@
     if (Session["Id"] == null)
     {
         Response.Redirect("~/Login/Login");
-    }  
+    }
 }
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -59,60 +59,30 @@
                             <!-- Comment -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-envelope " href="@Url.Action("MessageInbox", "Patient", Model)" aria-haspopup="true" aria-expanded="false"></a>
-                                @*<div class="dropdown-menu dropdown-menu-right animated" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>*@
+                                <!-- Notifications can go here -->
+
+
                             </li>
                             <!-- Messages -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark fas fa-bell" href="javascript:void(0)" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                     <ul class="list-style-none">
+
+
                                         <li>
-                                            <div class="">
-                                                <!-- Message -->
-                                                <a href="javascript:void(0)" class="link border-top">
-                                                    <div class="d-flex no-block align-items-center p-10">
-                                                        <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
-                                                        <div class="m-l-10">
-                                                            <h5 class="m-b-0">Event today</h5>
-                                                            <span class="mail-desc">Just a reminder that event</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                            <div class="" id="myNotificationList">
+                                                <!--Modular add notifications-->
                                                 <!-- Message -->
                                                 @*<a href="javascript:void(0)" class="link border-top">
-                                                    <div class="d-flex no-block align-items-center p-10">
-                                                        <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
-                                                        <div class="m-l-10">
-                                                            <h5 class="m-b-0">Settings</h5>
-                                                            <span class="mail-desc">You can customize this template</span>
+                                                        <div class="d-flex no-block align-items-center p-10">
+                                                            <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
+                                                            <div class="m-l-10">
+                                                                <h5 class="m-b-0">Event today</h5>
+                                                                <span class="mail-desc">Just a reminder that event</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                                 Message 
-                                                <a href="javascript:void(0)" class="link border-top">
-                                                    <div class="d-flex no-block align-items-center p-10">
-                                                        <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
-                                                        <div class="m-l-10">
-                                                            <h5 class="m-b-0">Pavan kumar</h5>
-                                                            <span class="mail-desc">Just see the my admin!</span>
-                                                        </div>
-                                                    </div>
-                                                </a>*@
-                                                <!-- Message -->
-                                                @*<a href="javascript:void(0)" class="link border-top">
-                                                    <div class="d-flex no-block align-items-center p-10">
-                                                        <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                                        <div class="m-l-10">
-                                                            <h5 class="m-b-0">Luanch Admin</h5>
-                                                            <span class="mail-desc">Just see the my new admin!</span>
-                                                        </div>
-                                                    </div>
-                                                </a>*@
+                                                    </a>*@
                                             </div>
                                         </li>
                                     </ul>
@@ -135,7 +105,7 @@
             <aside class="left-sidebar" data-sidebarbg="skin5">
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
-                        <ul id="sidebarnav" class="p-t-30">                            
+                        <ul id="sidebarnav" class="p-t-30">
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Patient", Model)" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Schedule</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Perscriptions", "Patient", Model)" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Prescriptions</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Deliveries", "Patient", Model)" aria-expanded="false"><i class="fas fa-truck"></i><span class="hide-menu">Deliveries</span></a></li>
@@ -143,13 +113,13 @@
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Appointments", "Patient", Model)" aria-expanded="false"><i class="fas fa-clock"></i><span class="hide-menu">Appointments</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("MessageInbox", "Patient", Model)" aria-expanded="false"><i class="fas fa-inbox"></i><span class="hide-menu">Messages</span></a></li>
                             @*<li class="sidebar-item">
-                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging </span></a>
-                                <ul aria-expanded="false" class="collapse  first-level">
-                                    <li class="sidebar-item"><a href="@Url.Action("MessageInbox", "Patient",Model)" class="sidebar-link"><i class="fas fa-inbox"></i><span class="hide-menu"> Inbox </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-send"></i><span class="hide-menu"> Send Message </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-trash-alt"></i><span class="hide-menu"> Trash </span></a></li>
-                                </ul>
-                            </li>*@
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">Messaging </span></a>
+                                    <ul aria-expanded="false" class="collapse  first-level">
+                                        <li class="sidebar-item"><a href="@Url.Action("MessageInbox", "Patient",Model)" class="sidebar-link"><i class="fas fa-inbox"></i><span class="hide-menu"> Inbox </span></a></li>
+                                        <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-send"></i><span class="hide-menu"> Send Message </span></a></li>
+                                        <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fas fa-trash-alt"></i><span class="hide-menu"> Trash </span></a></li>
+                                    </ul>
+                                </li>*@
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">
@@ -167,7 +137,7 @@
                 @RenderBody()
                 <hr />
             </div>
-            
+
 
         </div>
 
@@ -177,53 +147,7 @@
     @Scripts.Render("~/bundles/calendar")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
 
-@section scripts{
-    <script>
-    $(document).ready(function () {  
-        setInterval(function () {  
-            UpdateNotifications();  
-        }, 30);  
-    });  
-  
-        function UpdateNotifications() { 
-        debugger;
-        $.ajax({  
-            type: "GET",  
-            url: "/Patient/GetNotifications",  
-            contentType: "application/json; charset=utf-8",  
-            dataType: "json",  
-            success: function (response) {  
-                console.log(response);  
-                if (response != null) {  
-                                      
-                    var j = ""; var p = 0; var Q = "";  
-                    $.each(response, function (k, v) {  
-                        j += '<li><div class=""><a href="javascript:void(0)" class="link border-top">'
-                        j += '<div class="d-flex no-block align-items-center p-10"><span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>'
-                        j += '<div class="m-l-10"><h5 class="m-b-0">Event today</h5><span class="mail-desc">Just a reminder that event</span>'
-                        j += '</div></div></a></div></li>'
-                        
-                    });  
-
-                    $('#2').html("");
-                    $('#2').append(j);
-
-                    
-                    //$('#myNotifyList').html("");  
-                    //j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";  
-                    //$('#myNotifyList').append(j);  
-                    //$('#countNotify').html("<span>" + p + "</span>");  
-                    //$('#myAllNotifications').html("");  
-                    //$('#myAllNotifications').append(Q);  
-                }  
-            },  
-            failure: function (response) {  
-                alert(response.d);  
-            }  
-        });  
-    }  
-    </script>
-}

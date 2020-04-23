@@ -71,10 +71,10 @@
                                                 lastmessage = c.messageList.FindLast(ele => ele.Id != Model.Id).text;
                                             }
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 border-bottom bg-light-info">
                                                 <a class="chatID" data-Id="@c.Id" href="">
                                                     <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => c.topic)</h4>
-                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => displayName)</p>
+                                                    <h6 class="list-group-item-text">@Html.DisplayFor(modelItem => displayName)</h6>
                                                     <p class="list-group-item-text">@Html.DisplayFor(modelItem => lastmessage)</p>
                                                 </a>
                                             </div>

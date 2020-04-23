@@ -57,9 +57,57 @@
                 //}//,  
   
             });
+            setInterval(function () {
+                UpdateNotifications();
+            }, 3000);
         });
+
+        function UpdateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Patient/GetNotifications",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            j += '<a href="javascript:void(0)" class="link border-top">                           '
+                            j += '<div class="d-flex no-block align-items-center p-10">                           '
+                            j += '<span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>     '
+                            j += '<div class="m-l-10">                                                            '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                              '
+                            j += '<span class="mail-desc">' + v.time.toString() +  '</span>                       '
+                            j += '</div>                                                                          '
+                            j += '</div>                                                                          '
+                            j += '</a>'
+                        });
+
+                        $('#myNotificationList').html("");
+                        $('#myNotificationList').append(j);
+
+
+                        //$('#myNotifyList').html("");
+                        //j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        //$('#myNotifyList').append(j);
+                        //$('#countNotify').html("<span>" + p + "</span>");
+                        //$('#myAllNotifications').html("");
+                        //$('#myAllNotifications').append(Q);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+    </script>
+
     </script>
 }
+
+
 
 <div class="page-wrapper">
     <div class="container-fluid">

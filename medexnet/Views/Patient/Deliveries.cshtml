@@ -18,7 +18,7 @@
 
                 handleWindowResize: true,
                 defaultView: 'month',
-                editable: true,
+                editable: false,
                 allDaySlot: false,
                 selectable: true,
                 slotMinutes: 15,
@@ -55,10 +55,45 @@
                 //        content: event.description
                 //    });
                 //},
-
-                editable: false
             });
+            setInterval(function () {
+            UpdateNotifications();
+            }, 3000);
         });
+
+
+        function UpdateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Patient/GetNotifications",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
+                            j += '<div class="d-flex no-block align-items-center p-10">                           '
+                            j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
+                            j += '<div class="m-l-10">                                                            '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                            j += '<span class="mail-desc"></span>                       '
+                            j += '</div>                                                                          '
+                            j += '</div>                                                                          '
+                            j += '</a>'
+                        });
+
+                        $('#myNotificationList').html("");
+                        $('#myNotificationList').append(j);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
     </script>
 }
 

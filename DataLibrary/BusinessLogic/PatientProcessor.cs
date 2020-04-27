@@ -130,5 +130,18 @@ namespace DataLibrary.BusinessLogic
             }
             return returnVal;
         }
+
+        public static List<Chats> loadChats(int id)
+        {
+            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE patientID = '" + id + "';";
+            List<Chats> temp = SqlDataAccess.LoadData<Chats>(sql);
+            foreach (Chats C in temp)
+            {
+                sql = @"SELECT Id, userId, text, user, time, date FROM dbo.[messages] WHERE chatID = '" + C.Id + "';";
+                List<Message> tempMessage = SqlDataAccess.LoadData<Message>(sql);
+                C.messageList = tempMessage;
+            }
+            return temp;
+        }
     }
 }

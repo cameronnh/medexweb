@@ -41,7 +41,7 @@
                                     color = "red";
                                 }
                             <tr>
-                                <td onclick=""><a class="docID" data-Id="@item.doctor.Id" data-desc="@item.desc" href="@Url.Action("MessageInbox", "Patient", Model)">Message</a></td>
+                                <td onclick=""><a class="docID" data-Id="@item.doctor.Id" data-desc="@item.desc" href="">Message</a></td>
                                 <td onclick="">@Html.DisplayFor(modelItem => item.date)</td>
                                 <td onclick="">@Html.DisplayFor(modelItem => item.desc)</td>
                                 <td onclick="">@Html.DisplayFor(modelItem => doctorName)</td>
@@ -123,7 +123,6 @@
     <script type="text/javascript">
         $(function () {
             $(".docID").click(function () {
-                debugger;
                 var $buttonClicked = $(this);
                 var chat = {};
                 chat.id =  $buttonClicked.attr('data-Id');
@@ -135,7 +134,7 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        
+                        window.location.href = '/Patient/MessageInbox/'+ @Model.Id +'?';
                     },
                     error: function () {
                         alert("Error");
@@ -143,7 +142,46 @@
             });
             return false;
         });
-    });
+        });
+
+        $(document).ready(function () {
+            setInterval(function () {
+            UpdateNotifications();
+            }, 3000);
+        });
+
+        function UpdateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Patient/GetNotifications",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
+                            j += '<div class="d-flex no-block align-items-center p-10">                           '
+                            j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
+                            j += '<div class="m-l-10">                                                            '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                            j += '<span class="mail-desc"></span>                       '
+                            j += '</div>                                                                          '
+                            j += '</div>                                                                          '
+                            j += '</a>'
+                        });
+
+                        $('#myNotificationList').html("");
+                        $('#myNotificationList').append(j);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
     </script>
 
 }

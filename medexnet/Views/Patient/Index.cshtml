@@ -74,12 +74,12 @@
 
                         var j = ""; var p = 0; var Q = "";
                         $.each(response, function (k, v) {
-                            j += '<a href="javascript:void(0)" class="link border-top">                           '
+                            j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
                             j += '<div class="d-flex no-block align-items-center p-10">                           '
-                            j += '<span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>     '
+                            j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
                             j += '<div class="m-l-10">                                                            '
-                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                              '
-                            j += '<span class="mail-desc">' + v.time.toString() +  '</span>                       '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                            j += '<span class="mail-desc"></span>                       '
                             j += '</div>                                                                          '
                             j += '</div>                                                                          '
                             j += '</a>'
@@ -87,14 +87,6 @@
 
                         $('#myNotificationList').html("");
                         $('#myNotificationList').append(j);
-
-
-                        //$('#myNotifyList').html("");
-                        //j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
-                        //$('#myNotifyList').append(j);
-                        //$('#countNotify').html("<span>" + p + "</span>");
-                        //$('#myAllNotifications').html("");
-                        //$('#myAllNotifications').append(Q);
                     }
                 },
                 failure: function (response) {
@@ -104,7 +96,6 @@
         }
     </script>
 
-    </script>
 }
 
 
@@ -119,7 +110,7 @@
                         <div class="row">
                             <div class="col-lg-3 border-right p-r-0">
                                 <div class="card-body border-bottom">
-                                    <h4 class="card-title m-t-15">Perscriptions</h4>
+                                    <h4 class="card-title m-t-15">Prescriptions</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -127,7 +118,7 @@
 
                                             @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
                                             {
-                                                <a href="@Url.Action("Perscriptions", "Patient", Model)" class="text-secondary">
+                                                <a href="@Url.Action("Prescriptions", "Patient", Model)" class="text-secondary">
                                                     <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage)</h4>
                                                     <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.description)</p>
                                                 </a>

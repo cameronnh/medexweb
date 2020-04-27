@@ -15,6 +15,9 @@ namespace medexnet.Controllers
     public class PatientController : Controller
     {
         public static UserModel currentPatient = new UserModel();
+        public static List<Notification> notificationList = new List<Notification>();
+        public static int chatID = -1;
+        public static int notifyCounter = 1;
         public ActionResult Index(UserModel patient)
         {
             currentPatient = GetInfo(patient);
@@ -33,7 +36,8 @@ namespace medexnet.Controllers
             }
             temp.myAppointments = PatientProcessor.loadAppointmentData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
             temp.myChats = PatientProcessor.loadChats(temp.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
-            temp.currentChatID = currentPatient.currentChatID;
+            temp.currentChatID = chatID;
+            temp.myNotifications = notificationList;
             temp.myDoctors = PatientProcessor.loadDoctorData(temp.Id).ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DALtoMedex.DMDoctorData));
             return temp;
         }
@@ -46,15 +50,18 @@ namespace medexnet.Controllers
 
             return temp;
         }
-        public ActionResult Perscriptions(UserModel patient)
+        public ActionResult Prescriptions(UserModel patient)
         {
             currentPatient = GetInfo(patient);
+            currentPatient.myNotifications.RemoveAll(x => x.type == Notification.NotificationType.prescription);
+
             return View(currentPatient);
         }
 
         public ActionResult Deliveries(UserModel patient)
         {
             currentPatient = GetInfo(patient);
+            currentPatient.myNotifications.RemoveAll(x => x.type == Notification.NotificationType.delivery);
             return View(currentPatient);
         }
 
@@ -76,15 +83,14 @@ namespace medexnet.Controllers
         public ActionResult Appointments(UserModel patient)
         {
             currentPatient = GetInfo(patient);
+            currentPatient.myNotifications.RemoveAll(x => x.type == Notification.NotificationType.appointment);
             return View(currentPatient);
         }
         public ActionResult MessageInbox(UserModel patient)
         {
             currentPatient = GetInfo(patient);
-            if(currentPatient.currentChatID == -1)
-            {
-                currentPatient.currentChatID = currentPatient.myChats[0].Id;
-            }
+            currentPatient.myNotifications.RemoveAll(x => x.type == Notification.NotificationType.message);
+
             return View(currentPatient);
         }
         public ActionResult Settings(UserModel patient)
@@ -100,41 +106,127 @@ namespace medexnet.Controllers
             return View(currentPatient);
         }
 
-        [HttpGet]
-        public JsonResult GetNotifications()
-        {
-            List<Notification> lstDataSubmit = new List<Notification>();
+        #region Partial Views
 
-            UserModel temp = GetInfo(currentPatient);            
-            foreach(Chats c in temp.myChats)
+        [HttpGet]
+        public ActionResult getPrescriptionData()
+        {
+            return PartialView("PrescriptionsPartialView", currentPatient);
+        }
+        
+        [HttpGet]
+        public ActionResult ChatPartial()
+        {
+            return PartialView("ChatPartialView", currentPatient);
+        }
+        #endregion
+
+        #region notifications
+
+        public List<Notification> getMessageNotifications(List<Notification> notify)
+        {
+             List<Chats> tempChatList = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            foreach (Chats c in tempChatList)
             {
-                if(currentPatient.myChats.Contains(c))
+                if(!currentPatient.myChats.Exists(x => x.Id == c.Id))
                 {
-                    foreach(Message m in c.messageList)
-                    {
-                        Chats tChat = currentPatient.myChats.Find(x => x.Id == c.Id);
-                        if (!tChat.messageList.Contains(m))
-                        {
-                            lstDataSubmit.Add(new Notification() { description = "New Message from" + c.doctorID + ", in " + c.topic, time = DateTime.Now.ToString("ss") + " seconds ago..." });
-                        }
-                    }
+                    notify.Add(new Notification() {id = notifyCounter++, description = "New Chat from Dr. " + currentPatient.myDoctors.Find(d => d.Id == c.doctorID).lName, time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.message, image = "ti-envelope", address = "/patient/messageinbox/" + currentPatient.Id + "?" });
+                    currentPatient.myChats.Add(c);
                 }
                 else
                 {
-                    lstDataSubmit.Add(new Notification() { description = "New Chat from" + c.doctorID, time = DateTime.Now.ToString("ss") + " seconds ago..." });
+                    foreach (Message m in c.messageList)
+                    {
+                        Chats tChat = currentPatient.myChats.Find(x => x.Id == c.Id);
+                        if (!tChat.messageList.Exists(x => x.Id == m.Id))
+                        {
+                            notify.Add(new Notification() { id = notifyCounter++, description = "New Message in " + c.topic, time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.message, image = "ti-envelope", address = "/patient/messageinbox/" + currentPatient.Id + "?" });
+                            currentPatient.myChats.Find(x => x.Id == c.Id).messageList = c.messageList;
+                        }
+                    }
                 }
             }
-
-
-            var No = 1;
-            while (No != 0)
+            return notify;
+        }
+        public List<Notification> getAppointmentNotifications(List<Notification> notify)
+        {
+            List<Appointment> tempAppList = PatientProcessor.loadAppointmentData(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
+            foreach (Appointment a in tempAppList)
             {
-                lstDataSubmit.Add(new Notification() { description = "Nothing really.", time = DateTime.Now.ToString("ss") + " seconds ago..." });
-                No--;
+               if(currentPatient.myAppointments.Exists(x => x.Id == a.Id))
+                {
+                    Appointment temp = currentPatient.myAppointments.Find(x => x.Id == a.Id);
+                    if(temp.isConfirmed != a.isConfirmed)
+                    {
+                        notify.Add(new Notification() { id = notifyCounter++, description = "Appointment " + a.desc + " Confirmed.", time = DateTime.Now.ToString("ss") + " seconds ago...",type = Notification.NotificationType.appointment });
+                        temp.isConfirmed = a.isConfirmed;
+                    }
+                }
             }
+            return notify;
+        }      
+        
+        public List<Notification> getPrescriptionNotifications(List<Notification> notify)
+        {
+            List<PatientPrescriptions> tempPrescriptions = PatientProcessor.LoadPatientPrescriptions(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DALtoMedex.DMPatientPrescriptions));
+            foreach (PatientPrescriptions p in tempPrescriptions)
+            {
+               if(!currentPatient.myPrescriptions.Exists(x => x.Id == p.Id))
+                {
+                    notify.Add(new Notification() { id = notifyCounter++, description = "New Prescription from" + currentPatient.myDoctors.Find(d => d.Id == p.doctorFID).lName, time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.prescription, image = "ti-prescription-bottle", address = "/patient/Prescriptions/" + currentPatient.Id + "?" });
+                    currentPatient.myPrescriptions.Add(p);
+                }
+            }
+            notify = getDeliveryNotifications(notify, tempPrescriptions);
+            return notify;
+        }  
+        
+        public List<Notification> getDeliveryNotifications(List<Notification> notify, List<PatientPrescriptions> tempPrescriptions)
+        {
+            //foreach (PatientPrescriptions p in tempPrescriptions)
+            //{
+            //    p.dDates = PatientProcessor.loadPrescriptionDelivery(p.Id).ConvertAll(new Converter<DataLibrary.Models.Delivery, Delivery>(DALtoMedex.DMDeliveries));
+            //}
+            //foreach (Delivery d in )
+            //{
+            //   if(currentPatient.myAppointments.Exists(x => x.Id == a.Id))
+            //    {
+            //        Appointment temp = currentPatient.myAppointments.Find(x => x.Id == a.Id);
+            //        if(temp.isConfirmed != a.isConfirmed)
+            //        {
+            //            notify.Add(new Notification() { id = notifyCounter++, description = "Appointment " + a.desc + " Confirmed.", time = DateTime.Now.ToString("ss") + " seconds ago...",type = Notification.NotificationType.appointment });
+            //            temp.isConfirmed = a.isConfirmed;
+            //        }
+            //    }
+            //}
+            return notify;
+        }
+
+        [HttpGet]
+        public JsonResult GetNotifications()
+        {
+            List<Notification> lstDataSubmit = currentPatient.myNotifications;
+            lstDataSubmit = getMessageNotifications(lstDataSubmit);
+            lstDataSubmit = getAppointmentNotifications(lstDataSubmit);
+
+            if(lstDataSubmit.Count == 0)
+            {
+                lstDataSubmit.Add(new Notification() { id = 0, description = "Nothing to display.", time = " "});
+            }
+            else if(lstDataSubmit.Exists(x => x.id == 0))
+            {
+                lstDataSubmit.RemoveAll(x => x.id == 0);
+            }
+
+            currentPatient.myNotifications = lstDataSubmit;
+            notificationList = lstDataSubmit;
             return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
         }
 
+       
+        #endregion
+       
+        
         #region Calendar Methods
         private List<CalendarEvent> LoadAppointmentData()
         {
@@ -270,18 +362,27 @@ namespace medexnet.Controllers
                     GetInfo(currentPatient);
                     currentPatient.currentChatID = currentPatient.getChatID(currentPatient.Id, id, topic);
                 }
+                chatID = currentPatient.currentChatID;
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
             return View();
         }
         #region Messaging Methods
+
+        [HttpGet]
+        public ActionResult getChatID()
+        {
+            return Json(new { id = currentPatient.currentChatID, JsonRequestBehavior.AllowGet });
+        }
+
         [HttpPost]
         public ActionResult MessageChangeChatID(int Id)
         { 
             if (ModelState.IsValid)
             {
                 currentPatient.currentChatID = Id;
+                chatID = currentPatient.currentChatID;
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
@@ -298,7 +399,7 @@ namespace medexnet.Controllers
             }
             if (ModelState.IsValid)
             {
-                PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
+                PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), currentPatient.currentChatID);
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }

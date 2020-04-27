@@ -1,0 +1,84 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/PatientLayout.cshtml";
+}
+
+
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="scroll-sidebar">
+                    <nav class="sidebar-nav">
+                        <h2>My Prescriptions</h2>
+                        <ul id="sidebarnav" class="p-t-30">
+                            @foreach (medexnet.Models.PatientPrescriptions item in Model.myPrescriptions)
+                            {
+                                <li class="sidebar-item" style="background-color:#3db3a9;">
+                                    <a class="sidebar-link has-arrow waves-effect waves-dark" style="color:black; font:18px bolder;" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">@Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.dosage) </span></a>
+                                    <ul aria-expanded="false" class="collapse  first-level">
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Prescription Name: @Html.DisplayFor(modelItem => item.name) </span></a></li>
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Dosage: @Html.DisplayFor(modelItem => item.dosage) </span></a></li>
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Description: @Html.DisplayFor(modelItem => item.description) </span></a></li>
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Date Prescribed: @Html.DisplayFor(modelItem => item.datePrescribed) </span></a></li>
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Number of Refills: @Html.DisplayFor(modelItem => item.numberofRefills) </span></a></li>
+                                        <li class="sidebar-item" style="padding:5px; margin-left:50px; background-color:white;"><a href="#" class=""><i class=""></i><span class="hide-menu" style="color:black;"> Pill Count: @Html.DisplayFor(modelItem => item.pillCount) </span></a></li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+        setInterval(function () {
+        UpdateNotifications();
+        }, 3000);
+    });
+
+    function UpdateNotifications() {
+        $.ajax({
+            type: "GET",
+            url: "/Patient/GetNotifications",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                if (response != null) {
+
+                    var j = ""; var p = 0; var Q = "";
+                    $.each(response, function (k, v) {
+                        j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
+                        j += '<div class="d-flex no-block align-items-center p-10">'
+                        j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
+                        j += '<div class="m-l-10">'
+                        j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                        j += '<span class="mail-desc"></span>                       '
+                        j += '</div>  '
+                        j += '</div>                                                                          '
+                        j += '</a>'
+                    });
+
+                    $('#myNotificationList').html("");
+                    $('#myNotificationList').append(j);
+                }
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+</script>
+
+}

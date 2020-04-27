@@ -83,53 +83,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">@if (Model.currentChatID != -1){@Html.DisplayFor(modelItem => cChat.topic)}</h4>
-                                        <div class="chat-box scrollable" style="height:475px;">
-                                            <!--chat Row -->
-                                            <ul class="chat-list">
-                                                <!--chat Row -->
-                                                @if (Model.currentChatID != -1)
-                                                {
-                                                    foreach (medexnet.Models.Message M in cChat.messageList)
-                                                    {
-                                                        if (M.userID != Model.Id)
-                                                        {
-                                                            <li class="chat-item">
-                                                                <div class="chat-content">
-                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                                </div>
-                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                            </li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="odd chat-item">
-                                                                <div class="chat-content">
-                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                                </div>
-                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                            </li>
-                                                        }
-
-                                                    }
-                                                }
-                                            </ul>
+                                <div class="card" id="ChatArea">
+                                </div>
+                                <div class="card-body border-top">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div class="input-field m-t-0 m-b-0">
+                                                <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body border-top">
-                                        <div class="row">
-                                            <div class="col-9">
-                                                <div class="input-field m-t-0 m-b-0">
-                                                    <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
-                                            </div>
+                                        <div class="col-3">
+                                            <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +124,13 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        location.reload();
+                        $.ajax({
+                            type: "GET",
+                            url: "/Patient/chatPartial",
+                            success: function (partialViewResult) {
+                                $("#ChatArea").html(partialViewResult);
+                            }
+                        })
                     },
                     error: function () {
                         alert("Error sending message!");
@@ -185,16 +155,73 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        Location.reload();
+                        $.ajax({
+                            type: "GET",
+                            url: "/Patient/chatPartial",
+                            success: function (partialViewResult) {
+                                $("#ChatArea").html(partialViewResult);
+                            }
+
+                        });
                     },
                     error: function () {
                         alert("Error");
                     }
                 });
-                Location.reload();
+                //Location.reload();
             return false;
         });
     });
+
+    $(document).ready(function () {
+            setInterval(function () {
+            UpdateNotifications();
+            }, 3000);
+
+        $.ajax({
+            type: "GET",
+            url: "/Patient/chatPartial",
+            success: function (partialViewResult) {
+                $("#ChatArea").html(partialViewResult);
+            }
+
+        });
+        //var cBox = document.getElementById("chatBox");
+        //cBox.scrollTop = cBox.scrollHeight;
+        });
+
+        function UpdateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Patient/GetNotifications",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
+                            j += '<div class="d-flex no-block align-items-center p-10">                           '
+                            j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
+                            j += '<div class="m-l-10">                                                            '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                            j += '<span class="mail-desc"></span>                       '
+                            j += '</div>                                                                          '
+                            j += '</div>                                                                          '
+                            j += '</a>'
+                        });
+
+                        $('#myNotificationList').html("");
+                        $('#myNotificationList').append(j);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
     </script>
 
 }

@@ -1,0 +1,60 @@
+﻿@model List<medexnet.Models.PharmacyPrescriptions>
+
+@{
+    Layout = "~/Views/Shared/PharmacyLayout.cshtml";
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#prescriptions').DataTable();
+        });
+    </script>
+}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Prescriptions</h5>
+                <div class="table-responsive">
+                    <table id="prescriptions" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Prescription Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Dosage</th>
+                                <th>Pill Count</th>
+                                <th>Description</th>
+                                <th>Number of Refills</th>
+                                <th>Use Before</th>
+                                <th>Date Prescribed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.prescriptionFID)</td>
+                                <td>@Html.DisplayFor(modelItem => item.prescriptionName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.fName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.lName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.dosage)</td>
+                                <td>@Html.DisplayFor(modelItem => item.pillCount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.numberofRefills)</td>
+                                <td>@Html.DisplayFor(modelItem => item.useBefore)</td>
+                                <td>@Html.DisplayFor(modelItem => item.datePrescribed)</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -70,7 +70,8 @@
                                                         <optgroup label="@item2.className">
                                                             @foreach (medexnet.Models.docPre item3 in item2.prescriptions)
                                                             {
-                                                                <option value="@item3.prescriptionName">@item3.prescriptionName</option>
+                                                                <option id="name" data-id="@item3.prescriptionId" value="@item3.prescriptionName">@item3.prescriptionName</option>
+
                                                             }                                                            
                                                         </optgroup>
                                                     }
@@ -302,6 +303,7 @@
                 var $buttonClicked = $(this);
                 var pers = {};
                 pers.patientFID = $buttonClicked.attr('data-id');
+                pers.prescriptionFID = $("#name").attr('data-id');
                 pers.name = $("#name").val();
                 pers.dosage = $("#dosage").val();
                 pers.pillCount = $("#pillCount").val();
@@ -331,7 +333,8 @@
             $("#btnSet").click(function () {
                 debugger;
                 var $buttonClicked = $(this);
-                var app = {};               
+                var app = {};    
+                app.patientFID = $buttonClicked.attr('data-id');
                 app.date = $("#date").val();
                 app.desc = $("#description2").val();
                 $.ajax({

@@ -21,10 +21,6 @@ C:\Users\camer\Documents\Repos\medexweb\MedDB\bin\Debug\MedDB.dacpac
 C:\Users\camer\Documents\Repos\medexweb\MedDB\bin\Debug\MedDB.dll
 C:\Users\camer\Documents\Repos\medexweb\MedDB\bin\Debug\MedDB.pdb
 C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\MedDB.sqlprojAssemblyReference.cache
-C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\Model.xml
-C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\refactor.xml
-C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\postdeploy.sql
-C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\predeploy.sql
 C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\MedDB.dll
 C:\Users\camer\Documents\Repos\medexweb\MedDB\obj\Debug\MedDB.pdb
 C:\Users\Connor\Desktop\Github\medexweb\MedDB\bin\Debug\MedDB.dacpac

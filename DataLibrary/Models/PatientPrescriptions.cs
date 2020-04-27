@@ -20,5 +20,7 @@ namespace DataLibrary.Models
         public string description { get; set; }
         public string datePrescribed { get; set; }
         public string color { get; set; }
+
+        public List<Delivery> dDates { get; set; }
     }
 }

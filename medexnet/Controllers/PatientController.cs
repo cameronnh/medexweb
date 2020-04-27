@@ -88,7 +88,8 @@ namespace medexnet.Controllers
         }
         public ActionResult MessageInbox(UserModel patient)
         {
-            currentPatient = GetInfo(patient);
+            currentPatient = GetPatientInfo(patient);
+            currentPatient = GetInfo(currentPatient);
             currentPatient.myNotifications.RemoveAll(x => x.type == Notification.NotificationType.message);
 
             return View(currentPatient);

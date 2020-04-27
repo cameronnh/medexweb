@@ -42,7 +42,14 @@ namespace medexnet.Controllers
             List<CalendarEvent> temp = new List<CalendarEvent>();           
             foreach (Appointment item in currentDoctor.myAppointments)
             {
-                temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#0271e0" });
+                if(item.isConfirmed)
+                {
+                    temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Appointment", PriorityColor = "#0271e0" });
+                }
+                else
+                {
+                    temp.Add(new CalendarEvent { Sr = 4, Title = item.desc, Start_Date = Convert.ToDateTime(item.date).ToShortDateString(), End_Date = Convert.ToDateTime(item.date).ToShortDateString(), Desc = "Unconfirmed Appointment", PriorityColor = "#5671e0" });
+                }
             }
             return temp;
         }
@@ -126,7 +133,7 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                DoctorProcessor.AddPrescription(pers.patientFID, currentDoctor.Id, pers.name, pers.dosage, pers.pillCount, pers.numberofRefills,
+                DoctorProcessor.AddPrescription(pers.patientFID, currentDoctor.Id, pers.prescriptionFID , pers.name, pers.dosage, pers.pillCount, pers.numberofRefills,
                     pers.useBefore, pers.description, DateTime.Now.ToString());
 
                 string message = "Prescription has been written.";

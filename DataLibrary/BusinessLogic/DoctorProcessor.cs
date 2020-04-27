@@ -50,13 +50,14 @@ namespace DataLibrary.BusinessLogic
             return SqlDataAccess.LoadData<UserModel>(sql);
         }
      
-        public static int AddPrescription(int patientFID, int doctorFID, string name, string dosage,
+        public static int AddPrescription(int patientFID, int doctorFID, int prescriptionFID, string name, string dosage,
             int pillCount, int numberofRefills, string useBefore, string description, string datePrescribed)
         {
             PatientPrescriptions data = new PatientPrescriptions
             {
                 patientFID = patientFID,
-                doctorFID = doctorFID,                                
+                doctorFID = doctorFID, 
+                prescriptionFID = prescriptionFID,
                 name = name,
                 dosage = dosage,
                 pillCount = pillCount,
@@ -145,7 +146,7 @@ namespace DataLibrary.BusinessLogic
 
         public static List<Appointment> loadAppointmentData(int id)
         {
-            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE doctorFID = '" + id + "' AND isconfirmed = 1;";
+            string sql = @"SELECT Id, patientFID, doctorFID, date, [desc], isconfirmed FROM dbo.[appointments] WHERE doctorFID = '" + id + "';";
             List<Appointment> temp = SqlDataAccess.LoadData<Appointment>(sql);
             for (int i = 0; i < temp.Count(); i++)
             {
@@ -212,7 +213,7 @@ namespace DataLibrary.BusinessLogic
 
         public static List<Chats> loadChats(int id)
         {
-            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE patientID = '" + id + "';";
+            string sql = @"SELECT Id, topic, doctorID, patientID FROM dbo.[chats] WHERE doctorID = '" + id + "';";
             List<Chats> temp = SqlDataAccess.LoadData<Chats>(sql);
             foreach (Chats C in temp)
             {

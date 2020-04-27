@@ -1,0 +1,38 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[appointments] (Table)
+       [dbo].[bridgeDoctorPatient] (Table)
+       [dbo].[chats] (Table)
+       [dbo].[deliveries] (Table)
+       [dbo].[messages] (Table)
+       [dbo].[patientPrescriptions] (Table)
+       [dbo].[prescription] (Table)
+       [dbo].[prescriptionClasses] (Table)
+       [dbo].[user] (Table)
+       [dbo].[FK_PatientFID] (Foreign Key)
+       [dbo].[FK_DoctorFID] (Foreign Key)
+       [dbo].[FK_doctorPatients_ToTable] (Foreign Key)
+       [dbo].[FK_doctorPatients_ToTable_1] (Foreign Key)
+       [dbo].[FK_Chats_PatientID] (Foreign Key)
+       [dbo].[FK_Chats_DoctorID] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_1] (Foreign Key)
+       [dbo].[FK_deliveries_ToTable_2] (Foreign Key)
+       [dbo].[FK_Messages_ChatId] (Foreign Key)
+       [dbo].[FK_Messages_UserId] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_1] (Foreign Key)
+       [dbo].[FK_patientPrescription_ToTable_2] (Foreign Key)
+       [dbo].[FK_prescription_ToTable] (Foreign Key)
+
+** Supporting actions

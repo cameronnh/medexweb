@@ -112,6 +112,13 @@ namespace medexnet.Controllers
         public UserModel GetPatient()
         {
             List<int> patientIds = GetPatientIds();
+
+            if (patientIds.Count() < 0)
+            {
+                return null;
+
+            }
+
             int id = patientIds[0];
 
             List<UserModel> tempPatientData = new List<UserModel>();
@@ -169,7 +176,7 @@ namespace medexnet.Controllers
                 {
                     Delivery temp = new Delivery();
                     temp.shippedDate = DateTime.Now.ToString();
-                    temp.arrivalDate = DateTime.Now.ToString();
+                    temp.arrivalDate = DateTime.Now.AddDays(3).ToString();
                     temp.patientFID = currentPatient.Id;
                     temp.Id = item.Id;//used for prescriptions
 

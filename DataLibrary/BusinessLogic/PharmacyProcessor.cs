@@ -77,8 +77,8 @@ namespace DataLibrary.BusinessLogic
         {
             Delivery data = new Delivery
             {
-                patientFID = PatId,
-                Id = PerId,
+                patientFID = PerId,
+                Id = PatId,
                 shippedDate = shippedDate,
                 arrivalDate = ArrivalDate                
             };

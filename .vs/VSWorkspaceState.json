@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
-    "\\medexnet",
-    "\\medexnet\\Models",
-    "\\medexnet\\Views",
-    "\\medexnet\\Views\\Shared"
+    "",
+    "\\MedDB",
+    "\\MedDB\\dbo",
+    "\\MedDB\\dbo\\Tables",
+    "\\MedDB\\obj"
   ],
+  "SelectedNode": "\\MedDB\\dbo\\Tables\\prescriptionColors.sql",
   "PreviewInSolutionExplorer": false
 }

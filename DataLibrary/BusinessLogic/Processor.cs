@@ -88,6 +88,7 @@ namespace DataLibrary.BusinessLogic
                 user = user,
                 time = time,
                 date = date
+                
             };
             string sql = @"INSERT into dbo.[messages] (userId, text, [user], time, date, chatID)
                             values(@userId, @text, @user, @time, @date, " + chatID + ")";

@@ -131,6 +131,7 @@
                                 $("#ChatArea").html(partialViewResult);
                             }
                         })
+                        $("#newMessage").val("");
                     },
                     error: function () {
                         alert("Error sending message!");
@@ -173,22 +174,43 @@
         });
     });
 
+        var height = -1;
     $(document).ready(function () {
             setInterval(function () {
             UpdateNotifications();
             }, 3000);
 
-        $.ajax({
+       setInterval(function () {
+            UpdateChat();
+       }, 500);
+
+    });
+
+        
+
+        function UpdateChat() {
+            if (height != -1) {
+                height = document.getElementById("chatBox").scrollTop;
+            }
+            $.ajax({
             type: "GET",
             url: "/Patient/chatPartial",
             success: function (partialViewResult) {
                 $("#ChatArea").html(partialViewResult);
-            }
+                var cBox = document.getElementById("chatBox");
+                if (height == -1) {
+                    cBox.scrollTop = cBox.scrollHeight;
+                    height = cBox.scrollHeight;
+                }
+                else {
+                    cBox.scrollTop = height;
+                }
+                }
 
-        });
-        //var cBox = document.getElementById("chatBox");
-        //cBox.scrollTop = cBox.scrollHeight;
-        });
+            });
+
+        }
+
 
         function UpdateNotifications() {
             $.ajax({
@@ -211,7 +233,16 @@
                             j += '</div>                                                                          '
                             j += '</div>                                                                          '
                             j += '</a>'
+                            p++
                         });
+
+                        $('#NotificationBadge').html(p);
+                        if (p == 0) {
+                            $('#NotificationBadge').hide()
+                        }
+                        else {
+                            $('#NotificationBadge').show()
+                        }
 
                         $('#myNotificationList').html("");
                         $('#myNotificationList').append(j);

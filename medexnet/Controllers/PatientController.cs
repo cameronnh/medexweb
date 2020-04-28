@@ -210,15 +210,6 @@ namespace medexnet.Controllers
             lstDataSubmit = getMessageNotifications(lstDataSubmit);
             lstDataSubmit = getAppointmentNotifications(lstDataSubmit);
 
-            if(lstDataSubmit.Count == 0)
-            {
-                lstDataSubmit.Add(new Notification() { id = 0, description = "Nothing to display.", time = " "});
-            }
-            else if(lstDataSubmit.Exists(x => x.id == 0))
-            {
-                lstDataSubmit.RemoveAll(x => x.id == 0);
-            }
-
             currentPatient.myNotifications = lstDataSubmit;
             notificationList = lstDataSubmit;
             return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
@@ -369,6 +360,7 @@ namespace medexnet.Controllers
             }
             return View();
         }
+
         #region Messaging Methods
 
         [HttpGet]
@@ -406,7 +398,16 @@ namespace medexnet.Controllers
             }
             return View();
         }
-#endregion
+
+        [HttpGet]
+        public ActionResult UpdateChatWindow()
+        {
+            currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            return Json(new { Message = "" , JsonRequestBehavior.AllowGet });
+        }
+
+        
+        #endregion
 
         #region settings Methods
         [HttpPost]
@@ -440,11 +441,11 @@ namespace medexnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool validPhone = true;
+                bool validPhone = false;
 
                 if (newData.phoneNumber.Any())
                 {
-                    validPhone = false;
+                    validPhone = true;
                 }
 
                 if (validPhone)

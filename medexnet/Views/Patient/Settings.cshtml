@@ -60,7 +60,6 @@
     <script type="text/javascript">
 
         function callChangefunc(id, val) {
-            debugger;
             var rxColor = {};
                 rxColor.id = id;
                 rxColor.color = val;
@@ -107,7 +106,16 @@
                             j += '</div>  '
                             j += '</div>                                                                          '
                             j += '</a>'
+                            p++
                         });
+
+                        $('#NotificationBadge').html(p);
+                        if (p == 0) {
+                            $('#NotificationBadge').hide()
+                        }
+                        else {
+                            $('#NotificationBadge').show()
+                        }
 
                         $('#myNotificationList').html("");
                         $('#myNotificationList').append(j);

@@ -111,6 +111,7 @@
 @section scripts
 {
     <script type="text/javascript">
+             var height = -1;
         $(function () {
             $("#sendBtn").click(function () {
                 debugger;
@@ -132,6 +133,7 @@
                             }
                         })
                         $("#newMessage").val("");
+                        height = -1;
                     },
                     error: function () {
                         alert("Error sending message!");
@@ -140,9 +142,8 @@
             return false;
         });
     });
-    </script>
 
-    <script type="text/javascript">
+     
         $(function () {
             $(".chatID").click(function () {
                 debugger;
@@ -164,6 +165,7 @@
                             }
 
                         });
+                        height = -1;
                     },
                     error: function () {
                         alert("Error");
@@ -174,7 +176,7 @@
         });
     });
 
-        var height = -1;
+      
     $(document).ready(function () {
             setInterval(function () {
             UpdateNotifications();

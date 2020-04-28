@@ -12,12 +12,16 @@ namespace medexnet.Controllers
     public class DoctorController : Controller
     {
         public static UserModel currentDoctor = new UserModel();
+        public static List<Notification> notificationList = new List<Notification>();
+        public static int chatID = -1;
+        public static int notifyCounter = 1;
 
         public ActionResult Index(UserModel doctor)
         {           
             currentDoctor = doctor;
             currentDoctor.myAppointments = DoctorProcessor.loadAppointmentData(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
             currentDoctor = getDoctorEvents(currentDoctor);
+            currentDoctor.myNotifications = notificationList;
 
             return View(currentDoctor);
         }        
@@ -74,6 +78,7 @@ namespace medexnet.Controllers
             List<DataLibrary.Models.docPreClasses> tempSelData = DoctorProcessor.getSelections();
             tempSelection = tempSelData.ConvertAll(new Converter<DataLibrary.Models.docPreClasses, docPreClasses>(DataAccessSelection));
             currentDoctor.doctorSelection = tempSelection;
+            currentDoctor.myNotifications = notificationList;
 
             return View(currentDoctor);
         }
@@ -87,6 +92,8 @@ namespace medexnet.Controllers
         public ActionResult Appointments()
         {
             currentDoctor = getUnacceptedAppointments(currentDoctor);
+            currentDoctor.myNotifications = notificationList;
+
             return View(currentDoctor);
         }
 
@@ -199,6 +206,7 @@ namespace medexnet.Controllers
             List<PatientPrescriptions> patientPrescriptions = new List<PatientPrescriptions>();
             patientPrescriptions = data.ConvertAll(new Converter<DataLibrary.Models.PatientPrescriptions, PatientPrescriptions>(DataAccessPatientPerscriptions));
             currentPatient.SetPrescriptions(patientPrescriptions);
+            currentDoctor.myNotifications = notificationList;
 
             return View(currentPatient);
         }
@@ -407,6 +415,7 @@ namespace medexnet.Controllers
         public ActionResult MessageInbox(UserModel doctor)
         {
             currentDoctor = PullMessages(doctor);
+            currentDoctor.myAppointments = DoctorProcessor.loadAppData(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
 
             List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
 
@@ -459,6 +468,7 @@ namespace medexnet.Controllers
         [HttpGet]
         public ActionResult ChatPartial()
         {
+            //currentDoctor = PullMessages(currentDoctor);
             return PartialView("ChatPartialView", currentDoctor);
         }
 
@@ -526,6 +536,63 @@ namespace medexnet.Controllers
                 description = temp.description,
                 datePrescribed = temp.datePrescribed
             };
-        }       
+        }
+
+
+        #region notifications
+
+        public List<Notification> getMessageNotifications(List<Notification> notify)
+        {
+            List<Chats> tempChatList = DoctorProcessor.loadChats(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            foreach (Chats c in tempChatList)
+            {
+                if (!currentDoctor.myChats.Exists(x => x.Id == c.Id))
+                {
+                    notify.Add(new Notification() { id = notifyCounter++, description = "New Chat from " + currentDoctor.myPatients.Find(p => p.Id == c.patientID).lName, time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.message, image = "ti-envelope", address = "/Doctor/messageinbox/" + currentDoctor.Id + "?" });
+                    currentDoctor.myChats.Add(c);
+                }
+                else
+                {
+                    foreach (Message m in c.messageList)
+                    {
+                        Chats tChat = currentDoctor.myChats.Find(x => x.Id == c.Id);
+                        if (!tChat.messageList.Exists(x => x.Id == m.Id))
+                        {
+                            notify.Add(new Notification() { id = notifyCounter++, description = "New Message in " + c.topic, time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.message, image = "ti-envelope", address = "/Doctor/messageinbox/" + currentDoctor.Id + "?" });
+                            currentDoctor.myChats.Find(x => x.Id == c.Id).messageList = c.messageList;
+                        }
+                    }
+                }
+            }
+            return notify;
+        }
+        public List<Notification> getAppointmentNotifications(List<Notification> notify)
+        {
+            List<Appointment> tempAppList = DoctorProcessor.loadAppointmentData(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Appointment, Appointment>(DALtoMedex.DMAppointmentData));
+            foreach (Appointment a in tempAppList)
+            {
+                if (!currentDoctor.myAppointments.Exists(x => x.Id == a.Id))
+                {
+                     notify.Add(new Notification() { id = notifyCounter++, description = "New Appointment From " + a.patient.fName + " ", time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.appointment });
+                    currentDoctor.myAppointments.Add(a);
+                }
+            }
+            return notify;
+        }
+
+        [HttpGet]
+        public JsonResult GetNotifications()
+        {
+            List<Notification> lstDataSubmit = currentDoctor.myNotifications;
+            lstDataSubmit = getMessageNotifications(lstDataSubmit);
+            lstDataSubmit = getAppointmentNotifications(lstDataSubmit);
+
+            currentDoctor.myNotifications = lstDataSubmit;
+            notificationList = lstDataSubmit;
+            return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
     }
 }

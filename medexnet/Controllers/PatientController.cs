@@ -160,8 +160,13 @@ namespace medexnet.Controllers
                     if(temp.isConfirmed != a.isConfirmed)
                     {
                         notify.Add(new Notification() { id = notifyCounter++, description = "Appointment " + a.desc + " Confirmed.", time = DateTime.Now.ToString("ss") + " seconds ago...",type = Notification.NotificationType.appointment });
-                        temp.isConfirmed = a.isConfirmed;
+                        currentPatient.myAppointments.Find(x => x.Id == a.Id).isConfirmed = a.isConfirmed;
                     }
+                }
+                else
+                {
+                    notify.Add(new Notification() { id = notifyCounter++, description = "New Appointment From Dr. " + a.doctor.lName + " ", time = DateTime.Now.ToString("ss") + " seconds ago...", type = Notification.NotificationType.appointment });
+                    currentPatient.myAppointments.Add(a);
                 }
             }
             return notify;
@@ -385,7 +390,7 @@ namespace medexnet.Controllers
         [HttpPost]
         public ActionResult AddMessage(string msg, int id)
         {
-            if (currentPatient.currentChatID == -1)
+            if (currentPatient.currentChatID == -1 || msg == "")
             {
                 string message = "No Valid Chats";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
@@ -393,9 +398,11 @@ namespace medexnet.Controllers
             if (ModelState.IsValid)
             {
                 PatientProcessor.AddMessage(currentPatient.Id, msg, currentPatient.fName[0] + currentPatient.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), currentPatient.currentChatID);
+                currentPatient.myChats = PatientProcessor.loadChats(currentPatient.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
+
             return View();
         }
 

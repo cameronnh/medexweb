@@ -113,7 +113,7 @@ namespace medexnet.Controllers
         {
             List<int> patientIds = GetPatientIds();
 
-            if (patientIds.Count() < 0)
+            if (patientIds.Count() < 1)
             {
                 return null;
 
@@ -163,6 +163,11 @@ namespace medexnet.Controllers
         public ActionResult PackerCalendar()
         {
             GetPatient();
+
+            if(currentPatient.Id == 0)
+            {
+                return RedirectToAction("Index", "Pharmacy");
+            }
 
             return View(currentPatient);
         }

@@ -37,6 +37,7 @@
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav" class="p-t-30">
+                            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index", "Pharmacy")" aria-expanded="false"><i class="fas fa-boxes"></i><span class="hide-menu">Graph</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Inventory", "Pharmacy", Model)" aria-expanded="false"><i class="fas fa-boxes"></i><span class="hide-menu">Prescription Inventory</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Prescriptions", "Pharmacy")" aria-expanded="false"><i class="fas fa-prescription-bottle-alt"></i><span class="hide-menu">Patient Prescriptions</span></a></li>
                             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("PackerCalendar", "Pharmacy")" aria-expanded="false"><i class="fas fa-calendar-alt"></i><span class="hide-menu">Packer View</span></a></li>
@@ -44,8 +45,8 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">Account </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level">
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-settings"></i><span class="hide-menu"> Settings </span></a></li>
-                                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-logout"></i><span class="hide-menu"> Logout </span></a></li>
+                                    
+                                    <li class="sidebar-item"><a href="@Url.Action("LogOut", "Home")" class="sidebar-link"><i class="mdi mdi-logout"></i><span class="hide-menu"> Logout </span></a></li>
                                 </ul>
                             </li>
                             <!--SOME GOOD ONES ARE fas fa-capsules    fas fa-ambulance         fas fa-heartbeat    fas fa-hospital -->

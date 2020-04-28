@@ -4,8 +4,13 @@
     "\\MedDB",
     "\\MedDB\\dbo",
     "\\MedDB\\dbo\\Tables",
-    "\\MedDB\\obj"
+    "\\MedDB\\obj",
+    "\\medexnet",
+    "\\medexnet\\Controllers",
+    "\\medexnet\\Views",
+    "\\medexnet\\Views\\Doctor",
+    "\\medexnet\\Views\\Shared"
   ],
-  "SelectedNode": "\\MedDB\\dbo\\Tables\\prescriptionColors.sql",
+  "SelectedNode": "\\medexnet\\Controllers\\DoctorController.cs",
   "PreviewInSolutionExplorer": false
 }

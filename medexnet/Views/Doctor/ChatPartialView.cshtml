@@ -1,0 +1,68 @@
+﻿@model medexnet.Models.UserModel
+
+@{
+    medexnet.Models.Chats cChat = new medexnet.Models.Chats();
+    if (Model.currentChatID != -1)
+    {
+        cChat = Model.getChat(Model.currentChatID);
+    }
+    else
+    {
+        cChat.Id = 0;
+    }
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">
+            @if (Model.currentChatID != -1)
+            {@Html.DisplayFor(modelItem => cChat.topic)}
+        </h4>
+        <div class="chat-box scrollable" style="height:475px;" id="chatBox">
+            <!--chat Row -->
+            <ul class="chat-list">
+                <!--chat Row -->
+                @if (Model.currentChatID != -1)
+                {
+                    foreach (medexnet.Models.Message M in cChat.messageList)
+                    {
+                        if (M.userID != Model.Id)
+                        {
+                            <li class="chat-item">
+                                <div class="chat-content">
+                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                </div>
+                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="odd chat-item">
+                                <div class="chat-content">
+                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
+                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
+                                </div>
+                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
+                            </li>
+                        }
+
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script type="text/javascript">
+
+        $(document).ready(function () {
+        //var cBox = document.getElementById("chatBox");
+        //    cBox.scrollTop = cBox.scrollHeight;
+        
+        });
+
+</script>
+}

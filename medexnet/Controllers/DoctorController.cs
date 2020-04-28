@@ -407,6 +407,18 @@ namespace medexnet.Controllers
         public ActionResult MessageInbox(UserModel doctor)
         {
             currentDoctor = PullMessages(doctor);
+
+            List<int> patientIds = DoctorProcessor.GetPatientIds(currentDoctor.Id);
+
+            foreach(int i in patientIds)
+            {
+                List<UserModel> tempPatientData = new List<UserModel>();
+                List<DataLibrary.Models.UserModel> tempData = DoctorProcessor.LoadPatientInfo(i);
+                tempPatientData = tempData.ConvertAll(new Converter<DataLibrary.Models.UserModel, UserModel>(DataAccessPatientInfo));
+
+                currentDoctor.myPatients.Add(tempPatientData[0]);
+            };
+
             if (currentDoctor.currentChatID == -1 && currentDoctor.myChats.Count() > 0)
             {
                 currentDoctor.currentChatID = currentDoctor.myChats[0].Id;
@@ -437,11 +449,24 @@ namespace medexnet.Controllers
 
             if (ModelState.IsValid)
             {
-                PatientProcessor.AddMessage(currentDoctor.Id, msg, currentDoctor.fName[0] + currentDoctor.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), id);
+                PatientProcessor.AddMessage(currentDoctor.Id, msg, currentDoctor.fName[0] + currentDoctor.lName, DateTime.Now.ToShortTimeString(), DateTime.Now.ToShortDateString(), currentDoctor.currentChatID);
                 string message = "Message has been written.";
                 return Json(new { Message = message, JsonRequestBehavior.AllowGet });
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ChatPartial()
+        {
+            return PartialView("ChatPartialView", currentDoctor);
+        }
+
+        [HttpGet]
+        public ActionResult UpdateChatWindow()
+        {
+            currentDoctor.myChats = PatientProcessor.loadChats(currentDoctor.Id).ConvertAll(new Converter<DataLibrary.Models.Chats, Chats>(DALtoMedex.DMChatData));
+            return Json(new { Message = "", JsonRequestBehavior.AllowGet });
         }
 
         public static UserModel DataAccessPatientInfo(DataLibrary.Models.UserModel temp)

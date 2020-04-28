@@ -2,11 +2,10 @@
 
 @{
     Layout = "~/Views/Shared/DoctorLayout.cshtml";
-
     medexnet.Models.Chats cChat = new medexnet.Models.Chats();
-    if(Model.currentChatID != -1)
+    if (Model.currentChatID != -1)
     {
-         cChat= Model.getChat(Model.currentChatID);
+        cChat = Model.getChat(Model.currentChatID);
     }
     else
     {
@@ -21,7 +20,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Messages</h4>
+                <h4 class="page-title">Messenger</h4>
                 <div class="ml-auto text-right">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -56,10 +55,27 @@
                                     <div class="row">
                                         @foreach (medexnet.Models.Chats c in Model.myChats)
                                         {
-                                            <div class="col-md-12">
+                                            string displayName = "Test";
+                                            string lastmessage = "";
+
+                                            foreach (medexnet.Models.UserModel DM in Model.myPatients)
+                                            {
+                                                if (DM.Id == c.patientID)
+                                                {
+                                                    displayName =  DM.fName;
+                                                }
+                                            }
+
+                                            if (c.messageList.Count > 0)
+                                            {
+                                                lastmessage = c.messageList.FindLast(ele => ele.Id != Model.Id).text;
+                                            }
+
+                                            <div class="col-md-12 border-bottom bg-light-info">
                                                 <a class="chatID" data-Id="@c.Id" href="">
                                                     <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => c.topic)</h4>
-                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => c.doctorID)</p>
+                                                    <h6 class="list-group-item-text">@Html.DisplayFor(modelItem => displayName)</h6>
+                                                    <p class="list-group-item-text">@Html.DisplayFor(modelItem => lastmessage)</p>
                                                 </a>
                                             </div>
                                         }
@@ -67,54 +83,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <h4 class="card-title"> @if (Model.myChats.Count() > 0) {@Html.DisplayFor(modelItem => cChat.topic)} </h4>
-                                        <div class="chat-box scrollable" style="height:475px;">
-                                            <!--chat Row -->
-                                            <ul class="chat-list">
-                                                <!--chat Row -->
-                                                @if (Model.myChats.Count() > 0)
-                                                {
-                                                    foreach (medexnet.Models.Message M in cChat.messageList)
-                                                    {
-                                                        if (M.userID != Model.Id)
-                                                        {
-                                                            <li class="chat-item">
-                                                                <div class="chat-content">
-                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                                </div>
-                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                            </li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="odd chat-item">
-                                                                <div class="chat-content">
-                                                                    <h6 class="font-medium">@Html.DisplayFor(modelItem => M.user)</h6>
-                                                                    <div class="box bg-light-info">@Html.DisplayFor(modelItem => M.text)</div>
-                                                                </div>
-                                                                <div class="chat-time">@Html.DisplayFor(modelItem => M.time)</div>
-                                                            </li>
-                                                        }
-
-                                                    }
-                                                }
-                                            </ul>
+                                <div class="card" id="ChatArea">
+                                </div>
+                                <div class="card-body border-top">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div class="input-field m-t-0 m-b-0">
+                                                <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body border-top">
-                                        <div class="row">
-                                            <div class="col-9">
-                                                <div class="input-field m-t-0 m-b-0">
-                                                    <textarea id="newMessage" placeholder="Type and enter" class="form-control border-0"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
-                                            </div>
+                                        <div class="col-3">
+                                            <a class="btn-circle btn-lg btn-cyan float-right text-white" id="sendBtn"><i class="fas fa-paper-plane"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +124,14 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        location.reload();
+                        $.ajax({
+                            type: "GET",
+                            url: "/Doctor/chatPartial",
+                            success: function (partialViewResult) {
+                                $("#ChatArea").html(partialViewResult);
+                            }
+                        })
+                        $("#newMessage").val("");
                     },
                     error: function () {
                         alert("Error sending message!");
@@ -170,16 +156,103 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function () {
-                        Location.reload();
+                        $.ajax({
+                            type: "GET",
+                            url: "/Doctor/chatPartial",
+                            success: function (partialViewResult) {
+                                $("#ChatArea").html(partialViewResult);
+                            }
+
+                        });
                     },
                     error: function () {
                         alert("Error");
                     }
                 });
-                Location.reload();
+                //Location.reload();
             return false;
         });
     });
+
+        var height = -1;
+    $(document).ready(function () {
+            setInterval(function () {
+            UpdateNotifications();
+            }, 3000);
+
+       setInterval(function () {
+            UpdateChat();
+       }, 500);
+
+    });
+
+
+
+        function UpdateChat() {
+            if (height != -1) {
+                height = document.getElementById("chatBox").scrollTop;
+            }
+            $.ajax({
+            type: "GET",
+            url: "/Doctor/chatPartial",
+            success: function (partialViewResult) {
+                $("#ChatArea").html(partialViewResult);
+                var cBox = document.getElementById("chatBox");
+                if (height == -1) {
+                    cBox.scrollTop = cBox.scrollHeight;
+                    height = cBox.scrollHeight;
+                }
+                else {
+                    cBox.scrollTop = height;
+                }
+                }
+
+            });
+
+        }
+
+
+        function UpdateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Doctor/GetNotifications",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response);
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            j += '<a href="'+v.address+'" id="' + v.id + '" class="link border-top">'
+                            j += '<div class="d-flex no-block align-items-center p-10">                           '
+                            j += '<span class="btn btn-success btn-circle"><i class="' + v.image + '"></i></span>     '
+                            j += '<div class="m-l-10">                                                            '
+                            j += '<h5 class="m-b-0">' + v.description + '</h5>                                    '
+                            j += '<span class="mail-desc"></span>                       '
+                            j += '</div>                                                                          '
+                            j += '</div>                                                                          '
+                            j += '</a>'
+                            p++
+                        });
+
+                        $('#NotificationBadge').html(p);
+                        if (p == 0) {
+                            $('#NotificationBadge').hide()
+                        }
+                        else {
+                            $('#NotificationBadge').show()
+                        }
+
+                        $('#myNotificationList').html("");
+                        $('#myNotificationList').append(j);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
     </script>
 
 }

@@ -197,6 +197,7 @@
     <Content Include="Views\Doctor\MessageInbox.cshtml" />
     <Content Include="Views\Pharmacy\PackerCalendar.cshtml" />
     <Content Include="Views\Pharmacy\Inventory.cshtml" />
+    <Content Include="Views\Doctor\ChatPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">
